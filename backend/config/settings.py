@@ -99,7 +99,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
+<<<<<<< HEAD
 TIME_ZONE = "UTC"
+=======
+TIME_ZONE = "Asia/Seoul"
+>>>>>>> 5db13f22c843df07c4e874bcfc383ac0fd1e65be
 
 USE_I18N = True
 
