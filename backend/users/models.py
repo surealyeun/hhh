@@ -19,5 +19,7 @@ class User(AbstractUser):
     )
 
     avatar = models.ImageField(null=True, blank=True)
-    gender = models.CharField(max_length=10, null=True, choices=GENDER_CHOICES)
+    gender = models.CharField(
+        choices=GENDER_CHOICES, max_length=10, null=True, blank=True
+    )
     bio = models.TextField(default="", blank=True)
