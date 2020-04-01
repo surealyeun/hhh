@@ -25,7 +25,9 @@ SECRET_KEY = "@so)ntg1=$-=2d5q-qsx@qe62cfepgo+fpmi8d&6rn3wa8#*i%"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "*",
+]
 
 
 # Application definition
@@ -42,6 +44,8 @@ DJANGO_APPS = [
 
 PROJECT_APPS = [
     "users.apps.UsersConfig",
+    "rest_framework",
+    "drf_yasg",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS

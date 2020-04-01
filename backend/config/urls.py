@@ -13,9 +13,28 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+# from django.contrib import admin
+# from django.urls import path
+
+# urlpatterns = [
+#     path('admin/', admin.site.urls),
+# ]
+from django.conf.urls import url, include
 from django.contrib import admin
 from django.urls import path
+from rest_framework import routers
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+
+import users.views
+
+router = routers.DefaultRouter()
+router.register("users", users.views.UserViewSet)
+
+# prefix = movies , viewset = MovieViewSet
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    url(r"^admin/", admin.site.urls),
+    url(r"^", include(router.urls)),
+    url(r"^api/doc", get_swagger_view(title="Rest API Document")),
 ]
