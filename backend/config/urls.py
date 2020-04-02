@@ -13,27 +13,28 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+# from django.contrib import admin
+# from django.urls import path
+
+# urlpatterns = [
+#     path('admin/', admin.site.urls),
+# ]
+from django.conf.urls import url, include
 from django.contrib import admin
-from django.urls import path, include
-from django.conf.urls import url
+from django.urls import path
+from rest_framework import routers
 from drf_yasg.views import get_schema_view
-from rest_framework.permissions import AllowAny
 from drf_yasg import openapi
-from .yasg import schema_view, schema_url_patterns
+
+import users.views
+
+router = routers.DefaultRouter()
+router.register("users", users.views.UserViewSet)
+
+# prefix = movies , viewset = MovieViewSet
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    url(
-        r"^swagger(?P<format>\.json|\.yaml)$",
-        schema_view.without_ui(cache_timeout=0),
-        name="schema-json",
-    ),
-    url(
-        r"^swagger/$",
-        schema_view.with_ui("swagger", cache_timeout=0),
-        name="schema-swagger-ui",
-    ),
-    url(
-        r"^redoc/$", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"
-    ),
+    url(r"^admin/", admin.site.urls),
+    url(r"^", include(router.urls)),
+    url(r"^api/doc", get_swagger_view(title="Rest API Document")),
 ]

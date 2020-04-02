@@ -47,6 +47,8 @@ THIRD_PARTY_APPS = [
 
 PROJECT_APPS = [
     "users.apps.UsersConfig",
+    "rest_framework",
+    "drf_yasg",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
@@ -87,7 +89,7 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "member",
+        "NAME": "test",
         "USER": "root",
         "PASSWORD": "ssafy",
         "HOST": "localhost",
