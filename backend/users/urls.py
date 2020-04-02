@@ -1,12 +1,12 @@
-from django.urls import path
-from django.conf.urls import url
+from django.urls import path, include
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+from . import views
 
-from users import views
+schema_view = get_schema_view(openapi.Info(title="User API", default_version="v1",))
 
-urlpatterns = [
-    url(
-        r"",
-        views.UserViewSet.as_view({"get": "list", "get": "get_object"}),
-        name="movies",
-    ),
+app_name = "users"
+
+url_patterns = [
+    path("userList/", views.user_list, name="user_list"),
 ]
