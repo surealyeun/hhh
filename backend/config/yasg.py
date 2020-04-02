@@ -16,7 +16,7 @@ schema_view = get_schema_view(
         default_version="v1",
         description="SSAFY 특화프로젝트 서울 2반 2조.",
         terms_of_service="https://www.google.com/policies/terms/",
-        contact=openapi.Contact(email="opwer032@naver.com"),
+        contact=openapi.Contact(email="dlehfud22@naver.com"),
         license=openapi.License(name="우리조 화이팅"),
     ),
     validators=["flex", "ssv"],

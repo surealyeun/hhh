@@ -29,33 +29,19 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
 import users.views
+from .yasg import schema_view
+
 
 router = routers.DefaultRouter()
 router.register("users", users.views.UserViewSet)
 
-schema_url_v1_patterns = [
-    url("users/", include("users.urls", namespace="user_api")),
-]
-
-schema_view = get_schema_view(
-    openapi.Info(
-        title="a202",
-        default_version="v1",
-        description="Test description",
-        terms_of_service="https://www.google.com/policies/terms/",
-        contact=openapi.Contact(email="dlehfud22@naver.com"),
-        license=openapi.License(name="BSD License"),
-    ),
-    validators=["flex", "ssv"],
-    public=True,
-    permission_classes=(AllowAny,),
-)
 
 # prefix = movies , viewset = MovieViewSet
 
 urlpatterns = [
     url(r"^admin/", admin.site.urls),
     url(r"^", include(router.urls)),
+    # url(r"^api/doc", get_swagger_view(title="Rest API Document")),
     url(
         r"^swagger(?P<format>\.json|\.yaml)$",
         schema_view.without_ui(cache_timeout=0),
