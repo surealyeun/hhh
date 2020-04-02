@@ -19,12 +19,25 @@ from django.conf.urls import url
 from drf_yasg.views import get_schema_view
 from rest_framework.permissions import AllowAny
 from drf_yasg import openapi
-from .yasg import schema_view, schema_url_patterns
+
+# from .yasg import schema_view, schema_url_patterns
+from .yasg import schema_view
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    # path(
+    #     "swagger<str:format>",
+    #     schema_view.without_ui(cache_timeout=0),
+    #     name="schema-json",
+    # ),
+    # path(
+    #     "swagger/",
+    #     schema_view.with_ui("swagger", cache_timeout=0),
+    #     name="schema-swagger-ui",
+    # ),
+    # path("redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
     url(
-        r"^swagger(?P<format>\.json|\.yaml)$",
+        r"^swagger(?P<format>\.json|\.yaml)/$",
         schema_view.without_ui(cache_timeout=0),
         name="schema-json",
     ),

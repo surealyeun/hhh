@@ -7,7 +7,7 @@ from drf_yasg import openapi
 
 
 schema_url_patterns = [
-    path("users/", include("users.urls")),
+    url(r"^users/", include("users.urls")),
 ]
 
 schema_view = get_schema_view(
@@ -22,4 +22,5 @@ schema_view = get_schema_view(
     validators=["flex", "ssv"],
     public=True,
     permission_classes=(AllowAny,),
+    patterns=schema_url_patterns,
 )

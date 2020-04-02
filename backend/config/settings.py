@@ -40,6 +40,11 @@ DJANGO_APPS = [
     "django.contrib.staticfiles",
 ]
 
+# Django REST Framework
+REST_FRAMEWORK = {
+    "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",),
+}
+
 THIRD_PARTY_APPS = [
     "rest_framework",
     "drf_yasg",
@@ -108,9 +113,15 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
 ]
 
+# swagger
+
+SWAGGER_SETTINGS = {
+    "DEFAULT_AUTO_SCHEMA_CLASS": "drf_yasg_examples.SwaggerAutoSchema",
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
+
 
 LANGUAGE_CODE = "ko-kr"
 
