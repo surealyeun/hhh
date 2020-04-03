@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls import url
+from rest_framework.routers import DefaultRouter
 from drf_yasg.views import get_schema_view
 from rest_framework.permissions import AllowAny
 from drf_yasg import openapi
@@ -23,8 +24,15 @@ from drf_yasg import openapi
 # from .yasg import schema_view, schema_url_patterns
 from .yasg import schema_view
 
+from users import views
+import users.urls as userUrl
+
+router = DefaultRouter()
+router.register(r"users", views.UserViewSet)
+
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("", include(router.urls)),
     # path(
     #     "swagger<str:format>",
     #     schema_view.without_ui(cache_timeout=0),
