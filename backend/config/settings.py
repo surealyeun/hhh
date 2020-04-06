@@ -40,11 +40,6 @@ DJANGO_APPS = [
     "django.contrib.staticfiles",
 ]
 
-# Django REST Framework
-REST_FRAMEWORK = {
-    "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",),
-}
-
 THIRD_PARTY_APPS = [
     "rest_framework",
     "drf_yasg",
@@ -92,7 +87,7 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "test",
+        "NAME": "member",
         "USER": "root",
         "PASSWORD": "ssafy",
         "HOST": "localhost",
