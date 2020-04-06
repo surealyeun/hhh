@@ -20,10 +20,12 @@ from rest_framework.routers import DefaultRouter
 from .yasg import schema_view
 from users.views import UserViewSet
 from boards.views import BoardViewSet
+from follows.views import FollowViewSet
 
 router = DefaultRouter()
 router.register("users", UserViewSet)
 router.register("boards", BoardViewSet)
+router.register("follows", FollowViewSet)
 
 urlpatterns = [
     path("admin/", admin.site.urls),

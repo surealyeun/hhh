@@ -6,11 +6,10 @@ class Photo(core_models.TimeStampedModel):
 
     """ Photo Model Definitinon """
 
-    board = models.ForeignKey("Board", on_delete=models.CASCADE)
     image = models.ImageField()
 
     def __str__(self):
-        return self.board
+        return str(self.created)
 
 
 class Like(models.Model):
@@ -30,3 +29,5 @@ class Board(core_models.TimeStampedModel):
 
     writer = models.ForeignKey("users.User", on_delete=models.CASCADE)
     content = models.TextField(null=True, blank=True)
+    photo = models.ManyToManyField(Photo)
+    like = models.ManyToManyField(Like)
