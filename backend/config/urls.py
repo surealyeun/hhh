@@ -17,18 +17,13 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls import url
 from rest_framework.routers import DefaultRouter
-from drf_yasg.views import get_schema_view
-from rest_framework.permissions import AllowAny
-from drf_yasg import openapi
-
-# from .yasg import schema_view, schema_url_patterns
 from .yasg import schema_view
-
-from users import views
-import users.urls as userUrl
+from users.views import UserViewSet
+from boards.views import BoardViewSet
 
 router = DefaultRouter()
-router.register(r"users", views.UserViewSet)
+router.register("users", UserViewSet)
+router.register("boards", BoardViewSet)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
