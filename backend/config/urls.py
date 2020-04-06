@@ -25,10 +25,12 @@ from drf_yasg import openapi
 from .yasg import schema_view
 
 from users import views
-import users.urls as userUrl
+from locations import views
+
 
 router = DefaultRouter()
 router.register(r"users", views.UserViewSet)
+router.register(r"locations", views.LocationViewSet)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
