@@ -18,25 +18,26 @@ from django.urls import path, include
 from django.conf.urls import url
 from rest_framework.routers import DefaultRouter
 from .yasg import schema_view
-<<<<<<< HEAD
-
-from users.views import UserViewSet
-from locations.views import LocationViewSet
-
-
-router = DefaultRouter()
-router.register(r"users", UserViewSet)
-router.register(r"locations", LocationViewSet)
-=======
 from users.views import UserViewSet
 from boards.views import BoardViewSet
 from follows.views import FollowViewSet
+from keywords.views import TagViewSet
+from places.views import (
+    StoreViewSet,
+    LocationViewSet,
+    CategoryViewSet,
+    ReviewViewSet,
+)
 
 router = DefaultRouter()
 router.register("users", UserViewSet)
 router.register("boards", BoardViewSet)
 router.register("follows", FollowViewSet)
->>>>>>> ca75d17134016dc07f61d4a4c1fe226bba11ffd1
+router.register("keywords", TagViewSet)
+router.register("places/store", StoreViewSet)
+router.register("places/location", LocationViewSet)
+router.register("places/category", CategoryViewSet)
+router.register("places/review", ReviewViewSet)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
