@@ -16,26 +16,36 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls import url
-from drf_yasg.views import get_schema_view
-from rest_framework.permissions import AllowAny
-from drf_yasg import openapi
-from users import urls as user_urls
-
-# from .yasg import schema_view, schema_url_patterns
+from rest_framework.routers import DefaultRouter
 from .yasg import schema_view
+from users.views import UserViewSet
+from boards.views import BoardViewSet
+from follows.views import FollowViewSet
+from comments.views import CommentViewSet
+from keywords.views import TagViewSet
+from wishlists.views import WishListViewSet
+from places.views import (
+    StoreViewSet,
+    LocationViewSet,
+    CategoryViewSet,
+    ReviewViewSet,
+)
+
+router = DefaultRouter()
+router.register("users", UserViewSet)
+router.register("boards", BoardViewSet)
+router.register("follows", FollowViewSet)
+router.register("comments", CommentViewSet)
+router.register("keywords", TagViewSet)
+router.register("wishlist", WishListViewSet)
+router.register("places/store", StoreViewSet)
+router.register("places/location", LocationViewSet)
+router.register("places/category", CategoryViewSet)
+router.register("places/review", ReviewViewSet)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    url(
-        r"^swagger(?P<format>\.json|\.yaml)/$",
-        schema_view.without_ui(cache_timeout=0),
-        name="schema-json",
-    ),
-    url(
-        r"^swagger/$",
-        schema_view.with_ui("swagger", cache_timeout=0),
-        name="schema-swagger-ui",
-    ),
+    path("", include(router.urls)),
     url(
         r"^redoc/$", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"
     ),

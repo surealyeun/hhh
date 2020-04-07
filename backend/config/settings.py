@@ -40,18 +40,20 @@ DJANGO_APPS = [
     "django.contrib.staticfiles",
 ]
 
-# Django REST Framework
-REST_FRAMEWORK = {
-    "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",),
-}
-
 THIRD_PARTY_APPS = [
     "rest_framework",
     "drf_yasg",
 ]
 
 PROJECT_APPS = [
+    "core.apps.CoreConfig",
     "users.apps.UsersConfig",
+    "boards.apps.BoardsConfig",
+    "follows.apps.FollowsConfig",
+    "comments.apps.CommentsConfig",
+    "places.apps.PlacesConfig",
+    "keywords.apps.KeywordsConfig",
+    "wishlists.apps.WishlistsConfig",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
