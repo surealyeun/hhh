@@ -17,7 +17,6 @@ class Like(models.Model):
     """ Photo Model Definitinon """
 
     user = models.ForeignKey("users.User", on_delete=models.CASCADE)
-    pushed = models.BooleanField(null=True)
 
     def __str__(self):
         return self.user
@@ -29,5 +28,5 @@ class Board(core_models.TimeStampedModel):
 
     writer = models.ForeignKey("users.User", on_delete=models.CASCADE)
     content = models.TextField(null=True, blank=True)
-    photo = models.ManyToManyField(Photo, null=True, blank=True)
-    like = models.ManyToManyField(Like, null=True, blank=True)
+    photo = models.ManyToManyField(Photo)
+    like = models.ManyToManyField(Like)

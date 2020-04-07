@@ -2,13 +2,25 @@ from django.db import models
 from core import models as core_models
 
 
+class Comment_Like(models.Model):
+
+    """ Comment Like Model Definition"""
+
+    like_user = models.ForeignKey("users.User", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.like_user
+
+
 class Comment(core_models.TimeStampedModel):
 
     """ Comment Model Definition """
 
-    comment = models.CharField(max_length=120)
+    id = models.AutoField(primary_key=True)
+    text = models.CharField(max_length=120)
     writer = models.ForeignKey("users.User", on_delete=models.CASCADE)
     board = models.ForeignKey("boards.Board", on_delete=models.CASCADE)
-    like = models.ForeignKey(
-        "users.User", on_delete=models.CASCADE, null=True, blank=True
+    likes = models.ManyToManyField("Comment_Like", null=True, blank=True)
+    parents = models.ForeignKey(
+        "Comment", on_delete=models.CASCADE, null=True, blank=True
     )
