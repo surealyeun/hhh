@@ -14,8 +14,39 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from django.conf.urls import url
+from rest_framework.routers import DefaultRouter
+from .yasg import schema_view
+from users.views import UserViewSet
+from boards.views import BoardViewSet
+from follows.views import FollowViewSet
+from comments.views import CommentViewSet
+from keywords.views import TagViewSet
+from wishlists.views import WishListViewSet
+from places.views import (
+    StoreViewSet,
+    LocationViewSet,
+    CategoryViewSet,
+    ReviewViewSet,
+)
+
+router = DefaultRouter()
+router.register("users", UserViewSet)
+router.register("boards", BoardViewSet)
+router.register("follows", FollowViewSet)
+router.register("comments", CommentViewSet)
+router.register("keywords", TagViewSet)
+router.register("wishlist", WishListViewSet)
+router.register("places/store", StoreViewSet)
+router.register("places/location", LocationViewSet)
+router.register("places/category", CategoryViewSet)
+router.register("places/review", ReviewViewSet)
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-]
+    path("admin/", admin.site.urls),
+    path("", include(router.urls)),
+    url(
+        r"^redoc/$", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"
+    ),
+] + user_urls.url_patterns
