@@ -29,5 +29,5 @@ class Board(core_models.TimeStampedModel):
 
     writer = models.ForeignKey("users.User", on_delete=models.CASCADE)
     content = models.TextField(null=True, blank=True)
-    photo = models.ManyToManyField(Photo)
-    like = models.ManyToManyField(Like)
+    photo = models.ManyToManyField(Photo, null=True, blank=True)
+    like = models.ManyToManyField(Like, null=True, blank=True)

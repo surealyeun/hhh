@@ -50,6 +50,7 @@ PROJECT_APPS = [
     "users.apps.UsersConfig",
     "boards.apps.BoardsConfig",
     "follows.apps.FollowsConfig",
+    "comments.apps.CommentsConfig",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS

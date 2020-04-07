@@ -21,11 +21,13 @@ from .yasg import schema_view
 from users.views import UserViewSet
 from boards.views import BoardViewSet
 from follows.views import FollowViewSet
+from comments.views import CommentViewSet
 
 router = DefaultRouter()
 router.register("users", UserViewSet)
 router.register("boards", BoardViewSet)
 router.register("follows", FollowViewSet)
+router.register("comments", CommentViewSet)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
