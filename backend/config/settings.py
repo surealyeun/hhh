@@ -51,6 +51,8 @@ PROJECT_APPS = [
     "boards.apps.BoardsConfig",
     "follows.apps.FollowsConfig",
     "comments.apps.CommentsConfig",
+    "places.apps.PlacesConfig",
+    "keywords.apps.KeywordsConfig",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
@@ -91,7 +93,7 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "member",
+        "NAME": "test",
         "USER": "root",
         "PASSWORD": "ssafy",
         "HOST": "localhost",
