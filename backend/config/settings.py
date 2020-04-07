@@ -53,6 +53,7 @@ PROJECT_APPS = [
     "comments.apps.CommentsConfig",
     "places.apps.PlacesConfig",
     "keywords.apps.KeywordsConfig",
+    "wishlists.apps.WishlistsConfig",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS

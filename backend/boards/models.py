@@ -30,3 +30,6 @@ class Board(core_models.TimeStampedModel):
     content = models.TextField(null=True, blank=True)
     photo = models.ManyToManyField(Photo)
     like = models.ManyToManyField(Like)
+
+    def __str__(self):
+        return f"{self.writer}, {self.content}"
