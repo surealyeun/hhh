@@ -1,11 +1,10 @@
 import React from 'react';
 import './App.css';
+import ScrollCard from "./components/hotPlace/ScrollCard";
 
 function App() {
   return (
-    <div className="App">
-      <h1>ㅎㅎㅎ</h1>
-    </div>
+      <ScrollCard />
   );
 }
 
