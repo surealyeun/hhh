@@ -13,11 +13,11 @@ class Main extends React.Component {
                 <div className="grid">
                     <div className="title">
                         <h1>ㅎ<br/>ㅎ<br/>ㅎ</h1>
-                        <h4>핫,<br/>힙,<br/>힐링,</h4>
+                        <h4>핫,<br/>힙,<br/>힐링,<br/>플레이스</h4>
                         
                     </div>
                     <div className="map">
-                        <img className="seoul" alt="seoulMap" src={seoul}></img>
+                        {/* <img className="seoul" alt="seoulMap" src={seoul}></img> */}
                     </div>
                 </div>
             </div>
