@@ -2,8 +2,6 @@ from django.db import models
 from boards.models import Board
 from places.models import Store, Location
 
-# Create your models here.
-
 
 class Tag(models.Model):
     """ Tag model Definition """
