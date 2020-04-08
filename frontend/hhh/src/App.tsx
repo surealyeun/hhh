@@ -16,8 +16,8 @@ function App() {
         </Switch>
       </BrowserRouter>
 
-      <ScrollCard />
-      <FeedList></FeedList>
+      {/* <ScrollCard />
+      <FeedList></FeedList> */}
     </div>
   );
 }
