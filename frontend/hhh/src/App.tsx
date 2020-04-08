@@ -1,4 +1,5 @@
 import React from 'react';
+import FeedList from './components/feedList/FeedList';
 import './App.css';
 
 import { BrowserRouter, Switch, Redirect, Route } from 'react-router-dom';
@@ -16,6 +17,7 @@ function App() {
       </BrowserRouter>
 
       <ScrollCard />
+      <FeedList></FeedList>
     </div>
   );
 }
