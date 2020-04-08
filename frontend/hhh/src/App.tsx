@@ -1,7 +1,10 @@
 import React from 'react';
-import { BrowserRouter, Switch, Redirect, Route } from 'react-router-dom';
+import './App.css';
 
+import { BrowserRouter, Switch, Redirect, Route } from 'react-router-dom';
 import Main from './components/main/Main';
+import ScrollCard from "./components/hotPlace/ScrollCard";
+import FeedList from './components/feedList/FeedList';
 
 function App() {
   return (
@@ -12,6 +15,9 @@ function App() {
           <Redirect path="*" to="/"></Redirect>
         </Switch>
       </BrowserRouter>
+
+      {/* <ScrollCard />
+      <FeedList></FeedList> */}
     </div>
   );
 }
