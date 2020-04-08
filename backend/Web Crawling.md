@@ -12,6 +12,8 @@
 
 > ### 크롤링하기
 
+
+
 1. selenium 설치 
 
    + selenium : 인터넷 브라우저 컨트롤러
@@ -32,10 +34,18 @@
 
    + [크롬 드라이버 설치](https://sites.google.com/a/chromium.org/chromedriver/downloads/version-selection)
    + 설정 - Chrome 버전을 확인하고 해당하는 드라이버를 설치해야된다.
+   + 현재 버전 : [ 80.0.3987.106]
 
    
 
 3. 크롤링
+
+   + driver
+     + page_source : 페이지의 html 코드를 가져옴
+   + beautifulsoup
+     + find_all : 해당 되는 조건에 맞는 모든 결과 검색
+       + name : 검색할 태그
+       + attr : 클래스 등의 속성들
 
 
 
