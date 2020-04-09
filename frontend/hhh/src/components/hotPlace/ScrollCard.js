@@ -1,6 +1,6 @@
 import React, { Component, useState } from "react";
 import ScrollMenu from "react-horizontal-scrolling-menu";
-import "./Kira.css";
+import "./Kira.scss";
 import {
   HeartOutlined,
   PlusCircleOutlined,
