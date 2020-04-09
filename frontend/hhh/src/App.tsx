@@ -16,8 +16,6 @@ function App() {
           <Redirect path="*" to="/"></Redirect>
         </Switch>
       </BrowserRouter>
-      {/* <ScrollCard />
-      <FeedList></FeedList> */}
     </div>
   );
 }
