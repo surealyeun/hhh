@@ -1,13 +1,33 @@
 import React from 'react';
-import Feed from './Feed';
+import Feed from './feed/Feed';
+import UserCard from './userCard/userCard';
+import './FeedList.scss';
 
 class FeedList extends React.Component {
     render() {
         return (
-            <div id="comp-feed-list">
-                <div id="searchBar"></div>
+            <div id="feed-list">
+                <UserCard />
+
+                <input type="text" id="search-bar" placeholder="검색"></input>
                 <div id="list">
-                    <Feed></Feed>
+                    <div className="row">
+                        <Feed></Feed>
+                        <Feed></Feed>
+                        <Feed></Feed>
+                    </div>
+
+                    <div className="row">
+                        <Feed></Feed>
+                        <Feed></Feed>
+                        <Feed></Feed>
+                    </div>
+
+                    <div className="row">
+                        <Feed></Feed>
+                        <Feed></Feed>
+                        <Feed></Feed>
+                    </div>
                 </div>
             </div>
         );

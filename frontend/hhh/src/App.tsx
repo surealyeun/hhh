@@ -11,6 +11,8 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route path="/" exact component={Main} />
+          <Route path="/feedList" component={FeedList} />
+          <Route path="/spotList" component={ScrollCard} />
           <Redirect path="*" to="/"></Redirect>
         </Switch>
       </BrowserRouter>
