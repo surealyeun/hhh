@@ -1,11 +1,10 @@
 import React from 'react';
 import FeedList from './components/feedList/FeedList';
-import './App.css';
+import './App.scss';
 
 function App() {
   return (
     <div className="App">
-      <h1>ㅎㅎㅎ</h1>
       <FeedList></FeedList>
     </div>
   );
