@@ -19,7 +19,8 @@ body {
 .main {
     width: 100%;
     height: 100%;
-    background-color: rgb(243, 243, 243);
+    background-color: rgb(0, 0, 0);
+    // background-color: rgb(243, 243, 243);
     position: fixed;
 
     // 넓은 화면
@@ -27,7 +28,7 @@ body {
         .circle1,
         .circle2,
         .circle3 {
-            background: linear-gradient(to right, #00ffaa7a, #00ffaa27, white);
+            background: linear-gradient(to right, #00ffaae7, #00ffaa65, rgb(0, 0, 0));
             width: 500px;
             height: 500px;
             border-radius: 250px;
@@ -52,14 +53,19 @@ body {
 
         .grid {
             display: grid;
-            grid-template-columns: [title] 25% [map] 75%;
+            grid-template-columns: [title] 30% [mapFrame] 70%;
             grid-gap: 0;
-            grid-auto-rows: minmax(10px, auto);
+            height: 100%;
+            // grid-auto-rows: minmax(10px, auto);
+
 
             .title {
-                margin-left: 100px;
+                position: relative;
+                left: 50%;
+                margin-left: -90px;
                 h1 {
                     // color: rgba(255, 255, 255, 0.87);
+                    color: #00ffaa;
                     font-family: 'DOSGothic';
                     font-size: 110px;
                     font-weight: lighter;
@@ -74,16 +80,30 @@ body {
                     font-weight: lighter;
                     line-height: 1.8em;
                     margin: 15px 10px;
+                    #h4-1{
+                        color: #00ffaa;
+                    }
+                    #h4-2{
+                        color: #42ffc0;
+                    }
+                    #h4-3{
+                        color: #affde3;
+                    }
+                    #h4-4{
+                        color: #e4e4e4;
+                    }
                 }
             }
 
-            .map {
-                .seoul {
-                    height: 80%;
-                    position: absolute;
-                    top: 10%;
-                    right: 5%;
-                    // margin-top: 50px;
+            .mapFrame {
+                .map{
+                    width: 100%;
+                    height: 100%;
+                    position: relative;
+                    // top: 80px;
+                    // left: 10%;
+                    // box-shadow: 4px 4px 10px #0000007e;
+                    // border: 2px solid #00ffaa;
                 }
             }
         }
