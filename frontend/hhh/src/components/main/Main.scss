@@ -6,7 +6,10 @@
     font-style: normal;
 }
 @font-face { font-family: 'DOSGothic'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_eight@1.0/DOSGothic.woff') format('woff'); font-weight: normal; font-style: normal; }
-
+@font-face { font-family: 'locus_sangsang'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/locus_sangsang.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'GmarketSansLight'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'HSGaeulsenggak'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/HSGaeulsenggak.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'MyLotteLight'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.0/MyLotteLight.woff') format('woff'); font-weight: normal; font-style: normal; }
 
 body {
     margin: 0;
@@ -16,7 +19,8 @@ body {
 .main {
     width: 100%;
     height: 100%;
-    background-color: black;
+    background-color: rgb(0, 0, 0);
+    // background-color: rgb(243, 243, 243);
     position: fixed;
 
     // 넓은 화면
@@ -24,10 +28,10 @@ body {
         .circle1,
         .circle2,
         .circle3 {
-            background: linear-gradient(to right, #00ffaa7a, #00ffaa27, black);
-            width: 400px;
-            height: 400px;
-            border-radius: 200px;
+            background: linear-gradient(to right, #00ffaae7, #00ffaa65, rgb(0, 0, 0));
+            width: 500px;
+            height: 500px;
+            border-radius: 250px;
             position: absolute;
             top: 50%;
             left: 50%;
@@ -35,48 +39,71 @@ body {
         }
 
         .circle1 {
-            margin-top: -200px;
-            margin-left: -400px;
+            margin-top: -250px;
+            margin-left: -500px;
         }
         .circle2 {
-            margin-top: -200px;
-            margin-left: -200px;
+            margin-top: -250px;
+            margin-left: -250px;
         }
         .circle3 {
-            margin-top: -200px;
+            margin-top: -250px;
             margin-left: 0px;
         }
 
         .grid {
             display: grid;
-            grid-template-columns: [title] 25% [map] 75%;
+            grid-template-columns: [title] 30% [mapFrame] 70%;
             grid-gap: 0;
-            grid-auto-rows: minmax(10px, auto);
+            height: 100%;
+            // grid-auto-rows: minmax(10px, auto);
+
 
             .title {
-                margin-left: 115px;
+                position: relative;
+                left: 50%;
+                margin-left: -90px;
                 h1 {
-                    color: rgba(255, 255, 255, 0.87);
+                    // color: rgba(255, 255, 255, 0.87);
+                    color: #00ffaa;
                     font-family: 'DOSGothic';
-                    font-size: 100px;
+                    font-size: 110px;
+                    font-weight: lighter;
+                    line-height: 1em;
+                    margin: 40px auto;
                 }
 
                 h4{                    
-                    color: rgba(255, 255, 255, 0.87);
-                    font-family: 'DOSGothic';
+                    // color: rgba(255, 255, 255, 0.87);
+                    font-family: 'GmarketSansLight';
                     font-size: 40px;
+                    font-weight: lighter;
                     line-height: 1.8em;
-                    // margin: 15px auto;
+                    margin: 15px 10px;
+                    #h4-1{
+                        color: #00ffaa;
+                    }
+                    #h4-2{
+                        color: #42ffc0;
+                    }
+                    #h4-3{
+                        color: #affde3;
+                    }
+                    #h4-4{
+                        color: #e4e4e4;
+                    }
                 }
             }
 
-            .map {
-                .seoul {
-                    height: 80%;
-                    position: absolute;
-                    top: 10%;
-                    right: 5%;
-                    // margin-top: 50px;
+            .mapFrame {
+                .map{
+                    width: 100%;
+                    height: 100%;
+                    position: relative;
+                    // top: 80px;
+                    // left: 10%;
+                    // box-shadow: 4px 4px 10px #0000007e;
+                    // border: 2px solid #00ffaa;
                 }
             }
         }

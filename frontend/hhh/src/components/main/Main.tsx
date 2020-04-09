@@ -1,23 +1,31 @@
 import React from "react";
 import "./Main.scss";
 
-import seoul from "../image/seoul_grey.png";
+// import seoul from "../image/seoul_grey.png";
+
+// var map = './mapmini.html';
+// var template = {__html: __html};
 
 class Main extends React.Component {
     render() {
         return (
             <div className="main">
-                <div className="circle1"></div>
-                <div className="circle2"></div>
-                <div className="circle3"></div>
+                {/* <div className="circle1"></div> */}
+                {/* <div className="circle2"></div>
+                <div className="circle3"></div> */}
                 <div className="grid">
                     <div className="title">
                         <h1>ㅎ<br/>ㅎ<br/>ㅎ</h1>
-                        <h4>핫,<br/>힙,<br/>힐링,</h4>
+                        <h4>
+                            <span id="h4-1">핫,</span><br/>
+                            <span id="h4-2">힙,</span><br/>
+                            <span id="h4-3">힐링,</span><br/>
+                            <span id="h4-4">플레이스</span>
+                        </h4>
                         
                     </div>
-                    <div className="map">
-                        <img className="seoul" alt="seoulMap" src={seoul}></img>
+                    <div className="mapFrame">
+                        <iframe className="map" src="../map.html" frameBorder="0" />
                     </div>
                 </div>
             </div>
