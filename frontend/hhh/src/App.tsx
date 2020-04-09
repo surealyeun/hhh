@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.scss';
-import './App.css';
 
 import { BrowserRouter, Switch, Redirect, Route } from 'react-router-dom';
 import Main from './components/main/Main';
@@ -13,12 +12,11 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route path="/" exact component={Main} />
+          <Route path="/feedList" component={FeedList} />
+          <Route path="/spotList" component={ScrollCard} />
           <Redirect path="*" to="/"></Redirect>
         </Switch>
       </BrowserRouter>
-
-      {/* <ScrollCard />
-      <FeedList></FeedList> */}
     </div>
   );
 }
