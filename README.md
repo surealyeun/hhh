@@ -7,7 +7,7 @@ http://i02a202.p.ssafy.io/feedlist
 
 ---
 ### 사용 스택
-[!react](/img/react.png){: width="200" height="100"} 
+<img src"=/img/react.png" width="200" height="100"/> 
 [!typescript](/img/Typescript.png){: width="200" height="100"}   
 [!django](/img/django.png){: width="200" height="100"}
 [!mysql](/img/mysql.png){: width="200" height="100"}   
