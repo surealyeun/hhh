@@ -6,21 +6,16 @@ from rest_framework.permissions import AllowAny
 from drf_yasg import openapi
 
 
-schema_url_patterns = [
-    url(r"^users/", include("users.urls")),
-]
-
 schema_view = get_schema_view(
     openapi.Info(
         title="a202 Open API",
         default_version="v1",
         description="SSAFY 특화프로젝트 서울 2반 2조.",
         terms_of_service="https://www.google.com/policies/terms/",
-        contact=openapi.Contact(email="dlehfud22@naver.com"),
+        contact=openapi.Contact(email="opwer032@naver.com"),
         license=openapi.License(name="우리조 화이팅"),
     ),
     validators=["flex", "ssv"],
     public=True,
     permission_classes=(AllowAny,),
-    patterns=schema_url_patterns,
 )
