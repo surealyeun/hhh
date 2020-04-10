@@ -67,7 +67,7 @@ selenium / beautifulsoup
 ---
 ### 배포 
 
-> frontend
+> frontend   
 http://i02a202.p.ssafy.io/   
 http://i02a202.p.ssafy.io/spotlist   
 http://i02a202.p.ssafy.io/feedlist   
