@@ -7,12 +7,12 @@ http://i02a202.p.ssafy.io/feedlist
 
 ---
 ### 사용 스택
-<img src="./img/react.png" width="200" height="100">   
-<img src="./img/Typescript.png" width="200" height="100">   
-<img src="./img/django.png" width="200" height="100">    
-<img src="./img/mysql.png" width="200" height="100">   
-<img src="./img/aws.png" width="200" height="100">   
-
+<img src="./img/react.png" width="200" height="100">      
+<img src="./img/Typescript.png" width="200" height="100">      
+<img src="./img/django.jpg" width="200" height="100">       
+<img src="./img/mysql.png" width="200" height="100">       
+<img src="./img/aws.png" width="200" height="100">      
+  
 ### 사용 데이터 (예정)
 ```
 다이닝코드
@@ -47,13 +47,14 @@ SNS 스크래퍼
 - 모델설계
     게시글, 댓글, 팔로우, 위시리스트
 ```
-<img src="./img/ERD.png" width="200" height="100">  
+<img src="./img/erd.png" width="200" height="100">      
+   
 ```
 - rest framework 설정 및 redoc 설정
 ```
 <img src="./img/redoc1.png" width="200" height="100">  
 <img src="./img/redoc2.png" width="200" height="100">  
-
+   
 > Web Crawling
 
 - 크롤러 분류 - 상태 유무, JavaScript 유무
