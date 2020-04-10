@@ -10,7 +10,7 @@ http://i02a202.p.ssafy.io/feedlist
 <img src"=/img/react.png" width="200" height="100"/> 
 [!typescript](/img/Typescript.png = 200x100)   
 [!django](https://lab.ssafy.com/s02-bigdata-sub2/s02p22a202/raw/develop/img/django.png){: width="200" height="100"}
-[!mysql](./img/mysql.png){: width="200" height="100"}   
+![mysql](./img/mysql.png){: width="200" height="100"}   
 [!aws](/img/aws.png){: width="200" height="100"}  
 
 ### 사용 데이터 (예정)
