@@ -73,8 +73,9 @@ http://i02a202.p.ssafy.io/spotlist
 http://i02a202.p.ssafy.io/feedlist   
 
 
-> rest API
+> rest API   
 http://13.125.113.171:8000/
+(* 유저 기능 일시 중지)
 
 프론트엔드 배포 : nginx
 
