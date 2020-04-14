@@ -5,8 +5,8 @@ import shutil
 import datetime
 
 DATA_DIR = "./data/"
-DATA_FILE = os.path.join(DATA_DIR, "data.json")
-DUMP_FILE = os.path.join(DATA_DIR, "dump.pkl")
+DATA_FILE = os.path.join(DATA_DIR, "dining.json")
+DUMP_FILE = os.path.join(DATA_DIR, "dining.pkl")
 
 store_columns = (
     "id",  # 음식점 고유번호
@@ -81,49 +81,50 @@ def import_data(data_path=DATA_FILE):
     menu_id = 1
     for d in data:
 
-        categories = [c["category"] for c in d["category_list"]]
-        stores.append(
-            [
-                d["id"],
-                d["name"],
-                d["branch"],
-                d["area"],
-                d["tel"],
-                d["address"],
-                d["latitude"],
-                d["longitude"],
-                "|".join(categories)
-            ]
-        )
-
-        for review in d["review_list"]:
-            r = review["review_info"]
-            u = review["writer_info"]
-            age = (year-int(u["born_year"]))+1 if int(u["born_year"]) > 0  else 0
-
-            reviews.append(
-                [r["id"], d["id"], u["id"], r["score"], r["content"], r["reg_time"]]
-            )
-            
-            if u["id"] not in user_set:
-                users.append([u["id"], u["gender"], age])
-                user_set.add(u["id"])
-
-        for bhour in d["bhour_list"]:
-            b = bhour
-
-            bhours.append(
-                [d["id"], b["type"], b["week_type"], b["mon"], b["tue"], b["wed"],
-                b["thu"], b["fri"], b["sat"], b["sun"], b["start_time"], b["end_time"], b["etc"]]
+        if d["address"].str.contains("서울특별시") :
+            categories = [c["category"] for c in d["category_list"]]
+            stores.append(
+                [
+                    d["id"],
+                    d["name"],
+                    d["branch"],
+                    d["area"],
+                    d["tel"],
+                    d["address"],
+                    d["latitude"],
+                    d["longitude"],
+                    "|".join(categories)
+                ]
             )
 
-        for menu in d["menu_list"]:
-            m = menu
+            for review in d["review_list"]:
+                r = review["review_info"]
+                u = review["writer_info"]
+                age = (year-int(u["born_year"]))+1 if int(u["born_year"]) > 0  else 0
 
-            menus.append(
-                [menu_id, d["id"], m["menu"], m["price"]]
-            )
-            menu_id += 1
+                reviews.append(
+                    [r["id"], d["id"], u["id"], r["score"], r["content"], r["reg_time"]]
+                )
+                
+                if u["id"] not in user_set:
+                    users.append([u["id"], u["gender"], age])
+                    user_set.add(u["id"])
+
+            for bhour in d["bhour_list"]:
+                b = bhour
+
+                bhours.append(
+                    [d["id"], b["type"], b["week_type"], b["mon"], b["tue"], b["wed"],
+                    b["thu"], b["fri"], b["sat"], b["sun"], b["start_time"], b["end_time"], b["etc"]]
+                )
+
+            for menu in d["menu_list"]:
+                m = menu
+
+                menus.append(
+                    [menu_id, d["id"], m["menu"], m["price"]]
+                )
+                menu_id += 1
 
 
     store_frame = pd.DataFrame(data=stores, columns=store_columns)

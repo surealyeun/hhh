@@ -1,14 +1,13 @@
 from pathlib import Path
 import pandas as pd
 from django.core.management.base import BaseCommand
-from backend import settings
+from django.conf import settings
 from api import models
-
 
 class Command(BaseCommand):
     help = "initialize database"
-    DATA_DIR = Path(settings.BASE_DIR).parent.parent / "data"
-    DATA_FILE = str(DATA_DIR / "dining_dump.pkl")
+    DATA_DIR = Path(settings.BASE_DIR).parent / "data"
+    DATA_FILE = str(DATA_DIR / "dining.pkl")
 
     def _load_dataframes(self):
         try:
@@ -26,10 +25,10 @@ class Command(BaseCommand):
         dataframes = self._load_dataframes()
 
         print("[*] Initializing stores...")
-        models.Store.objects.all().delete()
+        models.DiningStore.objects.all().delete()
         stores = dataframes["stores"]
         stores_bulk = [
-            models.Store(
+            models.DiningStore(
                 id=store.id,
                 store_name=store.store_name,
                 branch=store.branch,
@@ -42,7 +41,7 @@ class Command(BaseCommand):
             )
             for store in stores.itertuples()
         ]
-        models.Store.objects.bulk_create(stores_bulk)
+        models.DiningStore.objects.bulk_create(stores_bulk)
 
         print("[+] Done")
 

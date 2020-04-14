@@ -54,7 +54,7 @@ PROJECT_APPS = [
     "places.apps.PlacesConfig",
     "keywords.apps.KeywordsConfig",
     "wishlists.apps.WishlistsConfig",
-    "api"
+    "api.apps.ApiConfig",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
@@ -100,7 +100,11 @@ DATABASES = {
         "PASSWORD": "ssafya202!@#",
         "HOST": "13.125.113.171",
         "PORT": "3306",
-        "OPTIONS": {"init_command": 'SET sql_mode="STRICT_TRANS_TABLES"'},
+        "OPTIONS": {
+            "init_command": 'SET sql_mode="STRICT_TRANS_TABLES"',
+            'charset': 'utf8mb4',
+            'use_unicode': True,
+        },
     }
 }
 
