@@ -22,7 +22,7 @@ def user_search(request, username):
 
 @api_view(['PUT','DELETE'])
 def user_update_and_delete(request, username):
-    user = get_object_or_404(User, id=username)
+    user = get_object_or_404(User, username=username)
     if request.method == 'PUT':
         serializer = UserSerializer(data=request.data, instance=user)
         if serializer.is_valid(raise_exception=True):
@@ -31,3 +31,4 @@ def user_update_and_delete(request, username):
     else:
         user.delete()
         return Response({'message':'User has been deleted!'})
+     
