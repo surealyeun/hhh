@@ -1,7 +1,6 @@
 from django.utils import timezone
 from django.db import models
 
-
 class DiningStore(models.Model):
     id = models.IntegerField(primary_key=True)
     store_name = models.CharField(max_length=50)
@@ -16,3 +15,14 @@ class DiningStore(models.Model):
     @property
     def category_list(self):
         return self.category.split("|") if self.category else []
+
+class DiningReview(models.Model):
+    review_id = models.IntegerField(null=True)
+    store = models.ForeignKey("DiningStore", on_delete=models.CASCADE, null=True)
+    dining_user = models.IntegerField(null=True)
+    score = models.IntegerField(null=True)
+    content = models.TextField(null=True)
+    reg_time = models.DateTimeField(null=True)
+
+    class Meta:
+        unique_together = (('store', 'review_id'),)
