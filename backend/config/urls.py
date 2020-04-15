@@ -16,10 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls import url
+from django.views.generic import TemplateView
 from rest_framework.routers import DefaultRouter
 from .yasg import schema_view
 from users.views import UserViewSet
-from users.urls import urlpatterns as user_urlpatterns
 from boards.views import BoardViewSet
 from follows.views import FollowViewSet
 from comments.views import CommentViewSet
@@ -50,4 +50,4 @@ urlpatterns = [
     url(
         r"^redoc/$", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"
     ),
-]+user_urlpatterns
+]

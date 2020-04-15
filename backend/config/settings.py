@@ -54,7 +54,6 @@ PROJECT_APPS = [
     "places.apps.PlacesConfig",
     "keywords.apps.KeywordsConfig",
     "wishlists.apps.WishlistsConfig",
-    "api.apps.ApiConfig",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
@@ -74,7 +73,7 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -100,11 +99,7 @@ DATABASES = {
         "PASSWORD": "ssafya202!@#",
         "HOST": "13.125.113.171",
         "PORT": "3306",
-        "OPTIONS": {
-            "init_command": 'SET sql_mode="STRICT_TRANS_TABLES"',
-            'charset': 'utf8mb4',
-            'use_unicode': True,
-        },
+        "OPTIONS": {"init_command": 'SET sql_mode="STRICT_TRANS_TABLES"'},
     }
 }
 
@@ -130,6 +125,7 @@ SWAGGER_SETTINGS = {
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
 
+
 LANGUAGE_CODE = "ko-kr"
 
 TIME_ZONE = "Asia/Seoul"
@@ -138,7 +134,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = False
+USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
