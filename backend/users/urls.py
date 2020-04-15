@@ -1,8 +1,7 @@
 from django.urls import path
-from .views import UserViewSet
-
-user_list = UserViewSet.as_view({"get": "list", "post": "create"})
+from .views import UserViewSet, user_search, user_update_and_delete
 
 urlpatterns = [
-    path("", user_list, name="user-list"),
+    path('users/detail/<username>/', user_search, name="user-search-by-name"),
+    path('users/update/delete/<username>/', user_update_and_delete, name="user-update-delete")
 ]
