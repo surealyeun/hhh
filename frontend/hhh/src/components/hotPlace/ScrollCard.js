@@ -1,88 +1,24 @@
 import React, { Component, useState } from "react";
+import axios from 'axios';
 import ScrollMenu from "react-horizontal-scrolling-menu";
-import "./Kira.scss";
+import "./ScrollCard.scss";
 import {
   HeartOutlined,
   PlusCircleOutlined,
   HeartFilled,
 } from "@ant-design/icons";
 
-// list of items
-const list = [
-  {
-    category: "ART",
-    name: "D MUSEUM",
-    description: "HIP 한 미술관",
-    url:
-      "https://www.daelimmuseum.org/front/images/exhibition/201908/img05.jpg",
-  },
-  {
-    category: "SHOW",
-    name: "이상한나라의앨리스 전시회",
-    description: "도심 속 원더랜드",
-    url: "https://img.hankyung.com/photo/201709/01.14677326.1.jpg",
-  },
-  {
-    category: "SHOW",
-    name: "UNDERSTAGE",
-    description: "현대카드 공연 스테이지",
-    url:
-      "https://img.hyundaicard.com/cms_content/cp_culture/image/145052_BIG.png",
-  },
-  {
-    category: "CAFE",
-    name: "노스모크위드아웃파이어",
-    description: "주택 안의 카페",
-    url: "https://bit.ly/2V93eDV",
-  },
-  {
-    category: "CAFE",
-    name: "미실",
-    description: "역사와 감성을 담은 카페",
-    url:
-      "https://post-phinf.pstatic.net/MjAxOTEwMDJfMTk2/MDAxNTY5OTk2NTQyMTE4.oj6DIG-f-6AR8rAvKLWsha89zXu2V-YgYNztYd_jtosg.z0C8hh-Atl30a93kB5Zj4HTmS0pS2dHwXq9kvT6IGWQg.JPEG/7._%EB%AF%B8%EC%8B%A4.jpg?type=w1200",
-  },
-  {
-    category: "CAFE",
-    name: "살라댕방콕",
-    description: "한국 안의 작은 방콕",
-    url:
-      "https://mblogthumb-phinf.pstatic.net/MjAxOTA5MDVfMTY0/MDAxNTY3Njg2NTM5NDQz.lw-vFO8lU3R9vI4VIACflRp5nwAtSrWcl2XWIJsU5Swg.X0paFcdezEwEoEGoWLrjCno4Ns0GICoUVdvLXWgBd4Yg.JPEG.jy2_wj7/IMG_1422.JPG?type=w800",
-  },
-  {
-    category: "CAFE",
-    name: "미실",
-    description: "역사와 감성을 담은 카페",
-    url:
-      "https://post-phinf.pstatic.net/MjAxOTEwMDJfMTk2/MDAxNTY5OTk2NTQyMTE4.oj6DIG-f-6AR8rAvKLWsha89zXu2V-YgYNztYd_jtosg.z0C8hh-Atl30a93kB5Zj4HTmS0pS2dHwXq9kvT6IGWQg.JPEG/7._%EB%AF%B8%EC%8B%A4.jpg?type=w1200",
-  },
-  {
-    category: "CAFE",
-    name: "미실",
-    description: "역사와 감성을 담은 카페",
-    url:
-      "https://post-phinf.pstatic.net/MjAxOTEwMDJfMTk2/MDAxNTY5OTk2NTQyMTE4.oj6DIG-f-6AR8rAvKLWsha89zXu2V-YgYNztYd_jtosg.z0C8hh-Atl30a93kB5Zj4HTmS0pS2dHwXq9kvT6IGWQg.JPEG/7._%EB%AF%B8%EC%8B%A4.jpg?type=w1200",
-  },
-];
-
-// One item component
-// selected prop will be passed
-const MenuItem = ({ category, text, description, url }) => {
-  // const initColor = "#eb2f96";
-  // const myFunction = () => {
-  //   this.twoToneColor = "#00b992";
-  // }
-
+const LocItem = ({ id, location_name, address_see, address_gu, address_dong, tel, latitude, longitude, description, url }) => {
   const [iconState, seticonState] = useState(true);
 
   return (
     <div className="container">
       <div className="grid">
         <figure className="effect-kira">
-          <img src={url} width="630px" height="400px"/>
+          <img src={url} width="630px" height="400px" />
           <figcaption>
-            <h2>
-              {category} <span>{text}</span>
+            <h2 style={{ color: "#fff" }}>
+              <span className="inner-span">{location_name}</span> {id}
             </h2>
 
             <p>
@@ -94,17 +30,76 @@ const MenuItem = ({ category, text, description, url }) => {
                     style={{ color: "#00b992" }}
                   />
                 ) : (
-                  <HeartFilled
-                    onClick={() => seticonState(true)}
-                    style={{ color: "#00b992" }}
-                  />
-                )}
+                    <HeartFilled
+                      onClick={() => seticonState(true)}
+                      style={{ color: "#00b992" }}
+                    />
+                  )}
               </a>
 
               <a href="#">
                 <PlusCircleOutlined />
               </a>
             </p>
+
+            <p className="infos">번호: {tel}}</p>
+            <p className="infos">시: {address_see}</p>
+            <p className="infos">구: {address_gu}</p>
+            <p className="infos">동: {address_dong}</p>
+            <p className="infos">위도: {latitude}</p>
+            <p className="infos">경도: {longitude}</p>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  );
+}
+
+// One item component
+// selected prop will be passed
+const MenuItem = ({ id, store_name, branch, area, tel, address, latitude, longitude, category_list, url }) => {
+  // const initColor = "#eb2f96";
+  // const myFunction = () => {
+  //   this.twoToneColor = "#00b992";
+  // }
+
+  const [iconState, seticonState] = useState(true);
+
+  return (
+    <div className="container">
+      <div className="grid">
+        <figure className="effect-kira">
+          <img src={url} width="630px" height="400px" />
+          <figcaption>
+            <h2 style={{ color: "#fff" }}>
+              {category_list} <span className="inner-span">{store_name}</span> {id}
+            </h2>
+
+            <p>
+              {address}({branch})
+              <a href="#">
+                {iconState ? (
+                  <HeartOutlined
+                    onClick={() => seticonState(false)}
+                    style={{ color: "#00b992" }}
+                  />
+                ) : (
+                    <HeartFilled
+                      onClick={() => seticonState(true)}
+                      style={{ color: "#00b992" }}
+                    />
+                  )}
+              </a>
+
+              <a href="#">
+                <PlusCircleOutlined />
+              </a>
+            </p>
+
+            <p className="infos">지역: {area}</p>
+            <p className="infos">번호: {tel}</p>
+            <p className="infos">위도: {latitude}</p>
+            <p className="infos">경도: {longitude}</p>
           </figcaption>
         </figure>
       </div>
@@ -112,34 +107,88 @@ const MenuItem = ({ category, text, description, url }) => {
   );
 };
 
+export const Loc = (list) =>
+  list.map((el) => {
+    const { id, location_name, address_see, address_gu, address_dong, tel, latitude, longitude, description } = el;
+
+    return (
+      <LocItem
+        id={id}
+        location_name={location_name}
+        address_see={address_see}
+        address_gu={address_gu}
+        address_dong={address_dong}
+        tel={tel}
+        latitude={latitude}
+        longitude={longitude}
+        description={description}
+        url="https://img.hankyung.com/photo/201709/01.14677326.1.jpg"
+        key={location_name}
+      />
+    );
+  });
+
 // All items component
 // Important! add unique key
 export const Menu = (list) =>
   list.map((el) => {
-    const { category, name, description, url } = el;
+    const { id, store_name, branch, area, tel, address, latitude, longitude, category_list } = el;
 
     return (
       <MenuItem
-        category={category}
-        text={name}
-        description={description}
-        url={url}
-        key={name}
+        id={id}
+        store_name={store_name}
+        branch={branch}
+        area={area}
+        tel={tel}
+        address={address}
+        latitude={latitude}
+        longitude={longitude}
+        category_list={category_list}
+        url="https://bit.ly/2V93eDV"
+        key={store_name}
       />
     );
   });
+
+
 
 const selected = "item1";
 
 class ScrollCard extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      storeList: [],
+      locList: []
+    }
+
     // call it again if items count changes
-    this.menuItems = Menu(list, selected);
+  }
+
+  async componentDidMount() {
+    await axios.get('http://13.125.113.171:8000/dining/stores/')
+      .then(res => {
+        this.menuItems = Menu(res.data.results, selected);
+
+        this.setState({
+          storeList: res.data.results
+        });
+      });
+
+    await axios.get('http://13.125.113.171:8000/places/location/')
+      .then(res => {
+        this.locItems = Loc(res.data.results, selected);
+
+        this.setState({
+          locList: res.data.results
+        })
+      })
   }
 
   state = {
-    selected,
+    selected
   };
 
   onSelect = (key) => {
@@ -150,10 +199,12 @@ class ScrollCard extends Component {
     const { selected } = this.state;
     // Create menu from items
     const menu = this.menuItems;
+    const loc = this.locItems;
 
     return (
       <div className="App">
         <ScrollMenu data={menu} selected={selected} onSelect={this.onSelect} />
+        <ScrollMenu data={loc} selected={selected} onSelect={this.onSelect} />
       </div>
     );
   }
