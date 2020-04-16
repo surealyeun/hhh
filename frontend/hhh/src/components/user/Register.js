@@ -270,7 +270,7 @@ const Register = () => {
                 rules={[
                   {
                     required: true,
-                    message: "Please input the captcha you got!",
+                    message: "Please input the captcha you got",
                   },
                 ]}
               >
