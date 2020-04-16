@@ -26,3 +26,11 @@ class DiningReview(models.Model):
 
     class Meta:
         unique_together = (('store', 'review_id'),)
+
+class Location(models.Model):
+    location_name = models.IntegerField(null=True)
+    address_see = models.CharField(max_length=20, null=True)
+    dining_user = models.IntegerField(null=True)
+    score = models.IntegerField(null=True)
+    content = models.TextField(null=True)
+    reg_time = models.DateTimeField(null=True)

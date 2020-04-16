@@ -5,136 +5,101 @@ import shutil
 import datetime
 
 DATA_DIR = "./data/"
-DATA_FILE = os.path.join(DATA_DIR, "dining.json")
-DUMP_FILE = os.path.join(DATA_DIR, "dining.pkl")
+DUMP_FILE = os.path.join(DATA_DIR, "location.pkl")
 
-store_columns = (
+location_columns = (
     "id",  # 음식점 고유번호
-    "store_name",  # 음식점 이름
-    "branch",  # 음식점 지점 여부
-    "area",  # 음식점 위치
-    "tel",  # 음식점 번호
-    "address",  # 음식점 주소
-    "latitude",  # 음식점 위도
-    "longitude",  # 음식점 경도
-    "category",  # 음식점 카테고리
+    "location_name",  # 장소 이름
+    "address_see",  # 장소 시
+    "address_gu",  # 장소 구
+    "address_dong",  # 장소 동
+    "tel",  # 전화 번호
+    "latitude",  # 장소 위도
+    "longitude",  # 장소 경도
+    "description",  # 장소 정보
 )
 
-review_columns = (
-    "id",  # 리뷰 고유번호
-    "store",  # 음식점 고유번호
-    "user",  # 유저 고유번호
-    "score",  # 평점
-    "content",  # 리뷰 내용
-    "reg_time",  # 리뷰 등록 시간
-)
+def import_data():
 
-user_columns = (
-    "user",     # 유저 아이디
-    "user_gen", # 유저 성별 
-    "user_age"  # 유저 나이
-)
+    """ 서울시 문화공간 """    
+    file_dir = os.path.join(DATA_DIR, "CulturalSpaceInformation_Seoul.csv")
+    location_frame_cultural = pd.read_csv(file_dir)
+    
+    location_frame_cultural.rename(columns={'문화시설명':'location_name', 
+    '전화번호':'tel', 'X좌표':'latitude', 'Y좌표':'longitude', '주제분류':'description'}, inplace=True)
 
-bhour_columns = (
-    "store", # 음식점 고유번호
-    "type",  # 영업시간 종류  / 1-영업시간, 2-쉬는시간, 3-휴무일
-    "week_type",  # 주단위 종류 / 1-매주, 2-첫째 주, 3-둘째 주 , 4-셋째 주, 5-넷째 주, 6-공휴일
-    "mon",  #  월요일 포함 유무  / 1-포함, 0-미포함
-    "tue",  #  화요일 포함 유무  / 1-포함, 0-미포함
-    "wed",  #  수요일 포함 유무  / 1-포함, 0-미포함
-    "thu",  #  목요일 포함 유무  / 1-포함, 0-미포함
-    "fri",  #  금요일 포함 유무  / 1-포함, 0-미포함
-    "sat",  #  토요일 포함 유무  / 1-포함, 0-미포함
-    "sun",  #  일요일 포함 유무  / 1-포함, 0-미포함
-    "start_time", # 시작 시간
-    "end_time", # 종료 시간
-    "etc", # 기타
-)
+    address_split = location_frame_cultural["주소"].str.split(n=2, expand=True)
+    location_frame_cultural["address_see"] = address_split[0]
+    location_frame_cultural["address_gu"] = address_split[1]
+    location_frame_cultural["address_dong"] = address_split[2]
 
-menu_columns = (
-    "menu_id",  # 메뉴 아이디
-    "store",    # 가게 이름
-    "menu_name",# 메뉴 이름
-    "price"     # 메뉴 가격
-)
-
-def import_data(data_path=DATA_FILE):
-    """
-    Req. 1-1-1 음식점 데이터 파일을 읽어서 Pandas DataFrame 형태로 저장합니다
-    """
-
-    try:
-        with open(data_path, encoding="utf-8") as f:
-            data = json.loads(f.read())
-    except FileNotFoundError as e:
-        print(f"`{data_path}` 가 존재하지 않습니다.")
-        exit(1)
-
-    stores = []  # 음식점 테이블
-    reviews = []  # 리뷰 테이블
-    users = [] # 유저 테이블
-    bhours = [] # 운영시간 테이블
-    menus = [] # 음식 테이블
-
-    year = datetime.datetime.today().year
-    user_set = set()
-    menu_id = 1
-    for d in data:
-        if d["address"] is None: continue
-        if "서울특별시" in d["address"] :
-            categories = [c["category"] for c in d["category_list"]]
-            stores.append(
-                [
-                    d["id"],
-                    d["name"],
-                    d["branch"],
-                    d["area"],
-                    d["tel"],
-                    d["address"],
-                    d["latitude"],
-                    d["longitude"],
-                    "|".join(categories)
-                ]
-            )
-
-            for review in d["review_list"]:
-                r = review["review_info"]
-                u = review["writer_info"]
-                age = (year-int(u["born_year"]))+1 if int(u["born_year"]) > 0  else 0
-
-                reviews.append(
-                    [r["id"], d["id"], u["id"], r["score"], r["content"], r["reg_time"]]
-                )
-                
-                if u["id"] not in user_set:
-                    users.append([u["id"], u["gender"], age])
-                    user_set.add(u["id"])
-
-            for bhour in d["bhour_list"]:
-                b = bhour
-
-                bhours.append(
-                    [d["id"], b["type"], b["week_type"], b["mon"], b["tue"], b["wed"],
-                    b["thu"], b["fri"], b["sat"], b["sun"], b["start_time"], b["end_time"], b["etc"]]
-                )
-
-            for menu in d["menu_list"]:
-                m = menu
-
-                menus.append(
-                    [menu_id, d["id"], m["menu"], m["price"]]
-                )
-                menu_id += 1
+    location_frame_cultural.drop(['번호', 'BLUE', 'RED', 'GREEN', 'YELLOW', '주소',
+     '대표이미지', '기타사항', '시설소개', '무료구분', '지하철', '팩스번호',
+      '홈페이지', '관람시간', '관람료', '휴관일', '개관일자', '객석수', 
+      '공항버스', '버스정거장'], axis='columns', inplace=True)
+    
+    location_frame_cultural = location_frame_cultural[['location_name', 'address_see',
+    'address_gu', 'address_dong', 'tel', 'latitude', 'longitude', 'description']]
+    
+    
+    """ 서울시 유적지 """    
+    file_dir = os.path.join(DATA_DIR, "HistoricSiteInformation_Seoul.csv")
+    location_frame_historic = pd.read_csv(file_dir)
 
 
-    store_frame = pd.DataFrame(data=stores, columns=store_columns)
-    review_frame = pd.DataFrame(data=reviews, columns=review_columns)
-    user_frame = pd.DataFrame(data=users, columns=user_columns)
-    bhour_frame = pd.DataFrame(data=bhours, columns=bhour_columns)
-    menu_frame = pd.DataFrame(data=menus, columns=menu_columns)
+    location_frame_historic.rename(columns={'분류3':'description', '명칭':'location_name', 
+    '행정 시':'address_see', '행정 구':'address_gu', '행정 동':'address_dong'}, inplace=True)
+    location_frame_historic.drop(['키', '분류1', '분류2', '도로명주소', '주소'], axis='columns', inplace=True)
+    location_frame_historic['latitude'] = ''
+    location_frame_historic['longitude'] = ''
+    location_frame_historic['tel'] = ''
+    
+    
+    location_frame_historic = location_frame_historic[['location_name', 'address_see',
+    'address_gu', 'address_dong', 'tel', 'latitude', 'longitude', 'description']]
 
-    return {"stores": store_frame, "reviews": review_frame, 
-        "bhours": bhour_frame, "users": user_frame, "menus": menu_frame}
+
+    """ 서울시 공원 """    
+    file_dir = os.path.join(DATA_DIR, "PublicParkInformation_Seoul.csv")
+    location_frame_park = pd.read_csv(file_dir)
+
+    location_frame_park.rename(columns={'공원명' :'location_name', '공원개요': 'description',
+    '전화번호':'tel', 'X좌표(WGS84)' : 'longitude', 'Y좌표(WGS84)' : 'latitude'}, inplace=True)
+
+    location_frame_park.drop(['공원번호', '면적', '개원일', '주요시설', '주요식물',
+    '안내도', '이용시참고사항', '오시는길', '이미지', '지역', '관리부서', 'X좌표(GRS80TM)',
+    'Y좌표(GRS80TM)', '바로가기'], axis='columns', inplace=True)
+
+    address_split = location_frame_park["공원주소"].str.split(n=2, expand=True)
+    location_frame_park["address_see"] = address_split[0]
+    location_frame_park["address_gu"] = address_split[1]
+    location_frame_park["address_dong"] = address_split[2]
+    
+    location_frame_park = location_frame_park[['location_name', 'address_see',
+    'address_gu', 'address_dong', 'tel', 'latitude', 'longitude', 'description']]
+    
+
+    """ 서울시 골목 데이터 """    
+    file_dir = os.path.join(DATA_DIR, "TouristStreetInformation_Seoul.csv")
+    location_frame_street = pd.read_csv(file_dir)
+
+    location_frame_street.rename(columns={'alias' :'location_name', '검색 키워드':'description',
+    '행정 시': 'address_see', '행정 구': 'address_gu', '행정 동' : 'address_dong',
+    '중심 좌표 X':'longitude', '중심 좌표 Y':'latitude'}, inplace=True)
+
+    location_frame_street.drop(['키', '최종 표기명', '법정 시', '법정 구', '법정 동', '지번 주소'], axis='columns', inplace=True)
+    location_frame_street['tel'] = ""
+    
+
+    location_frame_street = location_frame_street[['location_name', 'address_see',
+    'address_gu', 'address_dong', 'tel', 'latitude', 'longitude', 'description']]
+    
+    """ dataframes 이어붙이기 """
+    location_frame =pd.concat([location_frame_cultural, location_frame_historic,
+     location_frame_park, location_frame_street])
+    print(location_frame)
+
+    return {"location": location_frame}
 
 
 def dump_dataframes(dataframes):
@@ -160,31 +125,10 @@ def main():
     term_w = shutil.get_terminal_size()[0] - 1
     separater = "-" * term_w
 
-    print("[음식점]")
+    print("[장소 정보]")
     print(f"{separater}\n")
-    print(data["stores"].head())
+    print(data["location"])
     print(f"\n{separater}\n\n")
-
-    print("[리뷰]")
-    print(f"{separater}\n")
-    print(data["reviews"].head())
-    print(f"\n{separater}\n\n")
-
-    print("[유저 정보]")
-    print(f"{separater}\n")
-    print(data["users"].head())
-    print(f"\n{separater}\n\n")
-
-    print("[영업 시간]")
-    print(f"{separater}\n")
-    print(data["bhours"].head())
-    print(f"\n{separater}\n\n")
-
-    print("[메뉴 정보]")
-    print(f"{separater}\n")
-    print(data["menus"].head())
-    print(f"\n{separater}\n\n")
-
 
 if __name__ == "__main__":
     main()

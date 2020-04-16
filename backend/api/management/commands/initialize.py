@@ -61,5 +61,8 @@ class Command(BaseCommand):
         models.DiningReview.objects.bulk_create(reviews_bulk)
         print("[+] Done")
 
+        print("[*] Initializing locations...")
+
+
     def handle(self, *args, **kwargs):
         self._initialize()
