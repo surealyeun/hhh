@@ -1,5 +1,5 @@
 from django.http import Http404
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -32,3 +32,8 @@ def user_update_and_delete(request, username):
         user.delete()
         return Response({'message':'User has been deleted!'})
      
+@api_view(['GET'])
+def login(request, username, password):
+    if username=='Eum_mericano' and password == '1234':
+        return Response({'message':'인증되었습니다'}, status=status.HTTP_200_OK)
+    return Response({'message':'아이디와 비밀번호를 다시 확인해주세요'}, status=status.HTTP_404_NOT_FOUND)
