@@ -15,11 +15,14 @@ class Main extends React.Component {
                         <Link to="/userInfo">
                             2. 회원 정보 수정 페이지
                         </Link><br/>
-                        <Link to="/spotlist">
+                        <Link to="/spotList">
                             3. 장소 리스트 페이지
                         </Link><br/>
                         <Link to="/place">
                             4. 장소 상세 페이지
+                        </Link><br/>
+                        <Link to="/feedList">
+                            5. SNS 피드 페이지
                         </Link>
                 </div>
                 <div className="grid">
