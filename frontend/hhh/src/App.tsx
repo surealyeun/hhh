@@ -4,7 +4,7 @@ import { BrowserRouter, Switch, Redirect, Route } from 'react-router-dom';
 import Main from './components/main/Main';
 import ScrollCard from "./components/hotPlace/ScrollCard";
 import FeedList from './components/feedList/FeedList';
-import userInfo from "./components/userInfo/userInfoCopy";
+import userInfo from "./components/userInfo/userInfo";
 
 function App() {
   return (
