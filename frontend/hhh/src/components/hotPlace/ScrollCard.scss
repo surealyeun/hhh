@@ -97,7 +97,7 @@
   }
 
   figure.effect-kira p {
-    padding: 2.25em 0.5em;
+    padding: 0.5em 0.5em;
     font-weight: 600;
     font-size: 100%;
     line-height: 1.5;
@@ -110,7 +110,7 @@
 
   figure.effect-kira p {
     margin: 0 0.5em;
-    color: #101010;
+    color: #cccccc;
   }
 
   figure.effect-kira p a {
@@ -130,7 +130,7 @@
     left: 2em;
     z-index: -1;
     height: 3.5em;
-    background: #fff;
+    background: rgb(0, 0, 0);
     content: "";
     -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
     transition: opacity 0.35s, transform 0.35s;
@@ -154,5 +154,9 @@
     opacity: 0.7;
     -webkit-transform: translate3d(0, 5em, 0) scale3d(1, 1, 1);
     transform: translate3d(0, 5em, 0) scale3d(1, 1, 1);
+  }
+
+  .inner-span {
+    padding: 0 20px;
   }
 }
