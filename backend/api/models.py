@@ -27,10 +27,19 @@ class DiningReview(models.Model):
     class Meta:
         unique_together = (('store', 'review_id'),)
 
+    def __str__(self):
+        return self.review_id
+
+
 class Location(models.Model):
-    location_name = models.IntegerField(null=True)
+    location_name = models.CharField(max_length=40)
     address_see = models.CharField(max_length=20, null=True)
-    dining_user = models.IntegerField(null=True)
-    score = models.IntegerField(null=True)
-    content = models.TextField(null=True)
-    reg_time = models.DateTimeField(null=True)
+    address_gu = models.CharField(max_length=20, null=True)
+    address_dong = models.CharField(max_length=60, null=True)
+    tel = models.TextField(null=True)
+    latitude = models.CharField(max_length=20, null=True)
+    longitude = models.CharField(max_length=20, null=True)
+    description = models.TextField(null=True)
+
+    def __str__(self):
+        return self.location_name

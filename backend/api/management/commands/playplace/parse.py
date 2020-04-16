@@ -93,12 +93,13 @@ def import_data():
 
     location_frame_street = location_frame_street[['location_name', 'address_see',
     'address_gu', 'address_dong', 'tel', 'latitude', 'longitude', 'description']]
-    
+
     """ dataframes 이어붙이기 """
     location_frame =pd.concat([location_frame_cultural, location_frame_historic,
-     location_frame_park, location_frame_street])
-    print(location_frame)
+        location_frame_park, location_frame_street])
 
+    location_frame["longitude"] = location_frame["longitude"].str.replace(' ','') 
+    location_frame["latitude"] = location_frame["latitude"].str.replace(' ','') 
     return {"location": location_frame}
 
 
