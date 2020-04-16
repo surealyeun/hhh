@@ -46,6 +46,7 @@ const Login = () => {
 
   return (
     <div className="loginContainer">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ7ly6Nep4C_fGpdCTAxzjDeyNhLUsRWrdqdg_tbvey6WxsYgzs&usqp=CAU" />
       <Form
         {...layout}
         name="basic"
