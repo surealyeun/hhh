@@ -79,7 +79,7 @@ const MenuItem = ({ category, text, description, url }) => {
     <div className="container">
       <div className="grid">
         <figure className="effect-kira">
-          <img src={url} width="630px" height="400px"/>
+          <img src={url} width="630px" height="400px" />
           <figcaption>
             <h2>
               {category} <span>{text}</span>
@@ -94,11 +94,11 @@ const MenuItem = ({ category, text, description, url }) => {
                     style={{ color: "#00b992" }}
                   />
                 ) : (
-                  <HeartFilled
-                    onClick={() => seticonState(true)}
-                    style={{ color: "#00b992" }}
-                  />
-                )}
+                    <HeartFilled
+                      onClick={() => seticonState(true)}
+                      style={{ color: "#00b992" }}
+                    />
+                  )}
               </a>
 
               <a href="#">
@@ -153,6 +153,8 @@ class ScrollCard extends Component {
 
     return (
       <div className="App">
+        <ScrollMenu data={menu} selected={selected} onSelect={this.onSelect} />
+        <ScrollMenu data={menu} selected={selected} onSelect={this.onSelect} />
         <ScrollMenu data={menu} selected={selected} onSelect={this.onSelect} />
       </div>
     );
