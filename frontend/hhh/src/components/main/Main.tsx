@@ -2,27 +2,29 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Main.scss";
 
+const username:string | null = sessionStorage.getItem("username");
+
 class Main extends React.Component {
     render() {
         return (
             <div className="main">
                 <div className="test">
                     <h1>TEST</h1>
-                        <h4>클릭하면 해당 페이지로 넘어갑니다.</h4>
+                        <h4>클릭하면 해당 페이지로 넘어갑니다.</h4><br/>
                         <Link to="/login">
-                            1. 유저 로그인 페이지
+                        😃 유저 로그인 페이지
                         </Link><br/>
                         <Link to="/userInfo">
-                            2. 회원 정보 수정 페이지
+                        { username ? '🤟 회원 정보 페이지' : ''}
                         </Link><br/>
                         <Link to="/spotList">
-                            3. 장소 리스트 페이지
+                        🏛 장소 리스트 페이지
                         </Link><br/>
                         <Link to="/place">
-                            4. 장소 상세 페이지
+                        🔎 장소 상세 페이지
                         </Link><br/>
                         <Link to="/feedList">
-                            5. SNS 피드 페이지
+                        🙌 SNS 피드 페이지
                         </Link>
                 </div>
                 <div className="grid">
