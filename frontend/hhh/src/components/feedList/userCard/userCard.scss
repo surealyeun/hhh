@@ -19,6 +19,14 @@
         transform: translateY(-50%);
 
         margin-left: 100px;
+        
+        overflow: hidden;
+
+        img {
+            position: relative;
+            height: 100%;
+            right: 40%;
+        }
     }
 
     #user-info {

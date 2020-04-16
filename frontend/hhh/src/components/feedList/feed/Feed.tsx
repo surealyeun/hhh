@@ -1,8 +1,8 @@
 import React from 'react';
 import './Feed.scss';
 
-class Feed extends React.Component<{}, { flipped: boolean }> {
-    constructor(props: {}) {
+class Feed extends React.Component<{ url: string }, { flipped: boolean }> {
+    constructor(props: { url: string }) {
         super(props);
         this.state = {
             flipped: false
@@ -20,7 +20,7 @@ class Feed extends React.Component<{}, { flipped: boolean }> {
     render() {
         return (
             <div className="feed" onMouseOut={() => this.mouseOut()} onMouseOver={() => this.mouseOver()}>
-                {this.state.flipped}
+                <img src={this.props.url} alt="" />
             </div>
         );
     }
