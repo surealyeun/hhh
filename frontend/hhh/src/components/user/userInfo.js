@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Form, Input, Button, Row, Col, Select, Upload, Avatar } from "antd";
-import { UploadOutlined, UserOutlined } from "@ant-design/icons";
+import { Form, Input, Button } from "antd";
 
 import "antd/dist/antd.css";
 import "./userInfo.scss";
