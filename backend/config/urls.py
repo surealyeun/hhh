@@ -31,6 +31,11 @@ from places.views import (
     CategoryViewSet,
     ReviewViewSet,
 )
+from api.views import (
+    DiningStoreViewSet,
+    DiningReviewViewSet,
+    LocationViewSet
+)
 
 router = DefaultRouter()
 router.register("users", UserViewSet)
@@ -39,6 +44,9 @@ router.register("follows", FollowViewSet)
 router.register("comments", CommentViewSet)
 router.register("keywords", TagViewSet)
 router.register("wishlist", WishListViewSet)
+router.register("dining/stores", DiningStoreViewSet)
+router.register("dining/reviews", DiningReviewViewSet)
+router.register("locations", LocationViewSet)
 router.register("places/store", StoreViewSet)
 router.register("places/location", LocationViewSet)
 router.register("places/category", CategoryViewSet)

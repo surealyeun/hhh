@@ -6,23 +6,14 @@ from api import models
 
 class Command(BaseCommand):
     help = "initialize database"
-    DATA_DIR = Path(settings.BASE_DIR).parent / "data"
-    DATA_FILE = str(DATA_DIR / "dining.pkl")
-
-    def _load_dataframes(self):
-        try:
-            data = pd.read_pickle(Command.DATA_FILE)
-        except:
-            print(f"[-] Reading {Command.DATA_FILE} failed")
-            exit(1)
-        return data
 
     def _initialize(self):
         """
         Sub PJT 1에서 만든 Dataframe을 이용하여 DB를 초기화합니다.
         """
         print("[*] Loading data...")
-        dataframes = self._load_dataframes()
+        DATA_DIR = Path(settings.BASE_DIR).parent / "data"
+        dataframes = pd.read_pickle(str(DATA_DIR / "dining.pkl"))
 
         print("[*] Initializing stores...")
         models.DiningStore.objects.all().delete()
@@ -59,6 +50,30 @@ class Command(BaseCommand):
             for review in reviews.itertuples()
         ]
         models.DiningReview.objects.bulk_create(reviews_bulk)
+
+
+        print("[*] Loading data...")
+        dataframes = pd.read_pickle(str(DATA_DIR / "location.pkl"))
+        
+        print("[*] Initializing locations...")
+        models.Location.objects.all().delete()
+        locations = dataframes["location"]
+        locations_bulk = [
+            models.Location(
+                location_name=location.location_name,
+                address_see = location.address_see,
+                address_gu = location.address_gu,
+                address_dong = location.address_dong,
+                tel = location.tel,
+                latitude = location.latitude,
+                longitude = location.longitude,
+                description = location.description
+                
+            )
+            for location in locations.itertuples()
+        ]
+        models.Location.objects.bulk_create(locations_bulk)
+
         print("[+] Done")
 
     def handle(self, *args, **kwargs):

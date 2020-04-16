@@ -10,12 +10,16 @@ class SmallPagination(PageNumberPagination):
 
 
 class DiningStoreViewSet(viewsets.ModelViewSet):
+    queryset = models.DiningStore.objects.all()
     serializer_class = serializers.DiningStoreSerializer
     pagination_class = SmallPagination
 
-    def get_queryset(self):
-        name = self.request.query_params.get("name", "")
-        queryset = (
-            models.DiningStore.objects.all().filter(store_name__contains=name).order_by("id")
-        )
-        return queryset
+class DiningReviewViewSet(viewsets.ModelViewSet):
+    queryset = models.DiningReview.objects.all()
+    serializer_class = serializers.DiningReviewSerializer
+    pagination_class = SmallPagination
+
+class LocationViewSet(viewsets.ModelViewSet):
+    queryset = models.Location.objects.all()
+    serializer_class = serializers.LocationSerializer
+    pagination_class = SmallPagination
