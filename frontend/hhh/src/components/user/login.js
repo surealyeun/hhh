@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { Form, Input, Button, Checkbox } from "antd";
-import "./login.scss";
+import "./Login.scss";
+import axios from "axios";
+
+const loginURL = `http://13.125.113.171:8000/login/`;
 
 const layout = {
   labelCol: {
@@ -12,14 +16,28 @@ const layout = {
 };
 const tailLayout = {
   wrapperCol: {
-    offset: 8,
+    offset: 14,
     span: 16,
   },
 };
 
-const login = () => {
-  const onFinish = (values) => {
+const Login = () => {
+  let history = useHistory();
+
+  const onFinish = async (values) => {
     console.log("Success:", values);
+    const resultURL = loginURL + `${values.username}/${values.password}`;
+    await axios
+      .get(resultURL, {
+        username: values.username,
+        password: values.password,
+      })
+      .then((resp) => {
+        if (resp.status === 200) {
+          sessionStorage.setItem("username", values.username);
+          history.push("/");
+        }
+      });
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -64,12 +82,12 @@ const login = () => {
         </Form.Item>
 
         <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-          <Checkbox>Remember me</Checkbox>
+          <Checkbox>로그인 유지하기</Checkbox>
         </Form.Item>
 
         <Form.Item {...tailLayout}>
           <Button type="primary" htmlType="submit">
-            Submit
+            로그인
           </Button>
         </Form.Item>
       </Form>
@@ -77,4 +95,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default Login;

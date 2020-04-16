@@ -6,7 +6,7 @@ import { UploadOutlined, UserOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
 import "./userInfo.scss";
 
-const userID = "Eum_mericano";
+const userID = sessionStorage.getItem("username");
 const userUrl = `http://13.125.113.171:8000/users/detail/${userID}`;
 const updateUrl = `http://13.125.113.171:8000/users/update/delete/${userID}`; // username, password 필수로 입력해줘야 함
 
@@ -118,6 +118,7 @@ class userInfo extends Component {
               value={this.state.password}
               placeholder="*********"
               onChange={this.handleChange}
+              disabled
             />
           </Form.Item>
           <Form.Item label="Email" name="email">
