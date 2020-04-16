@@ -1,7 +1,7 @@
 import React, { Component, useState } from "react";
 import axios from 'axios';
 import ScrollMenu from "react-horizontal-scrolling-menu";
-import "./Kira.scss";
+import "./ScrollCard.scss";
 import {
   HeartOutlined,
   PlusCircleOutlined,
