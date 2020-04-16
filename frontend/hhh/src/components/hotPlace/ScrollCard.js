@@ -1,11 +1,14 @@
 import React, { Component, useState } from "react";
+import axios from 'axios';
 import ScrollMenu from "react-horizontal-scrolling-menu";
-import "./Kira.scss";
+import "./ScrollCard.scss";
 import {
   HeartOutlined,
   PlusCircleOutlined,
   HeartFilled,
 } from "@ant-design/icons";
+
+let list2 = [];
 
 // list of items
 const list = [
@@ -79,9 +82,9 @@ const MenuItem = ({ category, text, description, url }) => {
     <div className="container">
       <div className="grid">
         <figure className="effect-kira">
-          <img src={url} width="630px" height="400px"/>
+          <img src={url} width="630px" height="400px" />
           <figcaption>
-            <h2>
+            <h2 style={{ color: "#fff" }}>
               {category} <span>{text}</span>
             </h2>
 
@@ -94,11 +97,11 @@ const MenuItem = ({ category, text, description, url }) => {
                     style={{ color: "#00b992" }}
                   />
                 ) : (
-                  <HeartFilled
-                    onClick={() => seticonState(true)}
-                    style={{ color: "#00b992" }}
-                  />
-                )}
+                    <HeartFilled
+                      onClick={() => seticonState(true)}
+                      style={{ color: "#00b992" }}
+                    />
+                  )}
               </a>
 
               <a href="#">
@@ -114,17 +117,17 @@ const MenuItem = ({ category, text, description, url }) => {
 
 // All items component
 // Important! add unique key
-export const Menu = (list) =>
-  list.map((el) => {
-    const { category, name, description, url } = el;
+export const Menu = (list2) =>
+  list2.map((el) => {
+    const { category_list, store_name, area } = el;
 
     return (
       <MenuItem
-        category={category}
-        text={name}
-        description={description}
-        url={url}
-        key={name}
+        category={category_list}
+        text={store_name}
+        description={area}
+        url="https://img.hyundaicard.com/cms_content/cp_culture/image/145052_BIG.png"
+        key={store_name}
       />
     );
   });
@@ -135,7 +138,16 @@ class ScrollCard extends Component {
   constructor(props) {
     super(props);
     // call it again if items count changes
-    this.menuItems = Menu(list, selected);
+  }
+
+  async componentDidMount() {
+    await axios.get('http://13.125.113.171:8000/dining/stores/')
+      .then(res => {
+        list2 = res.data.results;
+        console.log(list2);
+        this.menuItems = Menu(list2, selected);
+      });
+
   }
 
   state = {
@@ -146,6 +158,8 @@ class ScrollCard extends Component {
     this.setState({ selected: key });
   };
 
+
+
   render() {
     const { selected } = this.state;
     // Create menu from items
@@ -153,6 +167,8 @@ class ScrollCard extends Component {
 
     return (
       <div className="App">
+        <ScrollMenu data={menu} selected={selected} onSelect={this.onSelect} />
+        <ScrollMenu data={menu} selected={selected} onSelect={this.onSelect} />
         <ScrollMenu data={menu} selected={selected} onSelect={this.onSelect} />
       </div>
     );

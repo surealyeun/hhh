@@ -1,0 +1,17 @@
+.userInfoContainer {
+  margin-top: 100px;
+
+  .submitButton {
+    margin-left: 40%;
+  }
+
+  Input::placeholder {
+    color: black !important;
+  }
+
+  img {
+      width:70px;
+      margin-left:22%;
+      margin-bottom: 20px;
+  }
+}

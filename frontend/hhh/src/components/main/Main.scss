@@ -25,32 +25,24 @@ body {
 
     // 넓은 화면
     @media screen and (min-width: 768px) {
-        .circle1,
-        .circle2,
-        .circle3 {
-            background: linear-gradient(to right, #00ffaae7, #00ffaa65, rgb(0, 0, 0));
-            width: 500px;
-            height: 500px;
-            border-radius: 250px;
+        .test{
             position: absolute;
-            top: 50%;
-            left: 50%;
-            z-index: -1;
+            top:10%;
+            left: 40%;
+            z-index: 10;
+            width: 500px;
+            height: 300px;
+            background-color: rgba(0, 0, 0, 0.692);
+            text-align: center;
+            h1, h4{
+                color:white;
+                font-weight: lighter;
+            }
+            a{
+                color:white;
+                text-decoration: none;
+            }
         }
-
-        .circle1 {
-            margin-top: -250px;
-            margin-left: -500px;
-        }
-        .circle2 {
-            margin-top: -250px;
-            margin-left: -250px;
-        }
-        .circle3 {
-            margin-top: -250px;
-            margin-left: 0px;
-        }
-
         .grid {
             display: grid;
             grid-template-columns: [title] 30% [mapFrame] 70%;

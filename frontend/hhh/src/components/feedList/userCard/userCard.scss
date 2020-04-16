@@ -3,6 +3,7 @@
     width: 960px;
     height: 250px;
     display: flex;
+    background-color: rgb(245, 245, 245);
 
     #avatar {
         display: inline-block;
@@ -18,19 +19,60 @@
         transform: translateY(-50%);
 
         margin-left: 100px;
+        
+        overflow: hidden;
+
+        img {
+            position: relative;
+            height: 100%;
+            right: 40%;
+        }
     }
 
     #user-info {
         display: inline-block;
         position: relative;
 
-        width: 400px;
+        width: 580px;
         height: 180px;
-        border: 1px solid black;
         top: 50%;
         transform: translateY(-50%);
 
         margin-left: 100px;
+        padding: 10px 20px;
+
+        #user-id {
+            font-size: 26px;
+        }
+    
+        #user-follow {
+            margin-top: 20px;
+            ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+
+                li {
+                    float: left;
+                    margin-right: 50px;
+
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    
+        #user-desc {
+            margin-top: 20px;
+            
+            b{
+                display: block;
+                margin-bottom: 5px;
+            }
+        }
     }
+
 
 }
