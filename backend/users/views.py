@@ -19,7 +19,6 @@ def user_search(request, username):
     serializer = UserSerializer(user)
     return Response(serializer.data)
 
-
 @api_view(['PUT','DELETE'])
 def user_update_and_delete(request, username):
     user = get_object_or_404(User, username=username)
