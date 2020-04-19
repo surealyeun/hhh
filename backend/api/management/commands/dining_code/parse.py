@@ -133,6 +133,12 @@ def import_data(data_path=DATA_FILE):
     bhour_frame = pd.DataFrame(data=bhours, columns=bhour_columns)
     menu_frame = pd.DataFrame(data=menus, columns=menu_columns)
 
+    address_split = store_frame["address"].str.split(n=2, expand=True)
+    store_frame["address_see"] = address_split[0]
+    store_frame["address_gu"] = address_split[1]
+    store_frame["address_dong"] = address_split[2]    
+    store_frame.drop('address', axis='columns', inplace=True)
+
     return {"stores": store_frame, "reviews": review_frame, 
         "bhours": bhour_frame, "users": user_frame, "menus": menu_frame}
 
