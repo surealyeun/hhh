@@ -1,5 +1,5 @@
 .place-detail{
-    width: 80%;
+    width: 90%;
     margin: 0 auto;
     font-family: 'GmarketSansLight';
     font-weight: bolder;
@@ -33,5 +33,17 @@
     // 좁은 화면
     @media screen and (max-width: 767px){
 
+    }
+
+    .gutter-row img{
+       width:200px;
+    }
+
+    .empty {
+        height: 50px;
+    }
+
+    .empty2 {
+        height: 15px;
     }
 }
