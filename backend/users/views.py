@@ -16,8 +16,8 @@ class UserViewSet(viewsets.ModelViewSet):
 @api_view(['GET'])
 def user_search(request, username):
     user = get_object_or_404(User, username=username)
-    serializer = UserSerializer(user)
-    return Response(serializer.data)
+    user_serializer = UserSerializer(user)
+    return Response(user_serializer.data)
 
 @api_view(['PUT','DELETE'])
 def user_update_and_delete(request, username):

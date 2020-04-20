@@ -19,6 +19,7 @@ class DiningStore(models.Model):
         return self.category.split("|") if self.category else []
 
 class DiningReview(models.Model):
+    id = models.AutoField(primary_key=True)
     review_id = models.IntegerField(null=True)
     store = models.ForeignKey("DiningStore", on_delete=models.CASCADE, null=True)
     dining_user = models.IntegerField(null=True)
@@ -26,11 +27,8 @@ class DiningReview(models.Model):
     content = models.TextField(null=True)
     reg_time = models.DateTimeField(null=True)
 
-    class Meta:
-        unique_together = (('store', 'review_id'),)
-
     def __str__(self):
-        return self.review_id
+        return str(self.review_id)
 
 
 class Location(models.Model):
