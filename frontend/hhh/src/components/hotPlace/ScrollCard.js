@@ -1,5 +1,6 @@
 import React, { Component, useState } from "react";
-import axios from 'axios';
+import { Link } from "react-router-dom";
+import axios from "axios";
 import ScrollMenu from "react-horizontal-scrolling-menu";
 import "./ScrollCard.scss";
 import {
@@ -8,100 +9,148 @@ import {
   HeartFilled,
 } from "@ant-design/icons";
 
-const LocItem = ({ id, location_name, address_see, address_gu, address_dong, tel, latitude, longitude, description, url }) => {
+const LocItem = ({
+  id,
+  location_name,
+  address_see,
+  address_gu,
+  address_dong,
+  tel,
+  latitude,
+  longitude,
+  description,
+  url,
+}) => {
   const [iconState, seticonState] = useState(true);
 
   return (
     <div className="container">
       <div className="grid">
-        <figure className="effect-kira">
-          <img src={url} width="630px" height="400px" />
-          <figcaption>
-            <h2 style={{ color: "#fff" }}>
-              <span className="inner-span">{location_name}</span> {id}
-            </h2>
+        <Link
+          to={{
+            pathname: `/place/${id}`,
+            state: {
+              pName: { location_name },
+              desc: { description },
+              addr_see: { address_see },
+              addr_gu: { address_gu },
+              addr_dong: { address_dong },
+              lat: { latitude },
+              lon: { longitude },
+            },
+          }}
+        >
+          <figure className="effect-kira">
+            <img src={url} width="630px" height="400px" />
+            <figcaption>
+              <h2 style={{ color: "#fff" }}>
+                <span className="inner-span">{location_name}</span> {id}
+              </h2>
 
-            <p>
-              {description}
-              <a href="#">
-                {iconState ? (
-                  <HeartOutlined
-                    onClick={() => seticonState(false)}
-                    style={{ color: "#00b992" }}
-                  />
-                ) : (
+              <p>
+                {description}
+                <a href="#">
+                  {iconState ? (
+                    <HeartOutlined
+                      onClick={() => seticonState(false)}
+                      style={{ color: "#00b992" }}
+                    />
+                  ) : (
                     <HeartFilled
                       onClick={() => seticonState(true)}
                       style={{ color: "#00b992" }}
                     />
                   )}
-              </a>
+                </a>
 
-              <a href="#">
-                <PlusCircleOutlined />
-              </a>
-            </p>
+                <a href="#">
+                  <PlusCircleOutlined />
+                </a>
+              </p>
 
-            <p className="infos">번호: {tel}}</p>
-            <p className="infos">시: {address_see}</p>
-            <p className="infos">구: {address_gu}</p>
-            <p className="infos">동: {address_dong}</p>
-            <p className="infos">위도: {latitude}</p>
-            <p className="infos">경도: {longitude}</p>
-          </figcaption>
-        </figure>
+              <p className="infos">번호: {tel}}</p>
+              <p className="infos">시: {address_see}</p>
+              <p className="infos">구: {address_gu}</p>
+              <p className="infos">동: {address_dong}</p>
+              <p className="infos">위도: {latitude}</p>
+              <p className="infos">경도: {longitude}</p>
+            </figcaption>
+          </figure>
+        </Link>
       </div>
     </div>
   );
-}
+};
 
-// One item component
-// selected prop will be passed
-const MenuItem = ({ id, store_name, branch, area, tel, address, latitude, longitude, category_list, url }) => {
-  // const initColor = "#eb2f96";
-  // const myFunction = () => {
-  //   this.twoToneColor = "#00b992";
-  // }
+const MenuItem = ({
+  id,
+  store_name,
+  branch,
+  area,
+  tel,
+  address_see,
+  address_gu,
+  address_dong,
+  latitude,
+  longitude,
+  category,
+  url,
+}) => {
 
   const [iconState, seticonState] = useState(true);
 
   return (
     <div className="container">
       <div className="grid">
-        <figure className="effect-kira">
-          <img src={url} width="630px" height="400px" />
-          <figcaption>
-            <h2 style={{ color: "#fff" }}>
-              {category_list} <span className="inner-span">{store_name}</span> {id}
-            </h2>
+        <Link
+          to={{
+            pathname: `/store/${id}`,
+            state: {
+              store_name,
+              category,
+              address_see,
+              address_gu,
+              address_dong,
+              latitude,
+              longitude,
+            },
+          }}
+        >
+          <figure className="effect-kira">
+            <img src={url} width="630px" height="400px" />
+            <figcaption>
+              <h2 style={{ color: "#fff" }}>
+                {category} <span className="inner-span">{store_name}</span>{" "}
+                {id}
+              </h2>
 
-            <p>
-              {address}({branch})
-              <a href="#">
-                {iconState ? (
-                  <HeartOutlined
-                    onClick={() => seticonState(false)}
-                    style={{ color: "#00b992" }}
-                  />
-                ) : (
+              <p>
+                ({branch})
+                <a href="#">
+                  {iconState ? (
+                    <HeartOutlined
+                      onClick={() => seticonState(false)}
+                      style={{ color: "#00b992" }}
+                    />
+                  ) : (
                     <HeartFilled
                       onClick={() => seticonState(true)}
                       style={{ color: "#00b992" }}
                     />
                   )}
-              </a>
+                </a>
+                <a href="#">
+                  <PlusCircleOutlined />
+                </a>
+              </p>
 
-              <a href="#">
-                <PlusCircleOutlined />
-              </a>
-            </p>
-
-            <p className="infos">지역: {area}</p>
-            <p className="infos">번호: {tel}</p>
-            <p className="infos">위도: {latitude}</p>
-            <p className="infos">경도: {longitude}</p>
-          </figcaption>
-        </figure>
+              <p className="infos">지역: {area}</p>
+              <p className="infos">번호: {tel}</p>
+              <p className="infos">위도: {latitude}</p>
+              <p className="infos">경도: {longitude}</p>
+            </figcaption>
+          </figure>
+        </Link>
       </div>
     </div>
   );
@@ -109,7 +158,17 @@ const MenuItem = ({ id, store_name, branch, area, tel, address, latitude, longit
 
 export const Loc = (list) =>
   list.map((el) => {
-    const { id, location_name, address_see, address_gu, address_dong, tel, latitude, longitude, description } = el;
+    const {
+      id,
+      location_name,
+      address_see,
+      address_gu,
+      address_dong,
+      tel,
+      latitude,
+      longitude,
+      description,
+    } = el;
 
     return (
       <LocItem
@@ -132,7 +191,19 @@ export const Loc = (list) =>
 // Important! add unique key
 export const Menu = (list) =>
   list.map((el) => {
-    const { id, store_name, branch, area, tel, address, latitude, longitude, category_list } = el;
+    const {
+      id,
+      store_name,
+      branch,
+      area,
+      tel,
+      address_see,
+      address_gu,
+      address_dong,
+      latitude,
+      longitude,
+      category,
+    } = el;
 
     return (
       <MenuItem
@@ -141,17 +212,17 @@ export const Menu = (list) =>
         branch={branch}
         area={area}
         tel={tel}
-        address={address}
+        address_see={address_see}
+        address_gu={address_gu}
+        address_dong={address_dong}
         latitude={latitude}
         longitude={longitude}
-        category_list={category_list}
+        category={category}
         url="https://bit.ly/2V93eDV"
         key={store_name}
       />
     );
   });
-
-
 
 const selected = "item1";
 
@@ -161,34 +232,34 @@ class ScrollCard extends Component {
 
     this.state = {
       storeList: [],
-      locList: []
-    }
+      locList: [],
+    };
 
     // call it again if items count changes
   }
 
   async componentDidMount() {
-    await axios.get('http://13.125.113.171:8000/dining/stores/')
-      .then(res => {
-        this.menuItems = Menu(res.data.results, selected);
+    await axios.get("http://13.125.113.171:8000/dining/stores/").then((res) => {
+      this.menuItems = Menu(res.data.results, selected);
 
-        this.setState({
-          storeList: res.data.results
-        });
+      this.setState({
+        storeList: res.data.results,
       });
+    });
 
-    await axios.get('http://13.125.113.171:8000/places/location/')
-      .then(res => {
+    await axios
+      .get("http://13.125.113.171:8000/places/location/")
+      .then((res) => {
         this.locItems = Loc(res.data.results, selected);
 
         this.setState({
-          locList: res.data.results
-        })
-      })
+          locList: res.data.results,
+        });
+      });
   }
 
   state = {
-    selected
+    selected,
   };
 
   onSelect = (key) => {

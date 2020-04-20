@@ -5,14 +5,18 @@ import "./PlaceDetail.scss";
 class PlaceDetail extends React.Component {
     
     render() {
+        const id = this.props.match.params.id;
+        const store_name = this.props.location.state.store_name;
+        const category = this.props.location.state.category;
+        console.log(this.props);
         return (
             <div className="place-detail">
-                <div className="slide">
+                {/* <div className="slide">
                     <SlideImg />
-                </div>
-                <h1 className="place-name">식당 또는 장소이름</h1>
+                </div> */}
+                <h1 className="place-name">{store_name}</h1>
                 <div>
-                    <p>간단한 설명 여기는 뭐를 팔거나 뭐를 체험할 수 있는 곳이다.</p>
+                    <p>{category}</p>
                 </div>
                 <hr />
                 <div className="description">
