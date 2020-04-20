@@ -3,11 +3,6 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import ScrollMenu from "react-horizontal-scrolling-menu";
 import "./ScrollCard.scss";
-import {
-  HeartOutlined,
-  PlusCircleOutlined,
-  HeartFilled,
-} from "@ant-design/icons";
 
 const LocItem = ({
   id,
@@ -21,7 +16,6 @@ const LocItem = ({
   description,
   url,
 }) => {
-  const [iconState, seticonState] = useState(true);
 
   return (
     <div className="container">
@@ -30,13 +24,13 @@ const LocItem = ({
           to={{
             pathname: `/place/${id}`,
             state: {
-              pName: { location_name },
-              desc: { description },
-              addr_see: { address_see },
-              addr_gu: { address_gu },
-              addr_dong: { address_dong },
-              lat: { latitude },
-              lon: { longitude },
+              location_name,
+              description,
+              address_see,
+              address_gu,
+              address_dong,
+              latitude,
+              longitude,
             },
           }}
         >
@@ -44,36 +38,12 @@ const LocItem = ({
             <img src={url} width="630px" height="400px" />
             <figcaption>
               <h2 style={{ color: "#fff" }}>
-                <span className="inner-span">{location_name}</span> {id}
+                <span className="inner-span">{location_name}</span>
               </h2>
 
-              <p>
+              <p style={{margin:"20px"}}>
                 {description}
-                <a href="#">
-                  {iconState ? (
-                    <HeartOutlined
-                      onClick={() => seticonState(false)}
-                      style={{ color: "#00b992" }}
-                    />
-                  ) : (
-                    <HeartFilled
-                      onClick={() => seticonState(true)}
-                      style={{ color: "#00b992" }}
-                    />
-                  )}
-                </a>
-
-                <a href="#">
-                  <PlusCircleOutlined />
-                </a>
               </p>
-
-              <p className="infos">번호: {tel}}</p>
-              <p className="infos">시: {address_see}</p>
-              <p className="infos">구: {address_gu}</p>
-              <p className="infos">동: {address_dong}</p>
-              <p className="infos">위도: {latitude}</p>
-              <p className="infos">경도: {longitude}</p>
             </figcaption>
           </figure>
         </Link>
@@ -96,9 +66,6 @@ const MenuItem = ({
   category,
   url,
 }) => {
-
-  const [iconState, seticonState] = useState(true);
-
   return (
     <div className="container">
       <div className="grid">
@@ -120,34 +87,12 @@ const MenuItem = ({
             <img src={url} width="630px" height="400px" />
             <figcaption>
               <h2 style={{ color: "#fff" }}>
-                {category} <span className="inner-span">{store_name}</span>{" "}
-                {id}
+                <span className="inner-span">{store_name}</span>
               </h2>
 
-              <p>
-                ({branch})
-                <a href="#">
-                  {iconState ? (
-                    <HeartOutlined
-                      onClick={() => seticonState(false)}
-                      style={{ color: "#00b992" }}
-                    />
-                  ) : (
-                    <HeartFilled
-                      onClick={() => seticonState(true)}
-                      style={{ color: "#00b992" }}
-                    />
-                  )}
-                </a>
-                <a href="#">
-                  <PlusCircleOutlined />
-                </a>
+              <p style={{margin:"20px"}}>
+                {category}
               </p>
-
-              <p className="infos">지역: {area}</p>
-              <p className="infos">번호: {tel}</p>
-              <p className="infos">위도: {latitude}</p>
-              <p className="infos">경도: {longitude}</p>
             </figcaption>
           </figure>
         </Link>
@@ -235,7 +180,6 @@ class ScrollCard extends Component {
       locList: [],
     };
 
-    // call it again if items count changes
   }
 
   async componentDidMount() {

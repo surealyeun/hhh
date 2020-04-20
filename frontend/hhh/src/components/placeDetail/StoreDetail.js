@@ -42,8 +42,7 @@ class PlaceDetail extends React.Component {
 
   render() {
     const id = this.props.match.params.id;
-    const store_name = this.props.location.state.store_name;
-    const category = this.props.location.state.category;
+    const state = this.props.location.state;
     console.log(this.props);
     return (
       <div className="place-detail">
@@ -100,13 +99,21 @@ class PlaceDetail extends React.Component {
           </Col>
           <Col span={1} />
           <Col span={12}>
-            <h1 className="place-name">{store_name}</h1>
+          <Row gutter={16}>
+              <Col span={24}>
+                <div className="empty" />
+              </Col>
+            </Row>
+            <h1 className="place-name">{state.store_name}</h1>
             <div>
-              <p>{category}</p>
+              <p>{state.category}</p>
             </div>
             <hr />
             <div className="location">
               <h3>Location</h3>
+              <p>
+                {state.address_see} {state.address_gu} {state.address_dong}
+              </p>
               <div className="map" id="Mymap"></div>
             </div>
             <br />
