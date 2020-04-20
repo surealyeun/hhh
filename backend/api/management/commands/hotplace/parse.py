@@ -5,54 +5,88 @@ import shutil
 import datetime
 
 DATA_DIR = "./data/"
-DUMP_FILE = os.path.join(DATA_DIR, "hotplace.pkl")
 
-location_columns = (
-    "id",  # 음식점 고유번호
-    "location_name",  # 장소 이름
-    "address_see",  # 장소 시
-    "address_gu",  # 장소 구
-    "address_dong",  # 장소 동
-    "tel",  # 전화 번호
-    "latitude",  # 장소 위도
-    "longitude",  # 장소 경도
-    "description",  # 장소 정보
+keyword_columns = (
+    "gu",  # 구 단위
+    "rank", # 순위
+    "keyword", # 키워드
+    "type", # 감성어 타입
 )
 
+"""
+payment_columns = (
+    ""
+)
+
+population_columns = (
+    "gu",  # 구 단위
+    "rank", # 순위
+    "keyword", # 키워드
+    "type", # 감성어 타입
+)
+"""
+
 def import_data():
+    """
+        핫플레이스 평가
+        인구수평가 + 매출액 평가
+    """
+    """
+        핫플레이스
+        인구수로 평가 (10대~40대)
+        주말 평일비교 : 30점 만점 
+        1년전 현재 비교 : 18점 만점
+    """
 
+    """ 
+        Data 3월 14일 (토요일), 3월 16일 (월요일) 비교
+        랭크세워서 30점만점
+    """
+    file_dir = os.path.join(DATA_DIR, "dong_code.csv")
+    dong_code_frame = pd.read_csv(file_dir)
+    file_dir = os.path.join(DATA_DIR, "LOCAL_PEOPLE_DONG_202003.csv")
+    people_frame_2003 = pd.read_csv(file_dir)
+
+    dong_code_frame.drop('H_SDNG_CD(통계청행정동코드)', axis='columns', inplace=True)
+    dong_code_frame.rename(columns={'H_DNG_CD(행자부행정동코드)':'dong_code',
+        'DO_NM(시도명)':'see', 'CT_NM(시군구명)':'gu', 'H_DNG_NM(행정동명)': 'dong'}, inplace=True)
+    
+    people_frame_2003.rename(columns={'기준일ID':'date', 
+        '시간대구분':'time', '행정동코드':'dong_code', '총생활인구수':'population',
+        '남자15세부터19세생활인구수': 'man_15_19', '남자20세부터24세생활인구수': 'man_20_24',
+        '남자25세부터29세생활인구수':'man_25_29', '남자30세부터34세생활인구수':'man_30_34',
+        '여자15세부터19세생활인구수': 'woman_15_19', '여자20세부터24세생활인구수': 'woman_20_24',
+        '여자25세부터29세생활인구수':'woman_25_29', '여자30세부터34세생활인구수':'woman_30_34',
+        }, inplace=True)
+    
+    print(people_frame_2003)
+
+    population_frame_2003 = pd.merge(
+        people_frame_2003, dong_code_frame, on="dong_code"
+    )
+    
+    pop_frame_200314 = population_frame_2003[population_frame_2003['date'] == 20200314]
+    pop_frame_200316 = population_frame_2003[population_frame_2003['date'] == 20200316]
+    print(pop_frame_200314)
+    print(pop_frame_200316)
     """ dataframes 이어붙이기 """
-    location_frame =pd.concat([location_frame_cultural])
+    #location_frame =pd.concat([location_frame_cultural])
 
-    return {"location": location_frame}
-
-
-def dump_dataframes(dataframes):
-    pd.to_pickle(dataframes, DUMP_FILE)
-
-
-def load_dataframes():
-    return pd.read_pickle(DUMP_FILE)
+    #return {"location": location_frame}
 
 
 def main():
 
     print("[*] Parsing data...")
     data = import_data()
-    print("[+] Done")
-
-    print("[*] Dumping data...")
-    dump_dataframes(data)
     print("[+] Done\n")
-
-    data = load_dataframes()
 
     term_w = shutil.get_terminal_size()[0] - 1
     separater = "-" * term_w
 
     print("[핫플레이스 스코어]")
     print(f"{separater}\n")
-    print(data["location"])
+    #print(data["location"])
     print(f"\n{separater}\n\n")
 
 if __name__ == "__main__":

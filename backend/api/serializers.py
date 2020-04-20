@@ -5,17 +5,7 @@ from rest_framework import serializers
 class DiningStoreSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.DiningStore
-        fields = [
-            "id",
-            "store_name",
-            "branch",
-            "area",
-            "tel",
-            "address",
-            "latitude",
-            "longitude",
-            "category_list",
-        ]
+        fields = "__all__"
 
 
 class DiningReviewSerializer(serializers.ModelSerializer):
