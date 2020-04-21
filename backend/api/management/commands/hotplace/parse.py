@@ -302,8 +302,6 @@ def import_data():
 
     result = (result_frame_population.set_index('gu')+result_frame_payment.set_index('gu')).sort_values(by=['score'], ascending=False).reset_index()
     
-    print(result)
-    
     
     return {"hotplace_result": result}
 

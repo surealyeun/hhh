@@ -1,12 +1,21 @@
+import os
+import webbrowser
 import itertools
-from collections import Counter
-from parse import load_dataframes
 import pandas as pd
+import folium
 import seaborn as sns
 import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
-import folium
+import requests
+import json
+import numpy as np
 from folium import plugins
+from collections import Counter
+from parse import load_dataframes
+from pandas.io.json import json_normalize
+
+
+
 
 def set_config():
     # 폰트, 그래프 색상 설정
@@ -27,30 +36,42 @@ def set_config():
 
 def show_stores_distribution_graph(dataframes):
     """
-    Req. 1-3-5 각 음식점의 위치 분포를 지도에 나타냅니다.
+        핫 플레이스 분포를 지도에 표시.
     """
     m = folium.Map(
         location=[37.503309,126.7636763],
         zoom_start=13
     )
-    
-    # 부천의 레스토랑 검색
-    stores = dataframes["stores"]
-    restaurant = stores["category"].str.contains("레스토랑")
-    restaurant = stores.loc[restaurant[restaurant].index]
-    buchon = restaurant["address"].str.contains("부천")
-    buchon = buchon.fillna(False)
-    buchon_restaurant = restaurant[buchon].set_index("id")
-    
-    buchon_res_loc = buchon_restaurant[["latitude", "longitude", "store_name"]]
+    result = pd.read_pickle('./data/hot_place.pkl')
 
-    for i in range(0, len(buchon_res_loc)):
-        folium.Marker([buchon_res_loc.iloc[i]["latitude"],
-                    buchon_res_loc.iloc[i]["longitude"]],
-                    popup=buchon_res_loc.iloc[i]['store_name']
-        ).add_to(m)
-    m.save('map.html')
+    sigugun_income = './data/seoul_border.json'
+    print(result["hotplace_result"])
+    geo_str = json.load(open(sigugun_income, encoding='utf-8'))
+    m = folium.Map(location=[37.5553542, 126.9803419], tiles='Stamen Toner', zoom_start=11)
+    df = result["hotplace_result"]
+    folium.Choropleth(
+        geo_data = geo_str,
+        data = df,
+        name='H H H',
+        columns = ('gu','score'),
+        fill_color = 'YlGn', #puRd, YlGnBu
+        key_on = 'feature.properties.SIG_KOR_NM',
+        fill_opacity=0.75,
+        line_opacity=0.9, 
+        legend_name="Hot Place Score",
+        tooltip=df.index
+    ).add_to(m)
 
+    inner_html = '<b>Hello world</b><br/><a href="#">hi!</a>'
+    test = folium.Html(inner_html, script=True)
+
+    popup = folium.Popup(test, max_width=2650)
+    folium.RegularPolygonMarker(
+        location=[37.503309,126.7636763], popup=popup,
+    ).add_to(m)
+
+    folium.LayerControl().add_to(m)
+    m.save('./frontend/hhh/public/map.html')
 
 def main():
     set_config()
