@@ -8,6 +8,8 @@ import userInfo from "./components/user/userInfo";
 import Login from "./components/user/Login";
 import Register from "./components/user/Register";
 import PlaceDetail from './components/placeDetail/PlaceDetail';
+import Header from './components/common/Header';
+import Footer from './components/common/Footer';
 
 function App() {
   return (
@@ -21,6 +23,7 @@ function App() {
           <Route path="/userinfo" component={userInfo} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
+          <Route path="/hd" component={Footer} />
           <Redirect path="*" to="/"></Redirect>
         </Switch>
       </BrowserRouter>
