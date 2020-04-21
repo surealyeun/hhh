@@ -80,7 +80,7 @@ def show_stores_distribution_graph(dataframes):
     
     """ 서울시 구 갯수만큼 for문 """
     for i in center_dataframe.index[0:]: 
-        inner_html = '<b>Hello world</b><br/><a href="'+'https://www.google.com'+'">hi!</a>'
+        inner_html = '<b>' + center_dataframe.loc[i, 'gu'] + '</b><br/><a href="'+'https://www.google.com'+'">hi!</a>'
         test = folium.Html(inner_html, script=True)
 
         popup = folium.Popup(test, max_width=2650)
@@ -88,14 +88,13 @@ def show_stores_distribution_graph(dataframes):
         folium.Circle( 
             location = center_dataframe.loc[i, ['lat', 'lon']], 
             tooltip = center_dataframe.loc[i, 'gu'], 
-            radius = 200,
+            radius = 500,
             color = '#00ffaa',
-            opacity = 0.5,
+            opacity = 0.7,
             fill_color = '#00ffaa',
             fill_opacity = 0.4,
             popup= popup
         ).add_to(m)
-    folium.LayerControl().add_to(m)
     m.save('./frontend/hhh/public/map.html')
 
 def main():
