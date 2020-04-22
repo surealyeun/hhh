@@ -73,7 +73,6 @@ def show_stores_distribution_graph(dataframes):
     }
     center_dataframe = pd.DataFrame(seoul_gu_center_dic)
 
-
     """ 구별 주요 키워드 리스트화 """
 
     """ 단일 마커 추가 코드 (사전작업: 해당 주소지만 걸러주는 url 만들어놓기)"""
