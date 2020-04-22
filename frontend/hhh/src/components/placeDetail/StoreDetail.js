@@ -43,7 +43,6 @@ class PlaceDetail extends React.Component {
   render() {
     const id = this.props.match.params.id;
     const state = this.props.location.state;
-    console.log(this.props);
     return (
       <div className="place-detail">
         <Row>
@@ -99,7 +98,7 @@ class PlaceDetail extends React.Component {
           </Col>
           <Col span={1} />
           <Col span={12}>
-          <Row gutter={16}>
+            <Row gutter={16}>
               <Col span={24}>
                 <div className="empty" />
               </Col>

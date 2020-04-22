@@ -43,7 +43,6 @@ class PlaceDetail extends React.Component {
   render() {
     const id = this.props.match.params.id;
     const state = this.props.location.state;
-    console.log(this.props);
     return (
       <div className="place-detail">
         <Row>
