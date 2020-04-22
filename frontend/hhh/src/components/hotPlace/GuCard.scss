@@ -1,0 +1,77 @@
+#Gu-card {
+    margin: auto;
+    width: 960px;
+    height: 250px;
+    display: flex;
+    background-color: rgb(245, 245, 245);
+
+    #avatar {
+        display: inline-block;
+        position: relative;
+
+        width: 180px;
+        height: 180px;
+        border: 1px solid rgb(190, 190, 190);
+        border-radius: 50%;
+        background-color: rgb(163, 255, 168);
+
+        top: 50%;
+        transform: translateY(-50%);
+
+        margin-left: 100px;
+        
+        overflow: hidden;
+
+        img {
+            width:150px;
+            margin-left: 10%;
+        }
+    }
+
+    #user-info {
+        display: inline-block;
+        position: relative;
+
+        width: 580px;
+        height: 180px;
+        top: 50%;
+        transform: translateY(-50%);
+
+        margin-left: 100px;
+        padding: 10px 20px;
+
+        #user-id {
+            font-size: 26px;
+        }
+    
+        #user-follow {
+            margin-top: 20px;
+            ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+
+                li {
+                    float: left;
+                    margin-right: 50px;
+
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    
+        #user-desc {
+            margin-top: 20px;
+            
+            b{
+                display: block;
+                margin-bottom: 5px;
+            }
+        }
+    }
+
+
+}

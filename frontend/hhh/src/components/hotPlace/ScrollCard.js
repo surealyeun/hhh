@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import ScrollMenu from "react-horizontal-scrolling-menu";
 import "./ScrollCard.scss";
+import GuCard from './GuCard';
 
 const LocItem = ({
   id,
@@ -16,7 +17,6 @@ const LocItem = ({
   description,
   url,
 }) => {
-
   return (
     <div className="container">
       <div className="grid">
@@ -41,9 +41,7 @@ const LocItem = ({
                 <span className="inner-span">{location_name}</span>
               </h2>
 
-              <p style={{margin:"20px"}}>
-                {description}
-              </p>
+              <p style={{ margin: "20px" }}>{description}</p>
             </figcaption>
           </figure>
         </Link>
@@ -90,9 +88,7 @@ const MenuItem = ({
                 <span className="inner-span">{store_name}</span>
               </h2>
 
-              <p style={{margin:"20px"}}>
-                {category}
-              </p>
+              <p style={{ margin: "20px" }}>{category}</p>
             </figcaption>
           </figure>
         </Link>
@@ -179,7 +175,6 @@ class ScrollCard extends Component {
       storeList: [],
       locList: [],
     };
-
   }
 
   async componentDidMount() {
@@ -217,9 +212,16 @@ class ScrollCard extends Component {
     const loc = this.locItems;
 
     return (
-      <div className="App">
-        <ScrollMenu data={menu} selected={selected} onSelect={this.onSelect} />
-        <ScrollMenu data={loc} selected={selected} onSelect={this.onSelect} />
+      <div className="scrollContainer">
+        <GuCard/>
+        <div className="scrollPlace">
+          <ScrollMenu
+            data={menu}
+            selected={selected}
+            onSelect={this.onSelect}
+          />
+          <ScrollMenu data={loc} selected={selected} onSelect={this.onSelect} />
+        </div>
       </div>
     );
   }
