@@ -20,9 +20,9 @@ class Header extends React.Component {
     }
 
     search = () => {
-            this.setState({
-                isSearch: !this.state.isSearch,
-            });
+        this.setState({
+            isSearch: !this.state.isSearch,
+        });
     };
 
     logout = () => {
@@ -41,56 +41,56 @@ class Header extends React.Component {
 
     render() {
         return (
-                <div className="Header">
-                    <div className="search">
-                        <button onClick={this.search}>
-                            <img
-                                className="search-btn"
-                                src="https://image.flaticon.com/icons/svg/149/149852.svg"
-                                alt="search"
-                            />
-                        </button>
-                    </div>
-                    <Link to="/">
+            <div className="Header">
+                <div className="search">
+                    <button onClick={this.search}>
+                        <img
+                            className="search-btn"
+                            src="https://image.flaticon.com/icons/svg/149/149852.svg"
+                            alt="search"
+                        />
+                    </button>
+                </div>
+                <Link to="/">
                     <h1 className="title">
                         ㅎ<br />
                         ㅎ<br />
                         ㅎ<br />
                     </h1>
-                    </Link>
-                    {this.state.isLog ? (
-                        <div>
-                            <div className="user">
-                                <Link to="">
-                                    <img
-                                        className="user-profile"
-                                        src="https://image.flaticon.com/icons/svg/1738/1738760.svg"
-                                        alt="user_profile"
-                                    />
-                                    {/* <h2 className="username">{username}</h2> */}
-                                </Link>
-                            </div>
-                            <div className="logout">
-                                <button onClick={this.logout}>
-                                    <img
-                                        className="logout-btn"
-                                        src="https://image.flaticon.com/icons/svg/1828/1828427.svg"
-                                        alt="logout"
-                                    />
-                                </button>
-                            </div>
-                        </div>
-                    ) : (
-                        <div className="login">
-                            <Link to="/login">
+                </Link>
+                {this.state.isLog ? (
+                    <div>
+                        <div className="user">
+                            <Link to="">
                                 <img
-                                    className="login-btn"
-                                    src="https://image.flaticon.com/icons/svg/1828/1828395.svg"
-                                    alt="login"
+                                    className="user-profile"
+                                    src="https://image.flaticon.com/icons/svg/1738/1738760.svg"
+                                    alt="user_profile"
                                 />
+                                {/* <h2 className="username">{username}</h2> */}
                             </Link>
                         </div>
-                    )}
+                        <div className="logout">
+                            <button onClick={this.logout}>
+                                <img
+                                    className="logout-btn"
+                                    src="https://image.flaticon.com/icons/svg/1828/1828427.svg"
+                                    alt="logout"
+                                />
+                            </button>
+                        </div>
+                    </div>
+                ) : (
+                    <div className="login">
+                        <Link to="/login">
+                            <img
+                                className="login-btn"
+                                src="https://image.flaticon.com/icons/svg/1828/1828395.svg"
+                                alt="login"
+                            />
+                        </Link>
+                    </div>
+                )}
                 {this.state.isSearch ? (
                     <div className="search-input">
                         <input type="text"></input>
@@ -104,7 +104,7 @@ class Header extends React.Component {
                 ) : (
                     <></>
                 )}
-                </div>
+            </div>
         );
     }
 }

@@ -23,7 +23,7 @@ function App() {
           <Route path="/userinfo" component={userInfo} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
-          <Route path="/hd" component={Footer} />
+          <Route path="/hd" component={Header} />
           <Redirect path="*" to="/"></Redirect>
         </Switch>
       </BrowserRouter>
