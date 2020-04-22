@@ -17,6 +17,9 @@ class DiningStore(models.Model):
     @property
     def category_list(self):
         return self.category.split("|") if self.category else []
+    
+    def __str__(self):
+        return self.store_name
 
 class DiningReview(models.Model):
     id = models.AutoField(primary_key=True)
