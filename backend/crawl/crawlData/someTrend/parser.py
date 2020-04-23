@@ -21,7 +21,7 @@ import json
 
 def read_csv():
 
-    df = pd.read_csv("./store.csv")
+    df = pd.read_csv("../store.csv")
     print(df)
 
     # for d in df.index:
@@ -34,30 +34,23 @@ def read_csv():
     return df
 
 
-def crawled(dataframes):
+def crawled(data, driver):
 
     rank = []
     feelings = []
     keywords = []
 
-    url = "https://some.co.kr/analysis/issue"
-
     # opt = wd.ChromeOptions()
     # opt.add_argument("headless")
     
     # driver = wd.Chrome("./chromedriver", chrome_options=opt)
-    driver = wd.Chrome("chromedriver")
-    driver.get(url)
+   
     
     time.sleep(3)
 
-    # dataframe들 반복하기
-    # for data in dataframes:
-    #     print(data)
-
     search = driver.find_element_by_id("searchKeyword")
     search.clear()
-    search.send_keys("BBQ")
+    search.send_keys(data.store_name)
 
     button = driver.find_element_by_xpath("//*[@id='searchKeywordClick']")
     button.click()
@@ -71,15 +64,15 @@ def crawled(dataframes):
     try:
     
         pageString = driver.find_element_by_tag_name('html').find_element_by_css_selector("div#issueSentimentSlick > div > div > div.slick-slide.slick-current.slick-active > div.sensitiveTable_wrap > div")
-        print(type(pageString))
-        print(pageString)
-        print(pageString.get_attribute('innerHTML'))
-        print(type(pageString.get_attribute('innerHTML')))
+        # print(type(pageString))
+        # print(pageString)
+        # print(pageString.get_attribute('innerHTML'))
+        # print(type(pageString.get_attribute('innerHTML')))
         
-        bsObj = BeautifulSoup(pageString.get_attribute('innerHTML'), 'lxml', from_encoding='utf-8')
+        bsObj = BeautifulSoup(pageString.get_attribute('innerHTML'), 'lxml')
 
         table = bsObj.find('table', {'class' : 'relation_table sensitive_table'})
-        print(table)
+        # print(table)
         trs = table.find_all('tr')
     
     #enumerate를 사용 시, 해당 값의 인덱스를 알 수 있다..?
@@ -95,9 +88,24 @@ def crawled(dataframes):
         print(rank)
         print(feelings)
         print(keywords)
+        print(type(rank))
+        store = []
+        for i in range(0 ,len(rank)):
+            store.append(data.id)
         
+        print(store)
+
+        frames = {
+            "ftype" : feelings,
+            "word" : keywords,
+            "rank" : rank,
+            "store" : store
+        }
+
+        dataframes = pd.DataFrame.from_dict(frames)
+        print(dataframes)
     except Exception as e:
-        print("에러", e)
+        print("Error Message : ", e)
     
     
     return 0
@@ -107,7 +115,20 @@ def crawled(dataframes):
 
 def main():
     print("안녕")
-    data = crawled(read_csv())
+
+    url = "https://some.co.kr/analysis/issue"
+
+    driver = wd.Chrome("chromedriver")
+    driver.get(url)
+
+    dataframes = read_csv()
+
+    for idx in dataframes.index:
+        print(dataframes.loc[idx, ["id", "store_name"]])
+        crawled(dataframes.loc[idx, ["id", "store_name"]], driver)
+
+        if idx == 3:
+            break
     # read_csv()
     # print(data)
     print("제발..")
