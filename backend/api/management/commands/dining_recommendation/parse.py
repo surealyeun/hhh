@@ -4,6 +4,7 @@ import os
 import shutil
 import datetime
 from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.decomposition import TruncatedSVD
 
 DATA_DIR = "./data/"
 DATA_FILE = os.path.join(DATA_DIR, "dining.json")
@@ -61,13 +62,21 @@ def import_data(data_path=DATA_FILE):
     df.drop(['id','branch', 'area', 'category', 'address_see', 'address_gu', 'address_dong'],axis='columns', inplace=True)
     df['user'] = df['user'].fillna(0).astype(int)
     df['score'] = df['score'].fillna(0).astype(int)
-    
+    print(df)
     user_dining_store_rating = df.pivot_table('score', index='user', columns='store_name').fillna(0)
 
     user_dining_store_rating = user_dining_store_rating.values.T
-    print(user_dining_store_rating)
-    
+
     SVD = TruncatedSVD(n_components=12)
+    matrix = SVD.fit_transform(user_dining_store_rating)
+
+    print(user_dining_store_rating.head())
+    print(type(user_dining_store_rating))
+
+    store_title = user_dining_store_rating.columns
+    store_title_list = list(store_title)
+    print(store_title_list.index(24))
+
 
 def dump_dataframes(dataframes):
     pd.to_pickle(dataframes, DUMP_FILE)
