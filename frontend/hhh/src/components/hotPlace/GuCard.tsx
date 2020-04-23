@@ -6,7 +6,7 @@ class UserCard extends React.Component {
         return (
             <div id="Gu-card">
                 <div id="avatar">
-                    <img src="https://lh3.googleusercontent.com/proxy/x6TZXn41daV-3IyfzQClDK1MOW48goNOIsyC5a_A4ErnZF6rsvt5twPrQrfuNBCiez07LfspemxfEhM3MW0NWC18oR3oNM-N2WLVl46uwhlJsN5aYwsUu3NKx46jjoti0aRJMbjhKiJRUS7KVUqvP2I9orLP3ftFk_a-aZqXnwaeaid1JbuJoHSraqtzYsaRq_blG8LI" alt="" />
+                    <img src="https://pbs.twimg.com/profile_images/491461147439009792/BU9yRHVK_400x400.png" alt="" />
                 </div>
                 <div id="user-info">
                     <div id="user-id">JONGNO</div>
