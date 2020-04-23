@@ -9,6 +9,7 @@ import Login from "./components/user/Login";
 import Register from "./components/user/Register";
 import PlaceDetail from './components/placeDetail/PlaceDetail';
 import StoreDetail from './components/placeDetail/StoreDetail';
+import FeedDetail from "./components/feedDetail/FeedDetail";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Switch>
           <Route path="/" exact component={Main} />
           <Route path="/feedList" component={FeedList} />
+          <Route path="/feedDetail" component={FeedDetail} />
           <Route path="/spotList" component={ScrollCard} />
           <Route path="/place/:id" component={PlaceDetail} />
           <Route path="/store/:id" component={StoreDetail} />
