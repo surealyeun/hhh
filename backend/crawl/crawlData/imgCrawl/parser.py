@@ -28,6 +28,9 @@ def read_csv():
 
     return df
 
+def isNaN(num):
+    return num != num
+
 
 def crawl(keyword, driver):
 
@@ -47,6 +50,7 @@ def crawl(keyword, driver):
     bsObj = BeautifulSoup(pageString, "lxml")
 
     image = bsObj.find(name="img", attrs={"class":"rg_i Q4LuWd tx8vtf"})
+    # print(image)
     src = image.get("src")
 
     print("이미지 가져오기")
@@ -59,12 +63,33 @@ def main():
     dataframes = read_csv()
     driver = wd.Chrome("./chromedriver.exe")
     csvtxt = []
-    #  dataframes.index
-    for i in tqdm(range(0,1000)):
-        csvtxt.append([])
-        keyword = dataframes.loc[i, "store_name"]
-        img_src = crawl(keyword, driver)
+    print(dataframes)
 
+
+    for i in tqdm(range(0,1000)):
+        keyword = ""
+        csvtxt.append([])
+        
+        if isNaN(dataframes.loc[i, "branch"]) is False:
+            keyword = dataframes.loc[i, "store_name"] + " " + str(dataframes.loc[i, "branch"])
+            if isNaN(dataframes.loc[i, "area"]) is False:
+                keyword = keyword + " " + dataframes.loc[i, "area"]
+
+        else:
+            keyword = dataframes.loc[i, "store_name"]
+            if isNaN(dataframes.loc[i, "area"]) is False:
+
+                keyword = keyword + " " + dataframes.loc[i, "area"]
+
+        print(keyword)
+        
+        img_src = crawl(quote_plus(keyword), driver)
+
+        print(type(keyword.find("/")))
+        if keyword.find("/") != -1:
+            keyword.replace("/", "-")
+
+                   
         img_filename = "img_" + str(dataframes.loc[i, "id"]) + "_" + keyword
 
         urlretrieve(img_src, "./img/"+img_filename+".jpg")
@@ -73,6 +98,7 @@ def main():
         # print(csvtxt)
 
     data = pd.DataFrame(csvtxt)
+    print(data)
     data.to_csv("./images.txt", encoding="utf-8")
 
         
