@@ -168,7 +168,7 @@ def main():
 
     print("[음식점]")
     print(f"{separater}\n")
-    print(data["stores"].head())
+    print(data["stores"].head(15))
     print(f"\n{separater}\n\n")
 
     print("[리뷰]")
