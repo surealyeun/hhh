@@ -1,8 +1,9 @@
 import React from "react";
 import GuCard from "./GuCard";
 import axios from "axios";
-import Place from "./CardPlace";
-import Place2 from "./CardStore";
+import CardPlace from "./CardPlace";
+import CardStore from "./CardStore";
+import Scrollable from "hide-scrollbar-react";
 import "./ScrollCard2.scss";
 
 class ScrollCard2 extends React.Component {
@@ -34,14 +35,17 @@ class ScrollCard2 extends React.Component {
   render() {
     return (
       <div className="scrollContainer">
+        <div className="logo">
+          <GuCard />
+        </div>
         <div className="container">
           <div className="container2">
-            {this.state.locList.map((plist) => (
-              <Place state={plist} />
+            {this.state.storeList.map((slist) => (
+              <CardStore state={slist} />
             ))}
-            {/* {this.state.storeList.map((slist) => (
-              <Place2 state={slist} />
-            ))} */}
+            {this.state.locList.map((plist) => (
+              <CardPlace state={plist} />
+            ))}
           </div>
         </div>
       </div>
