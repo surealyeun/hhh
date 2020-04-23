@@ -24,10 +24,11 @@ def read_csv():
     df = pd.read_csv("./store.csv")
     print(df)
 
-    for d in df.index:
+    # for d in df.index:
 
-        # df에서 가게명만 뽑아오기
-        search = df.loc[d, "store_name"]
+    #     # df에서 가게명만 뽑아오기
+    #     search = df.loc[d, "store_name"]
+    #     print(df.loc[d, ["id", "store_name"]])
 
 
     return df
@@ -51,8 +52,8 @@ def crawled(dataframes):
     time.sleep(3)
 
     # dataframe들 반복하기
-    for data in dataframes:
-        print(data)
+    # for data in dataframes:
+    #     print(data)
 
     search = driver.find_element_by_id("searchKeyword")
     search.clear()
@@ -68,12 +69,17 @@ def crawled(dataframes):
     
     ## -------------------------------------------
     try:
-        pageString = driver.page_source
+    
+        pageString = driver.find_element_by_tag_name('html').find_element_by_css_selector("div#issueSentimentSlick > div > div > div.slick-slide.slick-current.slick-active > div.sensitiveTable_wrap > div")
         print(type(pageString))
-        print(pageString.encode('ascii', 'ignore').decode('ascii'))
-        bsObj = BeautifulSoup(pageString, 'lxml', from_encoding='utf-8')
+        print(pageString)
+        print(pageString.get_attribute('innerHTML'))
+        print(type(pageString.get_attribute('innerHTML')))
+        
+        bsObj = BeautifulSoup(pageString.get_attribute('innerHTML'), 'lxml', from_encoding='utf-8')
 
         table = bsObj.find('table', {'class' : 'relation_table sensitive_table'})
+        print(table)
         trs = table.find_all('tr')
     
     #enumerate를 사용 시, 해당 값의 인덱스를 알 수 있다..?
@@ -94,8 +100,7 @@ def crawled(dataframes):
         print("에러", e)
     
     
-    return pageString.encode('ascii', 'ignore').decode('ascii')
-
+    return 0
 
 # store와 location에 대해 계속 반복하기
 
@@ -104,7 +109,7 @@ def main():
     print("안녕")
     data = crawled(read_csv())
     # read_csv()
-    print(data)
+    # print(data)
     print("제발..")
 
 

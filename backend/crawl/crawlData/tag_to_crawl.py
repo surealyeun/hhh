@@ -22,7 +22,7 @@ print("Chrome Driver를 실행합니다.")
 opt = wd.ChromeOptions()
 opt.add_argument("headless")
 
-driver = wd.Chrome("../chromedriver", chrome_options=opt)
+driver = wd.Chrome("./someTrend/chromedriver", chrome_options=opt)
 driver.get(url)
 time.sleep(3)
 

@@ -22,12 +22,12 @@ instargram_tag_dates = []
 opt = wd.ChromeOptions()
 opt.add_argument("headless")
 
-driver = wd.Chrome("./chromedriver", chrome_options=opt)
+driver = wd.Chrome("./someTrend/chromedriver", chrome_options=opt)
 driver.get(url)
 time.sleep(3)
 
 pageString = driver.page_source
-# print(pageString)
+print(type(pageString))
 
 soup = bs4.BeautifulSoup(pageString, "html.parser")
 hashtags = soup.find_all(
