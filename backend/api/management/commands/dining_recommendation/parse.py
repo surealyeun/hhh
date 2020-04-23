@@ -59,8 +59,15 @@ def import_data(data_path=DATA_FILE):
     """
     # gu 기준으로 위에서 정렬해서 넘어 와야함
     df.drop(['id','branch', 'area', 'category', 'address_see', 'address_gu', 'address_dong'],axis='columns', inplace=True)
-    print(df)
+    df['user'] = df['user'].fillna(0).astype(int)
+    df['score'] = df['score'].fillna(0).astype(int)
     
+    user_dining_store_rating = df.pivot_table('score', index='user', columns='store_name').fillna(0)
+
+    user_dining_store_rating = user_dining_store_rating.values.T
+    print(user_dining_store_rating)
+    
+    SVD = TruncatedSVD(n_components=12)
 
 def dump_dataframes(dataframes):
     pd.to_pickle(dataframes, DUMP_FILE)
