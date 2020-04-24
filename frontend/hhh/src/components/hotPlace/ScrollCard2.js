@@ -32,11 +32,11 @@ class ScrollCard2 extends React.Component {
   }
 
   render() {
-    console.log(window.location.href.split('/')[4])
+    const area = window.location.href.split('/')[4];
     return (
       <div className="scrollContainer">
         <div className="logo">
-          <GuCard />
+          <GuCard area={area}/>
         </div>
         <div className="container">
           <div className="container2">
