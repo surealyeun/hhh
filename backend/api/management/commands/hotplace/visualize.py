@@ -20,7 +20,7 @@ def show_stores_distribution_graph(dataframes):
     """
     m = folium.Map(
         location=[37.503309,126.7636763],
-        zoom_start=13
+        zoom_start=12
     )
     result = pd.read_pickle('./data/hot_place.pkl')
 
@@ -79,7 +79,7 @@ def show_stores_distribution_graph(dataframes):
     
     """ 서울시 구 갯수만큼 for문 """
     for i in center_dataframe.index[0:]: 
-        inner_html = '<b>' + center_dataframe.loc[i, 'gu'] + '</b><br/><a href="'+'https://www.google.com'+'">hi!</a>'
+        inner_html = '<b>' + center_dataframe.loc[i, 'gu'] + '</b><br/><a href="'+'https://www.google.com'+'" target="_parent">hi!</a>'
         test = folium.Html(inner_html, script=True)
 
         popup = folium.Popup(test, max_width=2650)
