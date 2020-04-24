@@ -19,7 +19,7 @@ function App() {
           <Route path="/" exact component={Main} />
           <Route path="/feedList" component={FeedList} />
           <Route path="/feedDetail" component={FeedDetail} />
-          <Route path="/spotList" component={ScrollCard} />
+          <Route path="/spotList/:area" component={ScrollCard} />
           <Route path="/place/:id" component={PlaceDetail} />
           <Route path="/store/:id" component={StoreDetail} />
           <Route path="/userinfo" component={userInfo} />

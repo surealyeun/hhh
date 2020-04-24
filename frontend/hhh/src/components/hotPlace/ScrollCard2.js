@@ -3,7 +3,6 @@ import GuCard from "./GuCard";
 import axios from "axios";
 import CardPlace from "./CardPlace";
 import CardStore from "./CardStore";
-import Scrollable from "hide-scrollbar-react";
 import "./ScrollCard2.scss";
 
 class ScrollCard2 extends React.Component {
@@ -33,6 +32,7 @@ class ScrollCard2 extends React.Component {
   }
 
   render() {
+    console.log(window.location.href.split('/')[4])
     return (
       <div className="scrollContainer">
         <div className="logo">
