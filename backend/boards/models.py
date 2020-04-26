@@ -6,7 +6,7 @@ class Photo(core_models.TimeStampedModel):
 
     """ Photo Model Definitinon """
 
-    image = models.ImageField()
+    image = models.ImageField(upload_to="boards")
 
     def __str__(self):
         return str(self.created)
