@@ -22,20 +22,14 @@ import json
 def read_csv():
 
     df = pd.read_csv("../store.csv")
-    print(df)
-
-    # for d in df.index:
-
-    #     # df에서 가게명만 뽑아오기
-    #     search = df.loc[d, "store_name"]
-    #     print(df.loc[d, ["id", "store_name"]])
-
 
     return df
 
 
 def crawled(data, driver):
+    global num
 
+    ids = []
     rank = []
     feelings = []
     keywords = []
@@ -80,15 +74,17 @@ def crawled(data, driver):
             if idx > 0:
                 tds = tr.find_all('td')
             # td에서 필요한 건, 순위, 분류, 키워드만 필요. 총 3개
+                ids.append(num)
+                num+=1
                 rank.append(tds[0].text)
                 feelings.append(tds[1].span.text)
                 keywords.append(tds[2].span.text)
 
 
-        print(rank)
-        print(feelings)
-        print(keywords)
-        print(type(rank))
+        # print(rank)
+        # print(feelings)
+        # print(keywords)
+        # print(type(rank))
         store = []
         for i in range(0 ,len(rank)):
             store.append(data.id)
@@ -96,6 +92,7 @@ def crawled(data, driver):
         print(store)
 
         frames = {
+            "id" : ids,
             "ftype" : feelings,
             "word" : keywords,
             "rank" : rank,
@@ -103,15 +100,17 @@ def crawled(data, driver):
         }
 
         dataframes = pd.DataFrame.from_dict(frames)
-        print(dataframes)
+        # print(dataframes)
     except Exception as e:
         print("Error Message : ", e)
     
     
-    return 0
+    return dataframes
 
 # store와 location에 대해 계속 반복하기
 
+global num
+num = 1
 
 def main():
     print("안녕")
@@ -122,16 +121,17 @@ def main():
     driver.get(url)
 
     dataframes = read_csv()
-
+    df1 = pd.DataFrame()
     for idx in dataframes.index:
         print(dataframes.loc[idx, ["id", "store_name"]])
-        crawled(dataframes.loc[idx, ["id", "store_name"]], driver)
+        df2 = crawled(dataframes.loc[idx, ["id", "store_name"]], driver)
 
+        df1 = pd.concat([df1, df2])
         if idx == 3:
             break
     # read_csv()
-    # print(data)
-    print("제발..")
+    data = df1.set_index("id")
+    data.to_csv("./data/store_sense.csv", encoding="utf-8")
 
 
 if __name__ == "__main__":

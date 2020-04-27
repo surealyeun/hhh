@@ -22,7 +22,7 @@ import json
 
 def read_csv():
 
-    df = pd.read_csv("./store.csv")
+    df = pd.read_csv("../store.csv")
     print(df)
 
 
@@ -33,30 +33,28 @@ def isNaN(num):
 
 
 def crawl(keyword, driver):
-
-    # keyword = ""
-
-    # keyword = "BBQ치킨"
-    url_info = "https://www.google.com/search?q="+keyword+"&tbm=isch"
+    
+   
+    url_info = "https://search.naver.com/search.naver?where=image&sm=tab_jum&query="+keyword
     driver.get(url_info)
 
     headers={'User-Agent': 'Mozila/5.0'}
 
     time.sleep(3)
-    # driver.get(url)
+   
+    
+    pageString = driver.find_element_by_tag_name('html').find_element_by_css_selector("#_sau_imageTab > div.photowall._photoGridWrapper > div.photo_grid._box > div:nth-child(1) > a.thumb._thumb")
+    # pageString = driver.page_source
+    print(type(pageString))
 
-    pageString = driver.page_source
-
-    bsObj = BeautifulSoup(pageString, "lxml")
-
-    image = bsObj.find(name="img", attrs={"class":"rg_i Q4LuWd tx8vtf"})
-    # print(image)
+    bsObj = BeautifulSoup(pageString.get_attribute('innerHTML'), "lxml")
+   
+    image = bsObj.find("img",{"class":"_img"})
     src = image.get("src")
-
+    print(src)
     print("이미지 가져오기")
 
     return src
-
 
 def main():
 
@@ -66,9 +64,9 @@ def main():
     print(dataframes)
 
 
-    for i in tqdm(range(0,1000)):
+    # for i in tqdm(range(0,1000)):
+    for i in tqdm(range(0, 10)):
         keyword = ""
-        csvtxt.append([])
         
         if isNaN(dataframes.loc[i, "branch"]) is False:
             keyword = dataframes.loc[i, "store_name"] + " " + str(dataframes.loc[i, "branch"])
@@ -90,16 +88,20 @@ def main():
             keyword.replace("/", "-")
 
                    
-        img_filename = "img_" + str(dataframes.loc[i, "id"]) + "_" + keyword
+        # img_filename = "img_" + str(dataframes.loc[i, "id"]) + "_" + keyword
 
-        urlretrieve(img_src, "./img/"+img_filename+".jpg")
+        # urlretrieve(img_src, "./img/"+img_filename+".jpg")
 
-        csvtxt[i].append(img_filename)
+        # csvtxt[i].append(img_filename)
+        csvtxt.append([i+1])
+        csvtxt[i].append(img_src)
+        csvtxt[i].append(dataframes.loc[i, "id"])
         # print(csvtxt)
 
-    data = pd.DataFrame(csvtxt)
-    print(data)
-    data.to_csv("./images.txt", encoding="utf-8")
+    data = pd.DataFrame(csvtxt, columns=["id" ,"src", "store"])
+    # print()?
+    data_set = data.set_index("id")
+    data_set.to_csv("./data/store_images.csv", encoding="utf-8")
 
         
 
