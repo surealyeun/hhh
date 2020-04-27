@@ -7,9 +7,10 @@ import FeedList from "./components/feedList/FeedList";
 import userInfo from "./components/user/userInfo";
 import Login from "./components/user/Login";
 import Register from "./components/user/Register";
-import PlaceDetail from './components/placeDetail/PlaceDetail';
-import StoreDetail from './components/placeDetail/StoreDetail';
+import PlaceDetail from "./components/placeDetail/PlaceDetail";
+import StoreDetail from "./components/placeDetail/StoreDetail";
 import FeedDetail from "./components/feedDetail/FeedDetail";
+import Follow from "./components/feedList/follow/Follow";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/userinfo" component={userInfo} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
+          <Route path="/follow" component={Follow} />
           <Redirect path="*" to="/"></Redirect>
         </Switch>
       </BrowserRouter>

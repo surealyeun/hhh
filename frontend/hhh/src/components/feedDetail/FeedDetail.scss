@@ -73,6 +73,10 @@
         border: none;
         width: 92%;
         padding: 0 20px;
+
+        &:focus {
+          outline: none;
+        }
       }
 
       #make {
