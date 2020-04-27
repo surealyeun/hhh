@@ -34,7 +34,6 @@ class Review(models.Model):
     score = models.IntegerField(default=0)
     store = models.ForeignKey("api.DiningStore", on_delete=models.CASCADE, null=True, blank=True)
     location = models.ForeignKey("api.Location", on_delete=models.CASCADE, null=True, blank=True)
-    isLocation = models.BooleanField(null=True, blank=True, default=False)
     user = models.ForeignKey("users.User", on_delete=models.CASCADE)
     
     def __str__(self):
