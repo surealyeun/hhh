@@ -35,6 +35,8 @@ class userInfo extends Component {
       first_name: "",
       last_name: "",
       email: "",
+      avatar: null,
+      imagePreviewUrl: "",
     };
   }
 
@@ -47,6 +49,7 @@ class userInfo extends Component {
       first_name: this.state.user.first_name,
       last_name: this.state.user.last_name,
       email: this.state.user.email,
+      avatar: this.state.user.avatar,
     });
   }
 
@@ -56,26 +59,51 @@ class userInfo extends Component {
     });
   };
 
+  handleAvatarChange = (e) => {
+    let reader = new FileReader();
+    let file = e.target.files[0];
+    reader.onloadend = () => {
+      this.setState({ avatar: file, imagePreviewUrl: reader.result });
+    };
+    reader.readAsDataURL(file);
+  };
+
   handleSubmit = (e) => {
     e.preventDefault();
+    let form_data = new FormData();
+    form_data.append("avatar", this.state.avatar, this.state.avatar.name);
+    form_data.append("username", this.state.username);
+    form_data.append("password", this.state.password);
+    form_data.append("first_name", this.state.first_name);
+    form_data.append("last_name", this.state.last_name);
+    form_data.append("email", this.state.email);
+
     axios
-      .put(updateUrl, {
-        username: this.state.username,
-        password: this.state.password,
-        email: this.state.email,
-        first_name: this.state.first_name,
-        last_name: this.state.last_name,
+      .put(updateUrl, form_data, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
       })
       .then((response) => console.timeLog(response))
       .catch((err) => console.timeLog(err));
   };
 
   render() {
+    let { imagePreviewUrl } = this.state;
+    let $imagePreview = null;
     return (
       <div className="userInfoContainer">
-        <img src="https://beslow.co.kr/assets/img/mobile-float-mypage.png" />
+        {!$imagePreview && <img src={imagePreviewUrl ? imagePreviewUrl : `http://13.125.113.171:8000` + this.state.avatar} />}
+        <br />
+        <input
+          type="file"
+          id="image"
+          accept="image/png, image/jpeg"
+          onChange={this.handleAvatarChange}
+          required
+        />
         <Form {...layout} onSubmitCapture={this.handleSubmit}>
-          <Form.Item name="username" label="Username">
+          <Form.Item name="username" label="아이디">
             <Input
               name="username"
               value={this.state.username}
@@ -83,7 +111,7 @@ class userInfo extends Component {
               disabled
             />
           </Form.Item>
-          <Form.Item label="Name" style={{ marginBottom: 0 }}>
+          <Form.Item label="이름" style={{ marginBottom: 0 }}>
             <Form.Item
               name="first_name"
               style={{ display: "inline-block", width: "calc(50% - 8px)" }}
@@ -111,16 +139,7 @@ class userInfo extends Component {
               />
             </Form.Item>
           </Form.Item>
-          <Form.Item name="password" label="Password">
-            <Input.Password
-              name="password"
-              value={this.state.password}
-              placeholder="*********"
-              onChange={this.handleChange}
-              disabled
-            />
-          </Form.Item>
-          <Form.Item label="Email" name="email">
+          <Form.Item label="이메일" name="email">
             <Input
               name="email"
               value={this.state.email}
