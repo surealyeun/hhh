@@ -20,10 +20,7 @@ class UserCard extends React.Component {
     return (
       <div id="Gu-card">
         <div id="avatar">
-          <img
-            src="https://pbs.twimg.com/profile_images/491461147439009792/BU9yRHVK_400x400.png"
-            alt=""
-          />
+          <img src={`http://13.125.113.171:8000` + this.state.user.avatar} />
         </div>
         <div id="user-info">
           <div id="user-id">{this.state.user.last_name}</div>
