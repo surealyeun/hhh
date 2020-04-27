@@ -12,3 +12,8 @@ class BoradAdmin(admin.ModelAdmin):
 class PhotoAdmin(admin.ModelAdmin):
 
     pass
+
+@admin.register(models.Like)
+class LikeAdmin(admin.ModelAdmin):
+
+    pass

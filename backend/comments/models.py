@@ -24,3 +24,6 @@ class Comment(core_models.TimeStampedModel):
     parents = models.ForeignKey(
         "Comment", on_delete=models.CASCADE, null=True, blank=True
     )
+
+    def __str__(self):
+        return self.board.content+' | '+ self.writer.username + ' | '+self.text

@@ -20,7 +20,6 @@ def import_data(data_path=DATA_FILE):
 
     df = pd.merge(df_review, df_store, left_on='store', right_on='id', how='outer')
     df.rename(columns={'id_x':'id'}, inplace=True)
-    df = df[df['address_gu'] == '서초구']
     """
         # 협업 필터링 알고리즘 - 아이템 기반 추천
     
@@ -73,6 +72,9 @@ def import_data(data_path=DATA_FILE):
     """
         유저 맞춤 가게 추천
     """
+    address_list = []
+    df = df[df['address_gu'] == '서초구']
+
     # gu 기준으로 위에서 정렬해서 넘어 와야함
     df.drop(['id','branch', 'area', 'category', 'address_see', 'address_gu', 'address_dong'],axis='columns', inplace=True)
     df['user'] = df['user'].fillna(0).astype(int)

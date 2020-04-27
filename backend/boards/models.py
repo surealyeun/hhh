@@ -17,9 +17,10 @@ class Like(models.Model):
     """ Photo Model Definitinon """
 
     user = models.ForeignKey("users.User", on_delete=models.CASCADE)
+    board = models.ForeignKey("Board", on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return self.user
+        return self.user.username + ' | ' + self.board.content
 
 
 class Board(core_models.TimeStampedModel):
@@ -31,7 +32,9 @@ class Board(core_models.TimeStampedModel):
     address_gu = models.CharField(max_length=20, null=True, blank=True)
     content = models.TextField(null=True, blank=True)
     photo = models.ManyToManyField(Photo)
-    like = models.ManyToManyField(Like, null=True, blank=True)
+    store = models.ForeignKey("api.DiningStore", on_delete=models.CASCADE, null=True, blank=True)
+    location = models.ForeignKey("api.Location", on_delete=models.CASCADE, null=True, blank=True)
+    isLocation = models.BooleanField(null=True, blank=True, default=False)
 
     def __str__(self):
         return str(self.writer) + ' | ' + self.address_gu +' | '+ self.content
