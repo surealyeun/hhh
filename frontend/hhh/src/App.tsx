@@ -10,6 +10,7 @@ import Register from "./components/user/Register";
 import PlaceDetail from './components/placeDetail/PlaceDetail';
 import StoreDetail from './components/placeDetail/StoreDetail';
 import FeedDetail from "./components/feedDetail/FeedDetail";
+import mainsns from './components/main/MainSNS';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/userinfo" component={userInfo} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
+          <Route path="/sns" component={mainsns} />
           <Redirect path="*" to="/"></Redirect>
         </Switch>
       </BrowserRouter>

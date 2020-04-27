@@ -1,5 +1,7 @@
 import React from "react";
+import MainSNS from "./MainSNS";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import "./Main.scss";
 
 const username: string | null = sessionStorage.getItem("username");
@@ -41,6 +43,14 @@ class Main extends React.Component {
     };
 
     snsOpen = () => {
+        axios({
+            method: "get",
+            url: "http://13.125.113.171:8000/feedlist/opwer032",
+        }).then(res => {
+            console.log(res.data);
+        }).catch(err => {
+            console.log(err);
+        })
         this.setState({
             isSns: !this.state.isSns,
         });
@@ -49,9 +59,14 @@ class Main extends React.Component {
     render() {
         return (
             <div className="main">
+                
+                {this.state.isSns ? 
+                    <div className="main-feed"><MainSNS /></div>: <></>}
+                
                 <div className={this.state.isSns ? `landing sns` : `landing`}>
                     <div className="item title">
                         <div className="title-head">
+
                             <div className="log">
                                 {this.state.isLog ? (
                                     <div>

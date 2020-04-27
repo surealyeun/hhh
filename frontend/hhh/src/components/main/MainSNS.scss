@@ -1,0 +1,142 @@
+.MainSNS {
+    width: 85%;
+    height: 600px;
+    display: grid;
+    grid-template-columns: 60% 40%;
+    gap: 0;
+    margin: 10px auto;
+
+    .feed-left {
+        width: 100%;
+        height: 100%;
+        border: solid 0px rgb(48, 48, 48);
+        background-color: black;
+        .pic {
+            img {
+                width: 100%;
+            }
+        }
+    }
+
+    .feed-right {
+        // position: inherit;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        border: solid 0.5px rgb(235, 235, 235);
+        background-color: white;
+        .user {
+            height: 60px;
+            border-bottom: solid 0.5px rgb(235, 235, 235);
+            .profile {
+                width: 70px;
+                position: relative;
+                top: 13px;
+                img {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 20px;
+                }
+            }
+            .id {
+                width: 70%;
+                position: relative;
+                left: 75px;
+                top: -22px;
+                // margin-top: -11px;
+            }
+        }
+
+        .content {
+            height: 450px;
+            overflow: auto;
+            .post, .comment{
+                .profile {
+                    width: 70px;
+                    position: relative;
+                    top: 7px;
+                    img {
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 20px;
+                    }
+                }
+                .te {
+                    width: 70%;
+                    position: relative;
+                    left: 75px;
+                    top: -37px;
+                    .text {
+                        word-break: break-all;
+                        margin: 0;
+                    }
+                }
+            }
+
+
+        }
+
+        .like{
+            position: relative;
+            bottom: 1px;
+            height: 40px;
+            width: 100%;
+            // float: left;
+            border-top: solid 0.5px rgb(235, 235, 235);
+            border-bottom: solid 0.5px rgb(235, 235, 235);
+            .like-heart{
+                // width: 30px;
+                height: 30px;
+                margin: 0;
+                .like{
+                    font-size: 25px;
+                    margin: 0 10px;
+                    color: #00ffaa;
+                    .num{
+                        color: black;
+                        margin-left: 10px;
+                        position: relative;
+                        top: -3px;
+                        font-size: 15px;
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+
+        .mk-comment{
+            position: relative;
+            // bottom: -38px;
+            height: 50px;
+            width: 100%;
+            // border-top: solid 0.5px rgb(235, 235, 235);
+            textarea{
+                overflow: auto;
+                height: 100%;
+                width: 80%;
+                position: relative;
+                // top: -39px;
+                padding-left: 10px;
+                padding-right: 10px;
+                border: 0;
+                resize: none;
+                border-right: solid 0.5px rgb(235, 235, 235);
+            }
+            textarea::placeholder{
+                padding-top: 11px;
+                color: rgb(100, 100, 100);
+            }
+            textarea:focus{
+                outline: none;
+            }
+            button{
+                width: 20%;
+                position: relative;
+                top: -21px;
+                background: none;
+                border: 0;
+                padding: 0;
+            }
+        }
+    }
+}

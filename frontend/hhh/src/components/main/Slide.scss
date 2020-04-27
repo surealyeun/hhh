@@ -1,0 +1,46 @@
+.Slide{
+    .ant-carousel .slick-dots{
+        position: relative;
+        bottom: 120px;
+    }
+
+    .ant-carousel .slick-slide {
+        text-align: center;
+        // width: 100%;
+        // height: 100%;
+        line-height: 0px;
+        background: black;
+        overflow: hidden;
+        .img {
+            margin: 10px 0px;
+        }
+    }
+    
+    .ant-carousel .slick-slide h3 {
+        color: #fff;
+    }
+    
+    .ant-carousel .slick-next {
+        right: 0px;
+        top: 0px;
+        z-index: 10;
+        width: 20%;
+        height: 102%;
+        
+    }
+    .ant-carousel .slick-next:hover {
+        background-color: rgba(0, 0, 0, 0.30);
+    }
+    
+    .ant-carousel .slick-prev {
+        left: 0px;
+        top: 0px;
+        z-index: 10;
+        width: 20%;
+        height: 102%;
+    }
+    .ant-carousel .slick-prev:hover {
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+
+}
