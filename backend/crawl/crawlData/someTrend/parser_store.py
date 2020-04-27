@@ -44,9 +44,15 @@ def crawled(data, driver):
 
     search = driver.find_element_by_id("searchKeyword")
     search.clear()
-    search.send_keys(data.store_name)
 
-    button = driver.find_element_by_xpath("//*[@id='searchKeywordClick']")
+    if len(data.store_name) > 20:
+        search.send_keys(data.store_name[0:20])
+    
+    else:
+        search.send_keys(data.store_name)
+
+    # button = driver.find_element_by_xpath("//*[@id='searchKeywordClick']")
+    button = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//*[@id='searchKeywordClick']")))
     button.click()
 
     time.sleep(5)
@@ -113,7 +119,6 @@ global num
 num = 1
 
 def main():
-    print("안녕")
 
     url = "https://some.co.kr/analysis/issue"
 
@@ -127,8 +132,8 @@ def main():
         df2 = crawled(dataframes.loc[idx, ["id", "store_name"]], driver)
 
         df1 = pd.concat([df1, df2])
-        if idx == 3:
-            break
+        # if idx == 3:
+        #     break
     # read_csv()
     data = df1.set_index("id")
     data.to_csv("./data/store_sense.csv", encoding="utf-8")

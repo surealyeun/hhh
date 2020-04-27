@@ -33,6 +33,14 @@ def user_update_and_delete(request, username):
      
 @api_view(['GET'])
 def login(request, username, password):
-    if username=='Eum_mericano' and password == '1234':
-        return Response({'message':'인증되었습니다'}, status=status.HTTP_200_OK)
-    return Response({'message':'아이디와 비밀번호를 다시 확인해주세요'}, status=status.HTTP_404_NOT_FOUND)
+
+    res_data = {}
+
+    if not (username and password):
+        res_data['error'] = 'ID 혹은 PASSWORD 를 입력하세요.'
+    else:
+        login_user = User.object.get(username=username, )
+
+    # if username=='Eum_mericano' and password == '1234':
+    #     return Response({'message':'인증되었습니다'}, status=status.HTTP_200_OK)
+    # return Response({'message':'아이디와 비밀번호를 다시 확인해주세요'}, status=status.HTTP_404_NOT_FOUND)

@@ -21,7 +21,7 @@ import json
 
 def read_csv():
 
-    df = pd.read_csv("./location.csv")
+    df = pd.read_csv("../location.csv")
 
     return df
 
@@ -46,7 +46,8 @@ def crawled(data, driver):
     search.clear()
     search.send_keys(data.location_name)
 
-    button = driver.find_element_by_xpath("//*[@id='searchKeywordClick']")
+    # button = driver.find_element_by_xpath("//*[@id='searchKeywordClick']")
+    button = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//*[@id='searchKeywordClick']")))
     button.click()
 
     time.sleep(5)
@@ -104,8 +105,8 @@ def crawled(data, driver):
     except Exception as e:
         print("Error Message : ", e)
     
-    
-    return dataframes
+    finally:
+        return dataframes
 
 # store와 location에 대해 계속 반복하기
 
@@ -122,16 +123,22 @@ def main():
 
     dataframes = read_csv()
     df1 = pd.DataFrame()
-    for idx in dataframes.index:
-        print(dataframes.loc[idx, ["id", "location_name"]])
-        df2 = crawled(dataframes.loc[idx, ["id", "location_name"]], driver)
+    
+    try:
+        for idx in dataframes.index:
+            print(dataframes.loc[idx, ["id", "location_name"]])
+            df2 = crawled(dataframes.loc[idx, ["id", "location_name"]], driver)
 
-        df1 = pd.concat([df1, df2])
-        if idx == 3:
-            break
+            df1 = pd.concat([df1, df2])
+        # if idx == 3:
+        #     break
     # read_csv()
-    data = df1.set_index("id")
-    data.to_csv("./data/location_sense.csv", encoding="utf-8")
+    except Exception as e:
+        print(e)
+
+    finally:
+        data = df1.set_index("id")
+        data.to_csv("./data/location_sense.csv", encoding="utf-8")
 
 
 if __name__ == "__main__":
