@@ -1,5 +1,4 @@
 import React from "react";
-import SlideImg from "./SlideImg";
 import Slide from "./Slide";
 import { HeartOutlined, HeartFilled } from "@ant-design/icons";
 import "./MainSNS.scss";
