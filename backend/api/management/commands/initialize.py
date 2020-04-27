@@ -16,7 +16,7 @@ class Command(BaseCommand):
         dataframes = pd.read_pickle(str(DATA_DIR / "dining.pkl"))
 
         print("[*] Initializing stores...")
-        models.DiningStore.objects.all().delete()
+        #models.DiningStore.objects.all().delete()
         stores = dataframes["stores"]
         stores_bulk = [
             models.DiningStore(
@@ -41,7 +41,7 @@ class Command(BaseCommand):
         dataframes = pd.read_pickle(str(DATA_DIR / "location.pkl"))
         
         print("[*] Initializing locations...")
-        models.Location.objects.all().delete()
+        #models.Location.objects.all().delete()
         locations = dataframes["location"]
         locations_bulk = [
             models.Location(
