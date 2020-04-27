@@ -81,6 +81,7 @@ def import_data(data_path=DATA_FILE):
     menu_id = 1
     for d in data:
         if d["address"] is None: continue
+        if '&amp;' in d['name'] : continue
         if "서울특별시" in d["address"] :
             categories = [c["category"] for c in d["category_list"]]
             stores.append(

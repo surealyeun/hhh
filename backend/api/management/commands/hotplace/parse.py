@@ -34,12 +34,37 @@ def import_data():
     """
     """
         핫플레이스
-        1)
-        인구수 평가 (15~35살까지)
-        주말 평일비교 : 30점 만점 
-        6개월 전 현재 비교 : 18점 만점
-        기저 생활인구 랭킹 : 20점 만점
+        1) 
+            (15세 ~ 35세)
+            인구수 평가
+
+            주말 평일비교 : 30점 만점 
+            6개월 전 현재 비교 : 18점 만점
+            기저 생활인구 랭킹 : 20점 만점
+
+        2) 
+            매출액 평가
+            
+            (10대~30대)
+            19년도 서울 카드사 데이터
+            9월, 12월 차이         
+            
+            기준 : 매출 발생 지역
+            구 단위로 묶어서 계산
+                
+            주말과 평일 차이 30점
+            9월대비 12월 현황 차이 18점
+
     """
+    PEOPLE_WEEK_RATE = 10
+    PEOPLE_WEEK_BASEMENT = 5
+    PEOPLE_TERM_RATE = 12
+    PEOPLE_TERM_BASEMENT = 6
+
+    PAYMENT_WEEK_RATE = 22
+    PAYMENT_WEEK_BASEMENT = 8
+    PAYMENT_TERM_RATE = 12
+    PAYMENT_TERM_BASEMENT = 6
 
     """
         1-1) Data 3월 14일 (토요일), 3월 16일 (월요일) 비교
@@ -91,7 +116,7 @@ def import_data():
 
     result_frame_week = (pop_frame_200314-pop_frame_200316).sort_values(by=['total'], ascending=False)
     result_frame_week = result_frame_week.reset_index()
-    result_frame_week['score'] = 30 - ((result_frame_week.index +1))/25 * 30
+    result_frame_week['score'] = (PEOPLE_WEEK_RATE - ((result_frame_week.index +1))/25 * PEOPLE_WEEK_RATE) + PEOPLE_WEEK_BASEMENT
     
     """
         1-2) 6개월전과 현재 비교 (주말)
@@ -125,7 +150,7 @@ def import_data():
 
     result_frame_term = (pop_frame_200314-pop_frame_190922).sort_values(by=['total'], ascending=False)
     result_frame_term = result_frame_term.reset_index()
-    result_frame_term['score'] = 18 - ((result_frame_term.index +1))/25 *18
+    result_frame_term['score'] = (PEOPLE_TERM_RATE - ((result_frame_term.index +1))/25 * PEOPLE_TERM_RATE) + PEOPLE_TERM_BASEMENT
   
     
     """ 인구 스코어 합산 """
@@ -222,7 +247,7 @@ def import_data():
 
 
     result_frame_week = (payment_frame_190921-payment_frame_190923).sort_values(by=['결제금액'], ascending=False).reset_index()
-    result_frame_week['score'] = 30 - ((result_frame_week.index +1))/25 * 30
+    result_frame_week['score'] = (PAYMENT_WEEK_RATE - ((result_frame_week.index +1))/25 * PAYMENT_WEEK_RATE) + PAYMENT_WEEK_BASEMENT
     result_frame_week.drop('결제금액', axis='columns', inplace=True)
 
 
@@ -295,9 +320,10 @@ def import_data():
 
 
     result_frame_term = (payment_frame_191221-payment_frame_190921).sort_values(by=['결제금액'], ascending=False).reset_index()
-    result_frame_term['score'] = 18 - ((result_frame_term.index +1))/25 * 18
-    result_frame_term.drop('결제금액', axis='columns', inplace=True)
+    result_frame_term['score'] = (PAYMENT_TERM_RATE - ((result_frame_term.index +1))/25 * PAYMENT_TERM_RATE) + PAYMENT_TERM_BASEMENT
 
+
+    result_frame_term.drop('결제금액', axis='columns', inplace=True)
     result_frame_payment = (result_frame_week.set_index('gu')+result_frame_term.set_index('gu')).sort_values(by=['score'], ascending=False).reset_index()
 
     result = (result_frame_population.set_index('gu')+result_frame_payment.set_index('gu')).sort_values(by=['score'], ascending=False).reset_index()

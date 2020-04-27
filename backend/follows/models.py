@@ -5,5 +5,8 @@ class Follow(models.Model):
 
     """ Follow Model Definition """
 
-    following = models.ManyToManyField("users.User", related_name="followed")
-    followed = models.ManyToManyField("users.User", related_name="followers")
+    following = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="followed", null=True)
+    followed = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="following", null=True)
+
+    def __str__(self):
+        return self.following.username + ' ------> ' + self.followed.username

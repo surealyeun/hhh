@@ -2,33 +2,118 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Main.scss";
 
-const username:string | null = sessionStorage.getItem("username");
+const username: string | null = sessionStorage.getItem("username");
 
 class Main extends React.Component {
+    state = {
+        isLog: false,
+        isSearch: false,
+        isSns: false,
+    };
+
+    constructor(props: any) {
+        super(props);
+
+        this.state = {
+            ...this.state,
+            isLog: sessionStorage.getItem("username") ? true : false,
+        };
+    }
+
+    search = () => {
+        this.setState({
+            isSearch: !this.state.isSearch,
+        });
+    };
+
+    logout = () => {
+        sessionStorage.removeItem("username");
+        console.log("logout");
+        this.setState({
+            isLog: false,
+        });
+    };
+
+    closeSearch = () => {
+        this.setState({
+            isSearch: false,
+        });
+    };
+
+    snsOpen = () => {
+        this.setState({
+            isSns: !this.state.isSns,
+        });
+    };
+
     render() {
         return (
             <div className="main">
-                <div className="test">
-                    <h1>TEST</h1>
-                        <h4>클릭하면 해당 페이지로 넘어갑니다.</h4><br/>
-                        <Link to="/login">
-                        😃 유저 로그인 페이지
-                        </Link><br/>
-                        <Link to="/userInfo">
-                        { username ? '🤟 회원 정보 페이지' : ''}
-                        </Link><br/>
-                        <Link to="/spotList">
-                        🏛 장소 리스트 페이지
-                        </Link><br/>
-                        <Link to="/place">
-                        🔎 장소 상세 페이지
-                        </Link><br/>
-                        <Link to="/feedList">
-                        🙌 SNS 피드 페이지
-                        </Link>
-                </div>
-                <div className="grid">
-                    <div className="title">
+                <div className={this.state.isSns ? `landing sns` : `landing`}>
+                    <div className="item title">
+                        <div className="title-head">
+                            <div className="log">
+                                {this.state.isLog ? (
+                                    <div>
+                                        <div className="user">
+                                            <Link to="">
+                                                <img
+                                                    className="user-profile"
+                                                    src="https://image.flaticon.com/icons/svg/1738/1738760.svg"
+                                                    alt="user_profile"
+                                                />
+                                                <h2 className="username">{username}</h2>
+                                            </Link>
+                                        </div>
+                                        <div className="logout">
+                                            <button onClick={this.logout}>
+                                                {/* <h3>logout</h3> */}
+                                                <img
+                                                    className="logout-btn"
+                                                    src="https://image.flaticon.com/icons/svg/1828/1828427.svg"
+                                                    alt="logout"
+                                                />
+                                            </button>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="login">
+                                        <Link to="/login">
+                                            <img
+                                                className="login-btn"
+                                                src="https://image.flaticon.com/icons/svg/1828/1828395.svg"
+                                                alt="login"
+                                            />
+                                        </Link>
+                                    </div>
+                                )}
+                            </div>
+                            <div className="search">
+                                <button onClick={this.search}>
+                                    <img
+                                        className="search-btn"
+                                        src="https://image.flaticon.com/icons/svg/149/149852.svg"
+                                        alt="search"
+                                    />
+                                </button>
+                            </div>
+                            {this.state.isSearch ? (
+                                <div className="search-input">
+                                    <input type="text"></input>
+                                    <img
+                                        className="close"
+                                        src="https://image.flaticon.com/icons/svg/1828/1828778.svg"
+                                        alt="close"
+                                        onClick={this.closeSearch}
+                                    />
+                                </div>
+                            ) : (
+                                <></>
+                            )}
+                        </div>
+                        <br />
+                        <br />
+                        <br />
                         <h1>
                             ㅎ<br />ㅎ<br />ㅎ
                         </h1>
@@ -41,9 +126,15 @@ class Main extends React.Component {
                             <br />
                             <span id="h4-4">플레이스</span>
                         </h4>
-                        <hr />
+                        <div className={this.state.isSns ? `title-foot mainp` : `title-foot sns`} onClick={this.snsOpen}>
+                            {this.state.isSns ? (
+                                <h5 id="main">MAIN &gt;&gt;</h5>
+                            ) : (
+                                <h5 id="sns">&lt;&lt; SNS</h5>
+                            )}
+                        </div>
                     </div>
-                    <div className="mapFrame">
+                    <div className="item mapFrame">
                         <iframe className="map" src="../map.html" frameBorder="0" />
                     </div>
                 </div>

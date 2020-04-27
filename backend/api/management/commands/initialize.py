@@ -35,25 +35,8 @@ class Command(BaseCommand):
             for store in stores.itertuples()
         ]
         
-        models.DiningStore.objects.bulk_create(stores_bulk)
+        #models.DiningStore.objects.bulk_create(stores_bulk)
         
-        print("[*] Initializing reviews...")
-        models.DiningReview.objects.all().delete()
-        reviews = dataframes["reviews"]
-        reviews_bulk = [
-            models.DiningReview(
-                review_id=review.id,
-                store_id=review.store,
-                dining_user=review.user,
-                score=review.score,
-                content=review.content,
-                reg_time=review.reg_time,
-            )
-            for review in reviews.itertuples()
-        ]
-        models.DiningReview.objects.bulk_create(reviews_bulk)
-
-
         print("[*] Loading data...")
         dataframes = pd.read_pickle(str(DATA_DIR / "location.pkl"))
         
@@ -74,7 +57,7 @@ class Command(BaseCommand):
             )
             for location in locations.itertuples()
         ]
-        models.Location.objects.bulk_create(locations_bulk)
+        #models.Location.objects.bulk_create(locations_bulk)
 
         print("[+] Done")
 

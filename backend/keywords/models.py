@@ -1,6 +1,5 @@
 from django.db import models
 from boards.models import Board
-from places.models import Store, Location
 
 
 class Tag(models.Model):
@@ -8,5 +7,8 @@ class Tag(models.Model):
 
     tag = models.CharField(max_length=20, null=False, blank=False)
     board = models.ManyToManyField(Board)
-    store = models.ForeignKey(Store, null=True, on_delete=models.CASCADE)
-    location = models.ForeignKey(Location, null=True, on_delete=models.CASCADE)
+    store = models.ForeignKey("api.DiningStore", null=True, on_delete=models.CASCADE, blank=True)
+    location = models.ForeignKey("api.Location", null=True, on_delete=models.CASCADE, blank=True)
+
+    def __str__(self):
+        return self.tag
