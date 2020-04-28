@@ -118,10 +118,10 @@ def main():
         csvtxt[i].append(dataframes.loc[i, "id"])
         # print(csvtxt)
 
-    data = pd.DataFrame(csvtxt, columns=["id" ,"src", "store"])
+        data = pd.DataFrame(csvtxt, columns=["id" ,"src", "store"])
     # print()?
-    data_set = data.set_index("id")
-    data_set.to_csv("./data/store_images.csv", encoding="utf-8")
+        data_set = data.set_index("id")
+        data_set.to_csv("./data/store_images.csv", encoding="utf-8")
 
         
 

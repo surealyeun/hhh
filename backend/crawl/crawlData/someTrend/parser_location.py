@@ -8,6 +8,7 @@ from selenium import webdriver as wd
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
 from urllib.parse import quote_plus
 from PyQt5 import QtCore, QtWidgets
 
@@ -21,7 +22,7 @@ import json
 
 def read_csv():
 
-    df = pd.read_csv("../location.csv")
+    df = pd.read_csv("../location_full.csv")
 
     return df
 
@@ -52,7 +53,7 @@ def crawled(data, driver):
 
     # button = driver.find_element_by_xpath("//*[@id='searchKeywordClick']")
     button = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//*[@id='searchKeywordClick']")))
-    button.click()
+    button.send_keys(Keys.ENTER)
 
     time.sleep(5)
     driver.implicitly_wait(3)
@@ -85,16 +86,11 @@ def crawled(data, driver):
                 feelings.append(tds[1].span.text)
                 keywords.append(tds[2].span.text)
 
-
-        # print(rank)
-        # print(feelings)
-        # print(keywords)
-        # print(type(rank))
         location = []
         for i in range(0 ,len(rank)):
             location.append(data.id)
         
-        print(location)
+        # print(location)
 
         frames = {
             "id" : ids,
@@ -122,27 +118,23 @@ def main():
 
     url = "https://some.co.kr/analysis/issue"
 
-    driver = wd.Chrome("chromedriver")
+    opt = wd.ChromeOptions()
+    opt.add_argument("headless")
+    
+    driver = wd.Chrome("./chromedriver", chrome_options=opt)
     driver.get(url)
 
     dataframes = read_csv()
     df1 = pd.DataFrame()
     
-    try:
-        for idx in dataframes.index:
-            print(dataframes.loc[idx, ["id", "location_name"]])
-            df2 = crawled(dataframes.loc[idx, ["id", "location_name"]], driver)
+    for idx in dataframes.index:
+        print(dataframes.loc[idx, ["id", "location_name"]])
+        df2 = crawled(dataframes.loc[idx, ["id", "location_name"]], driver)
 
-            df1 = pd.concat([df1, df2])
-        # if idx == 3:
-        #     break
-    # read_csv()
-    except Exception as e:
-        print(e)
-
-    finally:
+        df1 = pd.concat([df1, df2])
+    
         data = df1.set_index("id")
-        data.to_csv("./data/location_sense.csv", encoding="utf-8")
+        data.to_csv("./data/location_sense_rest.csv", encoding="utf-8")
 
 
 if __name__ == "__main__":
