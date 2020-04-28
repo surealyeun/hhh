@@ -13,6 +13,7 @@ class BoardViewSet(viewsets.ModelViewSet):
     serializer_class = BoardSerializer
 
 
+<<<<<<< HEAD
 @api_view(['POST'])
 def board_like_post(request):
     return Response({"message" : "data input!","data":request.data})
@@ -25,3 +26,6 @@ def board_like_delete(request, username, boardno):
     like.delete()
     return Response({'message':'like has been deleted!'})
     
+=======
+# 
+>>>>>>> 2a5261248dec3f5fa7562e38c518a7d2709c44b7

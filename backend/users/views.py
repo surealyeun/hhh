@@ -9,6 +9,7 @@ from django.shortcuts import get_object_or_404
 from follows import models as follow_models
 from boards import models as board_models
 from boards import serializers as board_serializer
+from django.contrib.auth.hashers import check_password
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -36,9 +37,24 @@ def user_update_and_delete(request, username):
      
 @api_view(['GET'])
 def login(request, username, password):
-    if username=='Eum_mericano' and password == '1234':
-        return Response({'message':'인증되었습니다'}, status=status.HTTP_200_OK)
-    return Response({'message':'아이디와 비밀번호를 다시 확인해주세요'}, status=status.HTTP_404_NOT_FOUND)
+
+    res_data = {}
+    
+    if not (username and password):
+        res_data['error'] = 'ID 혹은 PASSWORD 를 입력하세요.'
+    else:
+        login_user = User.objects.get(username=username)
+        print(login_user)
+        if check_password(password, login_user.password):
+            # request.session['user'] = login_user.username
+            res_data['message'] = "로그인 성공"
+            return Response(res_data, status=status.HTTP_200_OK)
+
+        else:
+            res_data['error'] = "비밀번호가 일치하지 않습니다."
+            res_data['message'] = "비밀번호가 일치하지 않습니다."
+            return Response(res_data, status=status.HTTP_401_UNAUTHORIZED)
+
 
 
 
@@ -56,3 +72,4 @@ def user_follow_feedlist(request, username):
     feed_serializer = board_serializer.BoardSerializer(queryset, many=True)
     return Response(feed_serializer.data)     
 
+    
