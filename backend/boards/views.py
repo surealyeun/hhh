@@ -23,3 +23,9 @@ def board_like_delete(request, username, boardno):
     like = Like.objects.filter(user=user).filter(board=board)
     like.delete()
     return Response({'message':'like has been deleted!'})
+
+@api_view(['DELETE'])
+def board_delete(request, boardno):
+    board = get_object_or_404(Board ,id=boardno)
+    board.delete()
+    return Response({'message':'board has been deleted!'})

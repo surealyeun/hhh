@@ -78,12 +78,16 @@ def user_follow_feedlist(request, username):
         board = get_object_or_404(board_models.Board ,id=result[i]["id"])
         like = list(board_models.Like.objects.filter(board=board).values())
         result[i]["likes"] =len(like)
+        result[i]["username"] = user.username
 
         login_user = get_object_or_404(User ,username=username)
         like = list(board_models.Like.objects.filter(board=board).filter(user=login_user).values())
         
         comments = list(comments_models.Comment.objects.filter(board=board).values())
         result[i]["comments"] = comments
+        for j in range(len(comments)):
+            user = get_object_or_404(User ,id=comments[j]["writer_id"])
+            comments[j]['username'] = user.username
 
         pressLike = True
         if len(like) == 0:
@@ -101,13 +105,17 @@ def user_follow_feedlist(request, username):
             board = get_object_or_404(board_models.Board ,id=result[i]["id"])
             like = list(board_models.Like.objects.filter(board=board).values())
             result[i]["likes"] =len(like)
+            result[i]["username"] = user.username
 
             login_user = get_object_or_404(User ,username=username)
             like = list(board_models.Like.objects.filter(board=board).filter(user=login_user).values())
             
             comments = list(comments_models.Comment.objects.filter(board=board).values())
             result[i]["comments"] = comments
-
+            for j in range(len(comments)):
+                user = get_object_or_404(User ,id=comments[j]["writer_id"])
+                comments[j]['username'] = user.username
+                
             pressLike = True
             if len(like) == 0:
                 pressLike = False
@@ -139,11 +147,16 @@ def user_feedlist(request, user_id):
         board = get_object_or_404(board_models.Board ,id=result[i]["id"])
         like = list(board_models.Like.objects.filter(board=board).values())
         result[i]["likes"] = len(like)
+        result[i]["username"] = user.username
         login_user = get_object_or_404(User ,id=user_id)
         like = list(board_models.Like.objects.filter(board=board).filter(user=login_user).values())
         
         comments = list(comments_models.Comment.objects.filter(board=board).values())
+        
         result[i]["comments"] = comments
+        for j in range(len(comments)):
+            user = get_object_or_404(User ,id=comments[j]["writer_id"])
+            comments[j]['username'] = user.username
 
         pressLike = True
         if len(like) == 0:

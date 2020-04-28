@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -35,3 +36,15 @@ def follower_list(request, user_id):
     follow_serializer = UserSerializer(queryset, many=True)
     return Response(follow_serializer.data)
 
+
+@api_view(['POST'])
+def follow(request):
+    return Response({"message" : "data input!","data":request.data})
+
+@api_view(['DELETE'])
+def unfollow(request, follower, followed):
+    follower = get_object_or_404(User ,id=follower)
+    followed = get_object_or_404(User ,id=followed)
+    follow = Follow.objects.filter(following_id=follower.id).filter(followed_id=followed.id)
+    follow.delete()
+    return Response({'message':'follow has been deleted!'})
