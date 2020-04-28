@@ -34,6 +34,7 @@ const Login = () => {
       })
       .then((resp) => {
         if (resp.status === 200) {
+          console.log(resp);
           sessionStorage.setItem("username", values.username);
           history.push("/");
         }
