@@ -2,23 +2,12 @@ import React, { Component } from "react";
 import "./Follow.scss";
 
 class Follow extends Component {
-  state = {
-    visible: "none",
-  };
-
-  closeFollow = () => {
-    this.setState({ visible: "none" });
-  };
-
   render() {
     return (
-      <div id="follow" style={{ display: this.state.visible }}>
+      <div id="follow" style={{ display: "none" }}>
         <div id="follow-list">
           <div id="follow-text">
-            팔로우{" "}
-            <div id="close-btn" onClick={this.closeFollow}>
-              X
-            </div>
+            팔로우 <div id="close-btn">X</div>
           </div>
           <ul>
             <li>
