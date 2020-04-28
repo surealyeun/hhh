@@ -8,5 +8,5 @@ urlpatterns = [
     path('users/update/delete/<username>/', user_update_and_delete, name="user-update-delete"),
     path('login/<username>/<password>', login, name="login"),
     path('feedlist/follow/<username>', user_follow_feedlist, name='user_follow_feedlist'),
-    path('feedlist/user/<user_id>', user_feedlist, name='user_follow_feedlist'),
+    path('feedlist/user/<user_name>', user_feedlist, name='user_follow_feedlist'),
 ]
