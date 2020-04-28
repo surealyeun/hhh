@@ -2,6 +2,7 @@
 import React from "react";
 import { Row, Col } from "antd";
 import "./PlaceDetail.scss";
+import { Link } from "react-router-dom";
 
 class PlaceDetail extends React.Component {
   componentDidMount() {
@@ -43,6 +44,7 @@ class PlaceDetail extends React.Component {
   render() {
     const id = this.props.match.params.id;
     const state = this.props.location.state;
+    const store_name = state.store_name;
     return (
       <div className="place-detail">
         <Row>
@@ -119,7 +121,20 @@ class PlaceDetail extends React.Component {
             <hr />
             <div className="reviews">
               <h3>Reviews</h3>
-              <div className="review"></div>
+              <div className="review">
+                <Link
+                  to={{
+                    pathname: `/writePost`,
+                    state: {
+                      isStore: true,
+                      store_name,
+                      id
+                    },
+                  }}
+                >
+                  <button>리뷰 작성하기</button>
+                </Link>
+              </div>
               <div className="review"></div>
               <div className="review"></div>
             </div>

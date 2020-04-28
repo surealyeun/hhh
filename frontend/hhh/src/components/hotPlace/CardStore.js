@@ -22,6 +22,7 @@ const Place = ({ state }) => {
             to={{
               pathname: `/store/${id}`,
               state: {
+                id,
                 store_name,
                 category,
                 address_see,

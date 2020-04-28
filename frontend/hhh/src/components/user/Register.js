@@ -3,7 +3,6 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { Form, Input, Select, Row, Col, Button } from "antd";
 import "./Register.scss";
-import Profile from "./Profile";
 
 const { Option } = Select;
 const registerUrl = `http://13.125.113.171:8000/users/`;

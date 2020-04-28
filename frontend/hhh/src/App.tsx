@@ -12,6 +12,7 @@ import StoreDetail from "./components/placeDetail/StoreDetail";
 import FeedDetail from "./components/feedDetail/FeedDetail";
 import mainsns from './components/main/MainSNS';
 import Follow from "./components/feedList/follow/Follow";
+import WritePost from "./components/Post/WritePost";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="/register" component={Register} />
           <Route path="/sns" component={mainsns} />
           <Route path="/follow" component={Follow} />
+          <Route path="/writePost" component={WritePost} />
           <Redirect path="*" to="/"></Redirect>
         </Switch>
       </BrowserRouter>
