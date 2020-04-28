@@ -20,7 +20,7 @@ class Like(models.Model):
     board = models.ForeignKey("Board", on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return self.user.username + ' | ' + str(self.board.id)
+        return self.user.username + ' | ' + str(self.board.content)
 
 
 class Board(core_models.TimeStampedModel):
