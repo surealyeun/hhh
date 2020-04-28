@@ -34,10 +34,23 @@ def import_data():
 
     connection.close()
 
+
+    df_store["isLocation"] = False
+    df_location["isLocation"] = True
+
+    df_store.drop([
+        'branch', 'area', 'tel', 'address_dong', 'latitude', 'longitude',
+        'category', 'address_see'
+    ], axis='columns', inplace=True)
+    df_location.drop([
+        'address_dong', 'latitude', 'longitude', 'tel',
+        'description', 'address_see'
+    ], axis='columns', inplace=True)
+    df_store.rename(columns={'store_name':'name'}, inplace=True)
+    df_location.rename(columns={'location_name':'name'}, inplace=True)
     print(df_store)
     print(df_location)
 
-    # df = pd.merge(df_review, df_store, left_on='store', right_on='id', how='outer')
     # df.rename(columns={'id_x':'id'}, inplace=True)
 
     """
@@ -117,10 +130,7 @@ def main():
     term_w = shutil.get_terminal_size()[0] - 1
     separater = "-" * term_w
 
-    print("[리뷰]")
     print(f"{separater}\n")
-    #print(data["reviews"].head())
-    print(f"\n{separater}\n\n")
 
 
 
