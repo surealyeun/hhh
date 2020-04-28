@@ -44,7 +44,11 @@ def crawled(data, driver):
 
     search = driver.find_element_by_id("searchKeyword")
     search.clear()
-    search.send_keys(data.location_name)
+    if len(data.location_name) > 20:
+            search.send_keys(data.location_name[0:20])
+    
+    else:
+        search.send_keys(data.location_name)
 
     # button = driver.find_element_by_xpath("//*[@id='searchKeywordClick']")
     button = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//*[@id='searchKeywordClick']")))

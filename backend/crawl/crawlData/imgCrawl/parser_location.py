@@ -23,7 +23,7 @@ import json
 
 def read_csv():
 
-    df = pd.read_csv("../location.csv")
+    df = pd.read_csv("../location_full.csv")
     print(df)
 
 
@@ -48,48 +48,55 @@ def crawl(keyword, driver):
     # driver.get(url)
     # image_link = driver.find_element_by_xpath("//*[@id='islrg']/div[1]/div[1]/a[1]")
     # image_link.click()
+    try:
+
+        if driver.find_element_by_tag_name('html').find_element_by_css_selector("#_sau_imageTab > div.photowall._photoGridWrapper > div.photo_grid._box > div:nth-child(1) > a.thumb._thumb") is None:
+        
+            pageString = None
+
+        else:
+            pageString=driver.find_element_by_tag_name('html').find_element_by_css_selector("#_sau_imageTab > div.photowall._photoGridWrapper > div.photo_grid._box > div:nth-child(1) > a.thumb._thumb")
     
-    pageString = driver.find_element_by_tag_name('html').find_element_by_css_selector("#_sau_imageTab > div.photowall._photoGridWrapper > div.photo_grid._box > div:nth-child(1) > a.thumb._thumb")
-    # pageString = driver.page_source
-    print(type(pageString))
+        print(type(pageString))
 
-    bsObj = BeautifulSoup(pageString.get_attribute('innerHTML'), "lxml")
+        bsObj = BeautifulSoup(pageString.get_attribute('innerHTML'), "lxml")
    
-    # print(BeautifulSoup(test., "lxml"))
-    # bsObj = BeautifulSoup(pageString, "html.parser")
-    # print(bsObj)
-    # image = bsObj.find(name="div", attrs={"class":"qdnLaf isv-id"})
-    # print(image)
-    image = bsObj.find("img",{"class":"_img"})
-    src = image.get("src")
-    print(src)
-    print("이미지 가져오기")
+        image = bsObj.find("img",{"class":"_img"})
+        src = image.get("src")
+        print(src)
 
-    return src
+        print("이미지 가져오기")
+
+        return src
+    except Exception as e:
+        print(e)
+        return None
 
 
 def main():
 
     dataframes = read_csv()
-    driver = wd.Chrome("./chromedriver.exe")
+    opt = wd.ChromeOptions()
+    opt.add_argument("headless")
+    
+    driver = wd.Chrome("./chromedriver", chrome_options=opt)
+    # driver = wd.Chrome("./chromedriver.exe")
     csvtxt = []
-    print(dataframes)
 
 
-    # for i in tqdm(range(0,1000)):
-    for i in tqdm(range(0, 10)):
+    for i in tqdm(range(0,1310)):
+    # for i in tqdm(range(0, 10)):
         keyword = ""
         
-        if isNaN(dataframes.loc[i, "address_see"]) is False:
-            keyword = dataframes.loc[i, "location_name"] + " " + str(dataframes.loc[i, "address_see"])
-            if isNaN(dataframes.loc[i, "address_gu"]) is False:
-                keyword = keyword + " " + dataframes.loc[i, "address_gu"]
+        # if isNaN(dataframes.loc[i, "address_see"]) is False:
+        #     keyword = dataframes.loc[i, "location_name"] + " " + str(dataframes.loc[i, "address_see"])
+        #     if isNaN(dataframes.loc[i, "address_gu"]) is False:
+        #         keyword = keyword + " " + dataframes.loc[i, "address_gu"]
 
-        else:
-            keyword = dataframes.loc[i, "location_name"]
-            if isNaN(dataframes.loc[i, "address_gu"]) is False:
-
-                keyword = keyword + " " + dataframes.loc[i, "address_gu"]
+        # else:
+        keyword = dataframes.loc[i, "location_name"]
+        if isNaN(dataframes.loc[i, "address_gu"]) is False:
+             keyword = keyword + " " + dataframes.loc[i, "address_gu"]
 
         print(keyword)
         
