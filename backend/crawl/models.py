@@ -1,5 +1,5 @@
 from django.db import models
-from backend.api import models as api
+from api import models as api
 
 # Create your models here.
 class StoreSense(models.Model):
@@ -16,7 +16,7 @@ class StoreSense(models.Model):
     # )
 
     ftype = models.CharField(max_length=10, null=False, blank=False)
-    word = models.CharField()
+    word = models.CharField(max_length=100)
     rank = models.IntegerField()
     store = models.ForeignKey("api.DiningStore", verbose_name=(""), on_delete=models.CASCADE)
 
@@ -27,7 +27,7 @@ class StoreSense(models.Model):
 class LocationSense(models.Model):
 
     ftype = models.CharField(max_length=10, null=False, blank=False)
-    word = models.CharField()
+    word = models.CharField(max_length=100)
     rank = models.IntegerField()
     location = models.ForeignKey("api.Location", verbose_name=(""), on_delete=models.CASCADE)
 
@@ -35,7 +35,7 @@ class LocationSense(models.Model):
 class DistrctSense(models.Model):
 
     ftype = models.CharField(max_length=10, null=False, blank=False)
-    word = models.CharField()
+    word = models.CharField(max_length=100)
     rank = models.IntegerField()
     district = models.CharField(max_length=20, null=False, blank=False)
 
