@@ -8,8 +8,10 @@ from selenium import webdriver as wd
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
 from urllib.parse import quote_plus
 from PyQt5 import QtCore, QtWidgets
+from multiprocessing import Pool
 
 # from crawl import models
 import time
@@ -51,9 +53,10 @@ def crawled(data, driver):
     else:
         search.send_keys(data.store_name)
 
-    # button = driver.find_element_by_xpath("//*[@id='searchKeywordClick']")
-    button = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//*[@id='searchKeywordClick']")))
-    button.click()
+    driver.implicitly_wait(5)
+    button = driver.find_element_by_xpath("//*[@id='searchKeywordClick']")
+    # button = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//*[@id='searchKeywordClick']")))
+    button.send_keys(Keys.ENTER)
 
     time.sleep(5)
     driver.implicitly_wait(3)
@@ -95,7 +98,7 @@ def crawled(data, driver):
         for i in range(0 ,len(rank)):
             store.append(data.id)
         
-        print(store)
+        # print(store)
 
         frames = {
             "id" : ids,
@@ -122,21 +125,27 @@ def main():
 
     url = "https://some.co.kr/analysis/issue"
 
-    driver = wd.Chrome("chromedriver")
+    opt = wd.ChromeOptions()
+    opt.add_argument("headless")
+    
+    driver = wd.Chrome("./chromedriver", chrome_options=opt)
+    # driver = wd.Chrome("chromedriver")
     driver.get(url)
 
+    # 로그인 세션
+   
     dataframes = read_csv()
     df1 = pd.DataFrame()
-    for idx in dataframes.index:
+    # for idx in dataframes.index:
+    for idx in tqdm(range(0,77559)):
         print(dataframes.loc[idx, ["id", "store_name"]])
         df2 = crawled(dataframes.loc[idx, ["id", "store_name"]], driver)
 
         df1 = pd.concat([df1, df2])
-        # if idx == 3:
-        #     break
+
+        data = df1.set_index("id")
+        data.to_csv("./data/store_sense_rest.csv", encoding="utf-8")
     # read_csv()
-    data = df1.set_index("id")
-    data.to_csv("./data/store_sense.csv", encoding="utf-8")
 
 
 if __name__ == "__main__":

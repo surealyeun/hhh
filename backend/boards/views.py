@@ -23,4 +23,3 @@ def board_like_delete(request, username, boardno):
     like = Like.objects.filter(user=user).filter(board=board)
     like.delete()
     return Response({'message':'like has been deleted!'})
-    
