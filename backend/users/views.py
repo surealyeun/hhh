@@ -8,6 +8,7 @@ from .serializers import UserSerializer
 from .models import User
 from follows import models as follow_models
 from boards import models as board_models
+from api import models as api_models
 from boards import serializers as board_serializer
 from django.contrib.auth.hashers import check_password
 from comments import models as comments_models
@@ -77,6 +78,14 @@ def user_follow_feedlist(request, username):
         user = get_object_or_404(User ,id=result[i]["writer_id"])
         board = get_object_or_404(board_models.Board ,id=result[i]["id"])
         like = list(board_models.Like.objects.filter(board=board).values())
+
+        if board.location_id is None:
+            store = get_object_or_404(api_models.DiningStore, id=board.store_id)
+            result[i]["loc_name"] = store.store_name
+        if board.store_id is None:
+            store = get_object_or_404(api_models.Location, id=board.location_id)
+            result[i]["loc_name"] = store.location_name
+
         result[i]["likes"] =len(like)
         result[i]["username"] = user.username
         
@@ -118,6 +127,14 @@ def user_follow_feedlist(request, username):
         for i in range(len(result)):
             user = get_object_or_404(User ,id=result[i]["writer_id"])
             board = get_object_or_404(board_models.Board ,id=result[i]["id"])
+
+            if board.location_id is None:
+                store = get_object_or_404(api_models.DiningStore, id=board.store_id)
+                result[i]["loc_name"] = store.store_name
+            if board.store_id is None:
+                store = get_object_or_404(api_models.Location, id=board.location_id)
+                result[i]["loc_name"] = store.location_name
+
             like = list(board_models.Like.objects.filter(board=board).values())
             result[i]["likes"] =len(like)
             result[i]["username"] = user.username
@@ -177,6 +194,14 @@ def user_feedlist(request, user_name):
     for i in range(len(result)):
         user = get_object_or_404(User ,id=result[i]["writer_id"])
         board = get_object_or_404(board_models.Board ,id=result[i]["id"])
+
+        if board.location_id is None:
+            store = get_object_or_404(api_models.DiningStore, id=board.store_id)
+            result[i]["loc_name"] = store.store_name
+        if board.store_id is None:
+            store = get_object_or_404(api_models.Location, id=board.location_id)
+            result[i]["loc_name"] = store.location_name
+
         photo = list(board_models.Photo.objects.filter(board=board).values())
         photos = []
         for j in range(len(photo)):

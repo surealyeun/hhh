@@ -1,6 +1,9 @@
 from django.db import models
 from core import models as core_models
 
+class UploadFileModel(models.Model):
+    title = models.TextField(default='')
+    file = models.FileField(null=True)
 
 class Photo(core_models.TimeStampedModel):
 
@@ -9,7 +12,7 @@ class Photo(core_models.TimeStampedModel):
     image = models.ImageField(upload_to="boards")
 
     def __str__(self):
-        return str(self.created)
+        return str(self.image)
 
 
 class Like(models.Model):

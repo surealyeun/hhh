@@ -7,10 +7,19 @@ from .models import Board, Like
 from users.models import User
 from boards.models import Board
 import json
+from django.http import HttpResponseRedirect
+from .forms import UploadFileForm
 
 class BoardViewSet(viewsets.ModelViewSet):
     queryset = Board.objects.all()
     serializer_class = BoardSerializer
+
+
+@api_view(['POST'])
+def board_post(request):
+    form = UploadFileForm(request.POST, request.FILES)
+    form.save()
+    return Response({"message" : "data input!","data":request.data})
 
 
 @api_view(['POST'])
