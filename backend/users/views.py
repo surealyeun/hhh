@@ -64,6 +64,13 @@ def login(request, username, password):
             res_data['user'] = serializer.data
             return Response(res_data, status=status.HTTP_200_OK)
 
+        elif (password == login_user.password):
+            serializer = UserSerializer(login_user)
+            res_data['message'] = "로그인 성공"
+            print(serializer.data)
+            res_data['user'] = serializer.data
+            return Response(res_data, status=status.HTTP_200_OK)
+
         else:
             res_data['error'] = "비밀번호가 일치하지 않습니다."
             res_data['message'] = "비밀번호가 일치하지 않습니다."
