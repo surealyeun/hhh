@@ -1,0 +1,86 @@
+#feed-detail {
+  position: relative;
+  margin: auto;
+  top: 50px;
+  width: 620px;
+  height: auto;
+  border: 1px solid rgb(210, 210, 210);
+  margin-bottom: 50px;
+
+  #user-id {
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    font-size: 16px;
+    font-weight: bold;
+    padding-left: 30px;
+  }
+
+  #feed-img {
+    width: 100%;
+    height: 420px;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  #feed-inside {
+    #feed-btns {
+      width: 100%;
+      height: 50px;
+    }
+
+    #likes {
+      font-weight: bold;
+      padding: 5px 15px;
+    }
+
+    #feed-text {
+      width: 100%;
+      height: auto;
+      font-size: 16px;
+
+      padding: 0 15px;
+      margin-bottom: 10px;
+
+      ul {
+        list-style-type: none;
+        margin: auto;
+        padding: 0;
+        overflow: hidden;
+
+        li {
+          .id {
+            display: inline-block;
+            font-weight: bold;
+          }
+
+          .text {
+            display: inline-block;
+            margin-left: 10px;
+          }
+        }
+      }
+    }
+
+    #make-text {
+      width: 100%;
+      height: 60px;
+      border-top: 1px solid rgb(210, 210, 210);
+
+      input {
+        border: none;
+        width: 92%;
+        padding: 0 20px;
+      }
+
+      #make {
+        display: inline-block;
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 60px;
+      }
+    }
+  }
+}

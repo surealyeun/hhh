@@ -31,8 +31,13 @@ class Location(models.Model):
 class Review(models.Model):
     """ 평가 모델 """
 
-    # 한줄평.
-    contents = models.CharField(max_length=100, help_text="최대 100자 까지 입력 가능합니다.")
-    rating = models.IntegerField(default=0)
-    store = models.ForeignKey(Store, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    score = models.IntegerField(default=0)
+    store = models.ForeignKey("api.DiningStore", on_delete=models.CASCADE, null=True, blank=True)
+    location = models.ForeignKey("api.Location", on_delete=models.CASCADE, null=True, blank=True)
+    user = models.ForeignKey("users.User", on_delete=models.CASCADE)
+    
+    def __str__(self):
+        if self.store is None:
+            return self.user.username+' | '+self.location.location_name+' | '+str(self.score)
+        else :
+            return self.user.username+' | '+self.store.store_name+' | '+str(self.score)
