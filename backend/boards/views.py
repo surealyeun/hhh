@@ -43,3 +43,4 @@ def board_delete(request, boardno):
     board = get_object_or_404(Board ,id=boardno)
     board.delete()
     return Response({'message':'board has been deleted!'})
+

@@ -88,21 +88,22 @@ def main():
     csvtxt = []
     print(dataframes)
 
+    idx = 25566
     pool = Pool(processes=4)
-    for i in tqdm(range(0,77559)):
+    for i in tqdm(range(0,77559-25566)):
     # for i in tqdm(range(0, 10)):
         keyword = ""
         
-        if isNaN(dataframes.loc[i, "branch"]) is False:
-            keyword = dataframes.loc[i, "store_name"] + " " + str(dataframes.loc[i, "branch"])
-            if isNaN(dataframes.loc[i, "area"]) is False:
-                keyword = keyword + " " + dataframes.loc[i, "area"]
+        if isNaN(dataframes.loc[idx, "branch"]) is False:
+            keyword = dataframes.loc[idx, "store_name"] + " " + str(dataframes.loc[idx, "branch"])
+            if isNaN(dataframes.loc[idx, "area"]) is False:
+                keyword = keyword + " " + dataframes.loc[idx, "area"]
 
         else:
-            keyword = dataframes.loc[i, "store_name"]
-            if isNaN(dataframes.loc[i, "area"]) is False:
+            keyword = dataframes.loc[idx, "store_name"]
+            if isNaN(dataframes.loc[idx, "area"]) is False:
 
-                keyword = keyword + " " + dataframes.loc[i, "area"]
+                keyword = keyword + " " + dataframes.loc[idx, "area"]
 
         print(keyword)
         
@@ -113,15 +114,18 @@ def main():
         # urlretrieve(img_src, "./img/"+img_filename+".jpg")
 
         # csvtxt[i].append(img_filename)
-        csvtxt.append([i+1])
+        csvtxt.append([idx+1])
+        print(img_src)
         csvtxt[i].append(img_src)
-        csvtxt[i].append(dataframes.loc[i, "id"])
+        csvtxt[i].append(dataframes.loc[idx, "id"])
         # print(csvtxt)
 
-    data = pd.DataFrame(csvtxt, columns=["id" ,"src", "store"])
+        data = pd.DataFrame(csvtxt, columns=["id" ,"src", "store"])
     # print()?
-    data_set = data.set_index("id")
-    data_set.to_csv("./data/store_images.csv", encoding="utf-8")
+        data_set = data.set_index("id")
+        data_set.to_csv("./data/store_images1.csv", encoding="utf-8")
+
+        idx +=1
 
         
 
