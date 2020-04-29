@@ -40,6 +40,7 @@ const Login = () => {
         if (resp.status === 200) {
           console.log(resp.data.user);
           sessionStorage.setItem("username", values.username);
+          sessionStorage.setItem("userId", resp.data.user.id);
           sessionStorage.setItem("user", resp.data.user);
           sessionStorage.setItem("id", resp.data.user.id);
           sessionStorage.setItem("avatar", resp.data.user.avatar)
@@ -93,9 +94,9 @@ const Login = () => {
           </Form.Item>
 
           <Form.Item {...tailLayout}>
-            <Button htmlType="submit">로그인</Button>
-            &nbsp;
             <Link to="/register">회원가입 하러가기</Link>
+            &nbsp;
+            <Button htmlType="submit">로그인</Button>
           </Form.Item>
         </Form>
       </div>
