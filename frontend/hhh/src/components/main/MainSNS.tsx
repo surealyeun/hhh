@@ -6,7 +6,7 @@ import { HeartOutlined, HeartFilled } from "@ant-design/icons";
 import "./MainSNS.scss";
 
 const username: string | null = sessionStorage.getItem("username");
-const url: string = "http://13.125.113.171:8000/";
+const url: string = "http://13.125.113.171:8000";
 
 export interface Comment {
     created?: number[];
@@ -48,6 +48,7 @@ class MainSNS extends React.Component<Props> {
 
     componentDidMount() {
         // console.log(this.props);
+        // console.log(avatar);
     }
 
     clickLike = () => {
@@ -101,11 +102,14 @@ class MainSNS extends React.Component<Props> {
 
     comment = () => {
         console.log("comment");
-        if (username != null) {
+        const avatarr: string|null = url+sessionStorage.getItem("avatar");
+        const id: string|null = sessionStorage.getItem("id");
+        
+        if (username != null && avatarr) {
             var newComm: Comment = {
                 text: this.state.text,
                 username: username,
-                avatar: "/",
+                avatar: avatarr,
             };
             var updateComm = this.state.comments;
             updateComm.push(newComm);
@@ -116,15 +120,16 @@ class MainSNS extends React.Component<Props> {
 
         axios({
             method: "post",
-            url: "http://13.125.113.171:8000/comments/",
-            params: {
-                text: this.state.text,
-                writer: 1,
-                board: this.props.id,
-            },
+            url: "http://13.125.113.171:8000/comment/post/"+this.props.id+"/"+id+"/"+this.state.text,
+            // headers: {'content-type': 'application/json'},
+            // data: {
+            //     text: this.state.text,
+            //     writer: id,
+            //     board: this.props.id,
+            // },
         })
             .then((res) => {
-                console.log("comment");
+                console.log("comment", res);
             })
             .catch((err) => {
                 console.log("comment error", err);
@@ -132,6 +137,7 @@ class MainSNS extends React.Component<Props> {
     };
 
     render() {
+        const user: any | null = sessionStorage.getItem("user");
         return (
             <div className="MainSNS">
                 <div className="feed-left">

@@ -83,8 +83,9 @@ body::-webkit-scrollbar{
                         display: inline-block;
                         .user-profile {
                             width: 40px;
-                            filter: invert(80%);
+                            // filter: invert(80%);
                             margin-right: 5px;
+                            border-radius: 20px;
                         }
                         h2 {
                             display: inline-block;
