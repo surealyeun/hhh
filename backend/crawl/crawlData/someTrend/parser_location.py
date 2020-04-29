@@ -127,7 +127,7 @@ def main():
     dataframes = read_csv()
     df1 = pd.DataFrame()
     
-    for idx in dataframes.index:
+    for idx in tqdm(range(0,1310)):
         print(dataframes.loc[idx, ["id", "location_name"]])
         df2 = crawled(dataframes.loc[idx, ["id", "location_name"]], driver)
 
@@ -135,6 +135,7 @@ def main():
     
         data = df1.set_index("id")
         data.to_csv("./data/location_sense_rest.csv", encoding="utf-8")
+
 
 
 if __name__ == "__main__":

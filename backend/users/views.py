@@ -39,11 +39,15 @@ def login(request, username, password):
     if not (username and password):
         res_data['error'] = 'ID 혹은 PASSWORD 를 입력하세요.'
     else:
-        login_user = User.objects.get(username=username)
+        login_user = get_object_or_404(User, username=username)
         print(login_user)
+        print(type(login_user))
         if check_password(password, login_user.password):
             # request.session['user'] = login_user.username
+            serializer = UserSerializer(login_user)
             res_data['message'] = "로그인 성공"
+            print(serializer.data)
+            res_data['user'] = serializer.data
             return Response(res_data, status=status.HTTP_200_OK)
 
         else:
