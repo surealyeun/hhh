@@ -1,20 +1,10 @@
 import React from "react";
-
-// const WritePost = (place, id, name) => { // place : store, location 구분, 각 id와 name
-//     // 마커 아이콘 + 장소이름
-
-//     // 업로드 구역
-
-//     // 글 작성 공간
-
-//     // 작성 버튼
-// }
-
-// export default WritePost;
-
-import { Upload, Modal, Input, Button, Rate } from "antd";
+import { Form, Upload, Modal, Input, Button, Rate } from "antd";
 import { PlusOutlined, EnvironmentTwoTone } from "@ant-design/icons";
 import "./WritePost.scss";
+import axios from "axios";
+
+const postURL = `http://13.125.113.171:8000/board/post`;
 
 const { TextArea } = Input;
 function getBase64(file) {
@@ -31,29 +21,7 @@ class PicturesWall extends React.Component {
     previewVisible: false,
     previewImage: "",
     previewTitle: "",
-    fileList: [
-      {
-        uid: "-1",
-        name: "image.png",
-        status: "done",
-        url:
-          "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-      },
-      {
-        uid: "-2",
-        name: "image.png",
-        status: "done",
-        url:
-          "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-      },
-      {
-        uid: "-3",
-        name: "image.png",
-        status: "done",
-        url:
-          "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-      },
-    ],
+    fileList: [],
   };
 
   handleCancel = () => this.setState({ previewVisible: false });
@@ -82,44 +50,77 @@ class PicturesWall extends React.Component {
       </div>
     );
     const placeName = this.props.location.state.store_name;
-    console.log(placeName);
+    const onFinish = (values) => {
+      console.log("Received values of form: ", values);
+      let form_data = new FormData();
+      form_data.append("content", values.content);
+      form_data.append("writer", 1); // 로그인 시 받은 id 로 처리 예정
+      // form_data.append("rate", values.rate); // 별점 컬럼 생성 시 추가
+      if (this.props.location.state.isStore) {
+        form_data.append("store", this.props.location.state.id);
+      } else {
+        form_data.append("location", this.props.location.state.id);
+      }
+      // 여기 고민...
+      for (let index = 0; index < fileList.length; index++) {
+        form_data.append("photo", fileList[index]);
+      }
+      axios
+        .post(postURL, form_data, {
+          headers: {
+            "content-type": "multipart/form-data",
+          },
+        })
+        .then((response) => console.timeLog(response))
+        .catch((err) => console.timeLog(err));
+    };
     return (
       <div className="writeContainer">
-        <div className="position">
-          <h3>
-            <EnvironmentTwoTone /> {placeName}
-          </h3>
-          <Rate className="rate" />
-          <hr />
+        <Form name="validate_other" onFinish={onFinish}>
+          <div className="position">
+            <h3>
+              <EnvironmentTwoTone /> {placeName}
+            </h3>
+            <Form.Item name="rate">
+              <Rate className="rate" />
+            </Form.Item>
+            <hr />
+            <br />
+          </div>
+          <div className="clearfix">
+            <Form.Item name="photo">
+              <Upload
+                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                listType="picture-card"
+                fileList={fileList}
+                onPreview={this.handlePreview}
+                onChange={this.handleChange}
+              >
+                {fileList.length >= 10 ? null : uploadButton}
+              </Upload>
+            </Form.Item>
+            <Modal
+              visible={previewVisible}
+              title={previewTitle}
+              footer={null}
+              onCancel={this.handleCancel}
+            >
+              <img alt="example" style={{ width: "100%" }} src={previewImage} />
+            </Modal>
+          </div>
           <br />
-        </div>
-        <div className="clearfix">
-          <Upload
-            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-            listType="picture-card"
-            fileList={fileList}
-            onPreview={this.handlePreview}
-            onChange={this.handleChange}
-          >
-            {fileList.length >= 8 ? null : uploadButton}
-          </Upload>
-          <Modal
-            visible={previewVisible}
-            title={previewTitle}
-            footer={null}
-            onCancel={this.handleCancel}
-          >
-            <img alt="example" style={{ width: "100%" }} src={previewImage} />
-          </Modal>
-        </div>
-        <br />
-        <div className="writeSpace">
-          <TextArea rows={10} />
-        </div>
-        <br />
-        <Button type="primary" htmlType="submit">
-          작성완료
-        </Button>
+          <div className="writeSpace">
+            <Form.Item name="content">
+              <TextArea rows={10} />
+            </Form.Item>
+          </div>
+          <br />
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              작성완료
+            </Button>
+          </Form.Item>
+        </Form>
       </div>
     );
   }

@@ -25,7 +25,7 @@ function App() {
           <Route path="/spotList/:area" component={ScrollCard} />
           <Route path="/place/:id" component={PlaceDetail} />
           <Route path="/store/:id" component={StoreDetail} />
-          <Route path="/userinfo" component={userInfo} />
+          <Route path="/userInfo" component={userInfo} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route path="/sns" component={mainsns} />

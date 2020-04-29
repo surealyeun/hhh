@@ -4,7 +4,7 @@ import { Form, Input, Button, Checkbox } from "antd";
 import "./Login.scss";
 import axios from "axios";
 
-const loginURL = `http://13.125.113.171:8000/login/`;
+const loginURL = `http://192.168.219.105:8080/login/`;
 
 const layout = {
   labelCol: {
@@ -25,7 +25,6 @@ const Login = () => {
   let history = useHistory();
 
   const onFinish = async (values) => {
-    console.log("Success:", values);
     const resultURL = loginURL + `${values.username}/${values.password}`;
     await axios
       .get(resultURL, {
@@ -33,6 +32,7 @@ const Login = () => {
         password: values.password,
       })
       .then((resp) => {
+        console.log(resp);
         if (resp.status === 200) {
           sessionStorage.setItem("username", values.username);
           history.push("/");

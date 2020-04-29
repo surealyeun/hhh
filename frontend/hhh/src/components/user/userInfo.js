@@ -77,7 +77,6 @@ class userInfo extends Component {
     form_data.append("first_name", this.state.first_name);
     form_data.append("last_name", this.state.last_name);
     form_data.append("email", this.state.email);
-
     axios
       .put(updateUrl, form_data, {
         headers: {
