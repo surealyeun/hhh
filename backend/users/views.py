@@ -9,13 +9,10 @@ from .models import User
 from follows import models as follow_models
 from boards import models as board_models
 from boards import serializers as board_serializer
-<<<<<<< HEAD
 from django.contrib.auth.hashers import check_password
-=======
 from comments import models as comments_models
 import json, datetime
 from django.http import HttpResponse
->>>>>>> 3b961aebb922ddb522d2290cb5f4ad23614e5d0b
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -126,9 +123,6 @@ def user_follow_feedlist(request, username):
     json_list = json.dumps(feedlist, cls=DateTimeEncoder)
     return HttpResponse(json_list)
 
-<<<<<<< HEAD
-    
-=======
 class DateTimeEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, datetime.datetime):
@@ -136,4 +130,3 @@ class DateTimeEncoder(json.JSONEncoder):
         else:
             encoded_object =json.JSONEncoder.default(self, obj)
         return encoded_object
->>>>>>> 3b961aebb922ddb522d2290cb5f4ad23614e5d0b
