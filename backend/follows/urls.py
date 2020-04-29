@@ -1,8 +1,9 @@
 from django.urls import path
-from .views import FollowViewSet
-
-follow_list = FollowViewSet.as_view({"get": "list", "post": "create"})
+from .views import following_list, follower_list, follow, unfollow
 
 urlpatterns = [
-    path("", follow_list, name="follow-list"),
+    path("following/<user_id>", following_list, name="following_list"),
+    path("follower/<user_id>", follower_list, name="follower_list"),
+    path("follow", follow, name="follow"),
+    path("unfollow/<follower>/<followed>", unfollow, name="unfollow"),
 ]

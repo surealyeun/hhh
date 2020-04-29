@@ -22,6 +22,7 @@ from users.views import UserViewSet
 from users.urls import urlpatterns as user_urlpatterns
 from api.urls import urlpatterns as api_urlpatterns
 from boards.urls import urlpatterns as board_urlpatterns
+from follows.urls import urlpatterns as follow_urlpatterns
 from boards.views import BoardViewSet
 from follows.views import FollowViewSet
 from comments.views import CommentViewSet
@@ -60,9 +61,9 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include(router.urls)),
     url(
-        r"^redoc/$", schema_view.with_ui("redoc", czache_timeout=0), name="schema-redoc"
+        r"^redoc/$", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"
     ),
-] + user_urlpatterns + api_urlpatterns + board_urlpatterns
+] + user_urlpatterns + api_urlpatterns + board_urlpatterns + follow_urlpatterns
 
 if settings.DEBUG:
     urlpatterns +=  static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)

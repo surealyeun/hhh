@@ -70,12 +70,9 @@ def login(request, username, password):
 
 
 
-
 @api_view(['GET'])
 def user_follow_feedlist(request, username):
     user = get_object_or_404(User, username=username)
-    followlist = follow_models.Follow.objects.filter(following=user)
-    followlist = list(followlist.values())
 
     feedlist = []
     result = board_models.Board.objects.filter(writer=user.id)[:50]
@@ -85,48 +82,140 @@ def user_follow_feedlist(request, username):
         board = get_object_or_404(board_models.Board ,id=result[i]["id"])
         like = list(board_models.Like.objects.filter(board=board).values())
         result[i]["likes"] =len(like)
+        result[i]["username"] = user.username
+        
+        photo = list(board_models.Photo.objects.filter(board=board).values())
+        photos = []
+        for j in range(len(photo)):
+            photos.append("http://13.125.113.171:8000/media/"+str(photo[j]["image"]))
+        result[i]["photos"] = photos 
+
+        if str(user.avatar) is not "":
+            result[i]["avatar"] = "http://13.125.113.171:8000/media/"+str(user.avatar)
+        else :
+            result[i]["avatar"] = ""
 
         login_user = get_object_or_404(User ,username=username)
         like = list(board_models.Like.objects.filter(board=board).filter(user=login_user).values())
         
         comments = list(comments_models.Comment.objects.filter(board=board).values())
         result[i]["comments"] = comments
+        for j in range(len(comments)):
+            user = get_object_or_404(User ,id=comments[j]["writer_id"])
+            comments[j]['username'] = user.username
+            if str(user.avatar) is not "":
+                comments[j]["avatar"] = "http://13.125.113.171:8000/media/"+str(user.avatar)
+            else :
+                comments[j]["avatar"] = ""
 
         pressLike = True
         if len(like) == 0:
             pressLike = False
         result[i]["pressLike"] = pressLike
         feedlist.append(result[i])
-        
-    feedlist.append(result)
+
+    followlist = follow_models.Follow.objects.filter(following=user)
+    followlist = list(followlist.values())
     for i in range(len(followlist)):
         result = board_models.Board.objects.filter(writer=followlist[i]['followed_id'])
         result = list(result.values())
-        
         for i in range(len(result)):
             user = get_object_or_404(User ,id=result[i]["writer_id"])
             board = get_object_or_404(board_models.Board ,id=result[i]["id"])
             like = list(board_models.Like.objects.filter(board=board).values())
             result[i]["likes"] =len(like)
+            result[i]["username"] = user.username
+ 
+            photo = list(board_models.Photo.objects.filter(board=board).values())
+            photos = []
+            for j in range(len(photo)):
+                photos.append("http://13.125.113.171:8000/media/"+str(photo[j]["image"]))
+            result[i]["photos"] = photos 
 
+            
+            if str(user.avatar) is not "":
+                result[i]["avatar"] = "http://13.125.113.171:8000/media/"+str(user.avatar)
+            else :
+                result[i]["avatar"] = ""
+                
             login_user = get_object_or_404(User ,username=username)
             like = list(board_models.Like.objects.filter(board=board).filter(user=login_user).values())
             
             comments = list(comments_models.Comment.objects.filter(board=board).values())
             result[i]["comments"] = comments
+            for j in range(len(comments)):
+                user = get_object_or_404(User ,id=comments[j]["writer_id"])
+                comments[j]['username'] = user.username
+                if str(user.avatar) is not "":
+                    comments[j]["avatar"] = "http://13.125.113.171:8000/media/"+str(user.avatar)
+                else :
+                    comments[j]["avatar"] = ""
 
+                
             pressLike = True
             if len(like) == 0:
                 pressLike = False
             result[i]["pressLike"] = pressLike
             feedlist.append(result[i])
+    if len(feedlist) is not 0:
+        feedlist = sorted(feedlist, key=lambda  feed: feed["created"], reverse=True)
     json_list = json.dumps(feedlist, cls=DateTimeEncoder)
     return HttpResponse(json_list)
 
 class DateTimeEncoder(json.JSONEncoder):
-    def default(self, obj):
+    def default(self, obj): 
         if isinstance(obj, datetime.datetime):
             encoded_object = list(obj.timetuple())[0:6]
         else:
             encoded_object =json.JSONEncoder.default(self, obj)
         return encoded_object
+
+
+
+@api_view(['GET'])
+def user_feedlist(request, user_name):
+    user = get_object_or_404(User, username=user_name)
+    feedlist = []
+    result = board_models.Board.objects.filter(writer=user.id)[:50]
+    result = list(result.values())
+    for i in range(len(result)):
+        user = get_object_or_404(User ,id=result[i]["writer_id"])
+        board = get_object_or_404(board_models.Board ,id=result[i]["id"])
+        photo = list(board_models.Photo.objects.filter(board=board).values())
+        photos = []
+        for j in range(len(photo)):
+            photos.append("http://13.125.113.171:8000/media/"+str(photo[j]["image"]))
+        result[i]["photos"] = photos 
+
+        like = list(board_models.Like.objects.filter(board=board).values())
+        result[i]["likes"] = len(like)
+        result[i]["username"] = user.username
+
+        if str(user.avatar) is not "":
+            result[i]["avatar"] = "http://13.125.113.171:8000/media/"+str(user.avatar)
+        else :
+            result[i]["avatar"] = ""
+                
+        login_user = get_object_or_404(User ,username=user_name)
+        like = list(board_models.Like.objects.filter(board=board).filter(user=login_user).values())
+        
+        comments = list(comments_models.Comment.objects.filter(board=board).values())
+        
+        result[i]["comments"] = comments
+        for j in range(len(comments)):
+            user = get_object_or_404(User ,id=comments[j]["writer_id"])
+            comments[j]['username'] = user.username
+            if str(user.avatar) is not "":
+                comments[j]["avatar"] = "http://13.125.113.171:8000/media/"+str(user.avatar)
+            else :
+                comments[j]["avatar"] = ""
+
+        pressLike = True
+        if len(like) == 0:
+            pressLike = False
+        result[i]["pressLike"] = pressLike
+        feedlist.append(result[i])
+    if len(feedlist) is not 0:
+        feedlist = sorted(feedlist, key=lambda  feed: feed["created"], reverse=True)
+    json_list = json.dumps(feedlist, cls=DateTimeEncoder)
+    return HttpResponse(json_list)
