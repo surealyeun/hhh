@@ -71,7 +71,7 @@ class Main extends React.Component {
                                 {this.state.isLog ? (
                                     <div>
                                         <div className="user">
-                                            <Link to="">
+                                            <Link to="/userInfo">
                                                 <img
                                                     className="user-profile"
                                                     src="https://image.flaticon.com/icons/svg/1738/1738760.svg"

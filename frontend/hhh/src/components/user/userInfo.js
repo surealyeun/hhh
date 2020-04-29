@@ -37,6 +37,7 @@ class userInfo extends Component {
       email: "",
       avatar: null,
       imagePreviewUrl: "",
+      flag: false,
     };
   }
 
@@ -70,8 +71,11 @@ class userInfo extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+    console.log(this.state);
     let form_data = new FormData();
-    form_data.append("avatar", this.state.avatar, this.state.avatar.name);
+    if (this.state.flag) {
+      form_data.append("avatar", this.state.avatar, this.state.avatar.name);
+    }
     form_data.append("username", this.state.username);
     form_data.append("password", this.state.password);
     form_data.append("first_name", this.state.first_name);
@@ -90,9 +94,20 @@ class userInfo extends Component {
   render() {
     let { imagePreviewUrl } = this.state;
     let $imagePreview = null;
+    if (imagePreviewUrl) {
+      this.state.flag = true;
+    }
     return (
       <div className="userInfoContainer">
-        {!$imagePreview && <img src={imagePreviewUrl ? imagePreviewUrl : `http://13.125.113.171:8000` + this.state.avatar} />}
+        {!$imagePreview && (
+          <img
+            src={
+              imagePreviewUrl
+                ? imagePreviewUrl
+                : `http://13.125.113.171:8000` + this.state.avatar
+            }
+          />
+        )}
         <br />
         <input
           type="file"
