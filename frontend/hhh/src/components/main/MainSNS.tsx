@@ -1,38 +1,152 @@
 import React from "react";
 import Slide from "./Slide";
+import axios from "axios";
+import { Link } from "react-router-dom";
 import { HeartOutlined, HeartFilled } from "@ant-design/icons";
 import "./MainSNS.scss";
 
-class MainSNS extends React.Component {
+const username: string | null = sessionStorage.getItem("username");
+const url: string = "http://13.125.113.171:8000/";
+
+export interface Comment {
+    created?: number[];
+    updated?: number[];
+    id?: number;
+    text: string;
+    writer_id?: number;
+    board_id?: number;
+    parents_id?: any;
+    username: string;
+    avatar: string;
+}
+
+interface Props {
+    created: number[];
+    updated: number[];
+    id: number;
+    writer_id: number;
+    address_gu: string;
+    content: string;
+    store_id?: number;
+    location_id?: number;
+    loc_name: string;
+    likes: number;
+    username: string;
+    photos: string[];
+    avatar: string;
+    comments: Comment[];
+    pressLike: boolean;
+}
+
+class MainSNS extends React.Component<Props> {
     state = {
-        isLike: false,
+        isLike: this.props.pressLike,
+        likes: this.props.likes,
+        text: "",
+        comments: this.props.comments,
     };
 
+    componentDidMount() {
+        // console.log(this.props);
+    }
+
     clickLike = () => {
+        if (this.state.isLike) {
+            // cancle like
+            console.log("delete");
+            this.setState({
+                likes: this.state.likes - 1,
+                isLike: !this.state.isLike,
+            });
+            axios({
+                method: "delete",
+                url:
+                    "http://13.125.113.171:8000/board/like/delete/" +
+                    username +
+                    "/" +
+                    this.props.id,
+            })
+                .then((res) => {
+                    console.log(res.data);
+                })
+                .catch((err) => {
+                    console.log("fail delete like", err);
+                });
+        } else {
+            // like
+            console.log("like");
+            this.setState({
+                likes: this.state.likes + 1,
+                isLike: !this.state.isLike,
+            });
+            axios({
+                method: "post",
+                url: url + "board/like/post/" + username + "/" + this.props.id,
+            })
+                .then((res) => {
+                    console.log(res.data);
+                })
+                .catch((err) => {
+                    console.log("fail like", err);
+                });
+        }
+    };
+
+    text = (comm: string) => {
         this.setState({
-            isLike: !this.state.isLike,
+            text: comm,
         });
+        // console.log(comm);
+    };
+
+    comment = () => {
+        console.log("comment");
+        if (username != null) {
+            var newComm: Comment = {
+                text: this.state.text,
+                username: username,
+                avatar: "/",
+            };
+            var updateComm = this.state.comments;
+            updateComm.push(newComm);
+            this.setState({
+                comments: updateComm,
+            });
+        }
+
+        axios({
+            method: "post",
+            url: "http://13.125.113.171:8000/comments/",
+            params: {
+                text: this.state.text,
+                writer: 1,
+                board: this.props.id,
+            },
+        })
+            .then((res) => {
+                console.log("comment");
+            })
+            .catch((err) => {
+                console.log("comment error", err);
+            });
     };
 
     render() {
         return (
             <div className="MainSNS">
-                <div className="feed feed-left">
+                <div className="feed-left">
                     <div className="pic">
-                        <Slide />
+                        <Slide photos={this.props.photos} />
                     </div>
                 </div>
-                <div className="feed feed-right">
+                <div className="feed-right">
                     <div className="user">
                         <div className="profile">
-                            <img
-                                src="https://scontent-ssn1-1.cdninstagram.com/v/t51.2885-15/e35/p1080x1080/93818837_131608151785158_3965098545993740587_n.jpg?_nc_ht=scontent-ssn1-1.cdninstagram.com&_nc_cat=106&_nc_ohc=wvnkNF-vXrYAX8A33uX&oh=8f358207c784034a74e842729e4ecf25&oe=5ECA5FDA"
-                                alt="profile"
-                            />
+                            <img src={this.props.avatar} alt="profile" />
                         </div>
                         <div className="id">
                             <p className="text">
-                                <b>idididid</b>
+                                <b>{this.props.username}</b>
                             </p>
                         </div>
                     </div>
@@ -40,83 +154,70 @@ class MainSNS extends React.Component {
                         {/* 작성자, 리플들 */}
                         <div className="post">
                             <div className="profile">
-                                <img
-                                    src="https://scontent-ssn1-1.cdninstagram.com/v/t51.2885-15/e35/p1080x1080/93818837_131608151785158_3965098545993740587_n.jpg?_nc_ht=scontent-ssn1-1.cdninstagram.com&_nc_cat=106&_nc_ohc=wvnkNF-vXrYAX8A33uX&oh=8f358207c784034a74e842729e4ecf25&oe=5ECA5FDA"
-                                    alt="profile"
-                                />
+                                <img src={this.props.avatar} alt="profile" />
                             </div>
                             <div className="te">
                                 <p className="text">
-                                    <b>idididid</b> blahblahblahblahblahblahblahblahblah 줄바꿈은
-                                    언제 생기는 걸까 abcdefghijklmnopqrstuvwxyz 이 사진에 대해서
-                                    설명할거야 두 사람이 있어 각자 책을 열심히 보고있지 한 명은 소파
-                                    위에 한 명은 바닥에 앉아있어
+                                    <b>{this.props.username}</b> {this.props.content}
                                 </p>
                             </div>
-                        </div>
-                        <div className="comment">
-                            <div className="profile">
-                                <img
-                                    src="https://scontent-ssn1-1.cdninstagram.com/v/t51.2885-15/e35/s1080x1080/94100839_2941295502580071_3479324562767351595_n.jpg?_nc_ht=scontent-ssn1-1.cdninstagram.com&_nc_cat=103&_nc_ohc=KNSjtdSu2UsAX8zkoXj&oh=1b4b850df518043e65cc2acabc4fa55f&oe=5ECC4C3B"
-                                    alt="profile"
-                                />
-                            </div>
-                            <div className="te">
-                                <p className="text">
-                                    <b>didididi</b> 나는 댓글을 달거야 아주 좋아
-                                </p>
-                            </div>
-                        </div>
-                        <div className="comment">
-                            <div className="profile">
-                                <img
-                                    src="https://scontent-ssn1-1.cdninstagram.com/v/t51.2885-15/e35/s1080x1080/94100839_2941295502580071_3479324562767351595_n.jpg?_nc_ht=scontent-ssn1-1.cdninstagram.com&_nc_cat=103&_nc_ohc=KNSjtdSu2UsAX8zkoXj&oh=1b4b850df518043e65cc2acabc4fa55f&oe=5ECC4C3B"
-                                    alt="profile"
-                                />
-                            </div>
-                            <div className="te">
-                                <p className="text">
-                                    <b>didididi</b> 나는 댓글을 달거야 아주 좋아
-                                </p>
+                            <div className="spot">
+                                <Link
+                                    to={
+                                        this.props.location_id
+                                            ? `/place/` + this.props.location_id
+                                            : `/store/` + this.props.store_id
+                                    }
+                                >
+                                    <img
+                                        className="location"
+                                        src="https://image.flaticon.com/icons/svg/447/447031.svg"
+                                        alt="location"
+                                    />
+                                    <p>{this.props.loc_name}</p>
+                                </Link>
                             </div>
                         </div>
-                        <div className="comment">
-                            <div className="profile">
-                                <img
-                                    src="https://scontent-ssn1-1.cdninstagram.com/v/t51.2885-15/e35/s1080x1080/94100839_2941295502580071_3479324562767351595_n.jpg?_nc_ht=scontent-ssn1-1.cdninstagram.com&_nc_cat=103&_nc_ohc=KNSjtdSu2UsAX8zkoXj&oh=1b4b850df518043e65cc2acabc4fa55f&oe=5ECC4C3B"
-                                    alt="profile"
-                                />
-                            </div>
-                            <div className="te">
-                                <p className="text">
-                                    <b>didididi</b> 나는 댓글을 달거야 아주 좋아
-                                </p>
-                            </div>
-                        </div>
-                        <div className="comment">
-                            <div className="profile">
-                                <img
-                                    src="https://scontent-ssn1-1.cdninstagram.com/v/t51.2885-15/e35/s1080x1080/94100839_2941295502580071_3479324562767351595_n.jpg?_nc_ht=scontent-ssn1-1.cdninstagram.com&_nc_cat=103&_nc_ohc=KNSjtdSu2UsAX8zkoXj&oh=1b4b850df518043e65cc2acabc4fa55f&oe=5ECC4C3B"
-                                    alt="profile"
-                                />
-                            </div>
-                            <div className="te">
-                                <p className="text">
-                                    <b>didididi</b> 나는 댓글을 달거야 아주 좋아
-                                </p>
-                            </div>
-                        </div>
+                        {this.state.comments.map((comment, i) => {
+                            return (
+                                <>
+                                    <div className="comment">
+                                        <div className="profile">
+                                            <img
+                                                src={
+                                                    comment.avatar
+                                                        ? comment.avatar
+                                                        : "https://image.flaticon.com/icons/svg/1738/1738760.svg"
+                                                }
+                                                alt="profile"
+                                            />
+                                        </div>
+                                        <div className="te">
+                                            <p className="text">
+                                                <b>{comment.username}</b> {comment.text}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </>
+                            );
+                        })}
                     </div>
                     <div className="like">
-                        <div className="like-heart" onClick={this.clickLike}>
-                        <p className="like">
-                            {this.state.isLike ? <HeartFilled /> : <HeartOutlined />}
-                            <span className="num">좋아요 202개</span></p>
+                        <div className="like-heart">
+                            <p className="like" onClick={this.clickLike}>
+                                {this.state.isLike ? <HeartFilled /> : <HeartOutlined />}
+                                <span className="num">좋아요 {this.state.likes}개</span>
+                            </p>
                         </div>
                     </div>
                     <div className="mk-comment">
-                        <textarea placeholder="댓글 달기" />
-                        <button className="comment-btn">게시</button>
+                        <textarea
+                            placeholder="댓글 달기"
+                            onChange={(e) => this.text(e.target.value)}
+                        />
+                        <button className="comment-btn" onClick={this.comment}>
+                            게시
+                        </button>
                     </div>
                 </div>
             </div>

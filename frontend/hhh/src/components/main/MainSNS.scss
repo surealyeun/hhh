@@ -4,16 +4,24 @@
     display: grid;
     grid-template-columns: 60% 40%;
     gap: 0;
-    margin: 10px auto;
+    margin: 20px auto;
 
     .feed-left {
         width: 100%;
         height: 100%;
         border: solid 0px rgb(48, 48, 48);
         background-color: black;
+        // display: table;
         .pic {
+            // display: table-cell;
+            // vertical-align: middle;
+            // text-align: center;
             img {
-                width: 100%;
+                margin: 0 auto;
+                max-width: auto;
+                max-width: 100%;
+                // height: 600px;
+                max-height: 600px;
             }
         }
     }
@@ -27,15 +35,17 @@
         background-color: white;
         .user {
             height: 60px;
-            border-bottom: solid 0.5px rgb(235, 235, 235);
+            // border-bottom: solid 0.5px rgb(235, 235, 235);
             .profile {
                 width: 70px;
                 position: relative;
                 top: 13px;
+                margin-left: 10px;
                 img {
                     width: 40px;
                     height: 40px;
                     border-radius: 20px;
+                    border: solid 1px rgba(133, 133, 133, 0.281);
                 }
             }
             .id {
@@ -50,33 +60,56 @@
         .content {
             height: 450px;
             overflow: auto;
-            .post, .comment{
+            .post{
+                // background-color: #00ffaa10;
+            }
+            .post,
+            .comment {
                 .profile {
                     width: 70px;
                     position: relative;
                     top: 7px;
+                    margin-left: 10px;
                     img {
                         width: 40px;
                         height: 40px;
                         border-radius: 20px;
+                        border: solid 1px rgba(133, 133, 133, 0.281);
                     }
                 }
                 .te {
                     width: 70%;
                     position: relative;
                     left: 75px;
-                    top: -37px;
+                    top: -33px;
                     .text {
                         word-break: break-all;
                         margin: 0;
                     }
                 }
+                .spot{
+                    width: 100%;
+                    height: 30px;
+                    padding-left: 75px;
+                    margin-bottom: 0;
+                    position: relative;
+                    top: -25px;
+                    img{
+                        width: 20px;
+                        display: inline-block;
+                        filter: invert(75%);
+                        position: relative;
+                        top: -3px;
+                    }
+                    p{
+                        display: inline-block;
+                        color: #797878;
+                    }
+                }
             }
-
-
         }
 
-        .like{
+        .like {
             position: relative;
             bottom: 1px;
             height: 40px;
@@ -84,15 +117,15 @@
             // float: left;
             border-top: solid 0.5px rgb(235, 235, 235);
             border-bottom: solid 0.5px rgb(235, 235, 235);
-            .like-heart{
+            .like-heart {
                 // width: 30px;
                 height: 30px;
                 margin: 0;
-                .like{
+                .like {
                     font-size: 25px;
                     margin: 0 10px;
                     color: #00ffaa;
-                    .num{
+                    .num {
                         color: black;
                         margin-left: 10px;
                         position: relative;
@@ -104,13 +137,13 @@
             }
         }
 
-        .mk-comment{
+        .mk-comment {
             position: relative;
             // bottom: -38px;
             height: 50px;
             width: 100%;
             // border-top: solid 0.5px rgb(235, 235, 235);
-            textarea{
+            textarea {
                 overflow: auto;
                 height: 100%;
                 width: 80%;
@@ -122,20 +155,21 @@
                 resize: none;
                 border-right: solid 0.5px rgb(235, 235, 235);
             }
-            textarea::placeholder{
+            textarea::placeholder {
                 padding-top: 11px;
                 color: rgb(100, 100, 100);
             }
-            textarea:focus{
+            textarea:focus {
                 outline: none;
             }
-            button{
+            button {
                 width: 20%;
                 position: relative;
                 top: -21px;
                 background: none;
                 border: 0;
                 padding: 0;
+                cursor: pointer;
             }
         }
     }

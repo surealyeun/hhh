@@ -1,5 +1,6 @@
 /*global kakao*/
 import React from "react";
+import Header from "../common/Header";
 import { Row, Col } from "antd";
 import "./PlaceDetail.scss";
 import { Link } from "react-router-dom";
@@ -46,6 +47,8 @@ class PlaceDetail extends React.Component {
     const state = this.props.location.state;
     const store_name = state.store_name;
     return (
+      <>
+      <Header />
       <div className="place-detail">
         <Row>
           <Col span={11}>
@@ -145,6 +148,7 @@ class PlaceDetail extends React.Component {
           </Col>
         </Row>
       </div>
+      </>
     );
   }
 }

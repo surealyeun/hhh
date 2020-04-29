@@ -1,7 +1,7 @@
 .Slide{
     .ant-carousel .slick-dots{
-        position: relative;
-        bottom: 120px;
+        position: absolute;
+        // bottom: 100px;
     }
 
     .ant-carousel .slick-slide {
@@ -22,10 +22,10 @@
     
     .ant-carousel .slick-next {
         right: 0px;
-        top: 0px;
+        top: 10px;
         z-index: 10;
         width: 20%;
-        height: 102%;
+        height: 600px;
         
     }
     .ant-carousel .slick-next:hover {
@@ -34,10 +34,10 @@
     
     .ant-carousel .slick-prev {
         left: 0px;
-        top: 0px;
+        top: 10px;
         z-index: 10;
         width: 20%;
-        height: 102%;
+        height: 600px;
     }
     .ant-carousel .slick-prev:hover {
         background-color: rgba(0, 0, 0, 0.3);
