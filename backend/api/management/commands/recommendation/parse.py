@@ -8,6 +8,7 @@ import pymysql
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.decomposition import TruncatedSVD
 from scipy.sparse.linalg import svds
+from sqlalchemy import create_engine
 
 DATA_DIR = "./data/"
 DATA_FILE = os.path.join(DATA_DIR, "dining.json")
@@ -142,12 +143,15 @@ def import_data():
                     isLoc.append(False)
             
             dict = {'rank': rank, 'recommend':recommend, 'user_id':user_num_list[j], 'isLocation':isLoc}
-            print(dict)
             data_user = pd.DataFrame(dict)
             data = pd.concat([data, data_user])
         
         data = data.reset_index(drop=True)
-        print(data)
+        pymysql.install_as_MySQLdb()
+        import MySQLdb
+
+        engine = create_engine("mysql+mysqldb://root:"+"ssafya202!@#"+"@13.125.113.171/HHH", encoding='utf-8')
+        data.to_sql(name = "api_recommend_by_id_"+gu_eng[gu_list[i]], con=engine, if_exists='replace')
         DUMP_FILE = os.path.join(DATA_DIR, 'recommend_'+gu_eng[gu_list[i]]+'.pkl') 
         dump_dataframes(data, DUMP_FILE)
 
