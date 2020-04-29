@@ -6,7 +6,7 @@ import icon from "../image/teacher.png";
 import iconClose from "../image/close.png";
 import "./Main.scss";
 
-const username: string | null = sessionStorage.getItem("username");
+// const username: string | null = sessionStorage.getItem("username");
 
 export interface Comment {
     created: number[];
@@ -56,21 +56,20 @@ class Main extends React.Component {
     }
 
     componentDidMount() {
-        if (this.state.isLog) {
-            axios({
-                method: "get",
-                url: "http://13.125.113.171:8000/feedlist/follow/" + username,
-            })
-                .then((res) => {
-                    console.log(res.data);
-                    this.setState({
-                        feedlist: res.data,
-                    });
+        const username: string | null = sessionStorage.getItem("username");
+                axios({
+                    method: "get",
+                    url: "http://13.125.113.171:8000/feedlist/follow/" + username,
                 })
-                .catch((err) => {
-                    console.log(err);
-                });
-        }
+                    .then((res) => {
+                        console.log(res.data);
+                        this.setState({
+                            feedlist: res.data,
+                        });
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
     }
 
     search = () => {
@@ -105,6 +104,8 @@ class Main extends React.Component {
     };
 
     render() {
+        const username: string | null = sessionStorage.getItem("username");
+        const avatar: string|null = "http://13.125.113.171:8000"+sessionStorage.getItem("avatar");
         return (
             <div className="main">
                 {this.state.isSns ? (
@@ -147,7 +148,7 @@ class Main extends React.Component {
                                             <Link to="/userInfo">
                                                 <img
                                                     className="user-profile"
-                                                    src="https://image.flaticon.com/icons/svg/1738/1738760.svg"
+                                                    src={avatar ? avatar:"https://image.flaticon.com/icons/svg/1738/1738760.svg"}
                                                     alt="user_profile"
                                                 />
                                                 <h2 className="username">{username}</h2>
@@ -176,12 +177,15 @@ class Main extends React.Component {
                                     </div>
                                 )}
                             </div>
+                            {this.state.isSns ? <></>: <>
                             <div className="search">
                                 <button onClick={this.search}>
                                     <p>ㅎㅎㅎ?</p>
                                     <img className="search-btn" src={icon} alt="search" />
                                 </button>
                             </div>
+                            
+                            </>}
                         </div>
                         {this.state.isSearch ? (
                             <div className="search-input">

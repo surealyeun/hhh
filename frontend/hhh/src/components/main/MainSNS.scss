@@ -94,6 +94,7 @@
                     margin-bottom: 0;
                     position: relative;
                     top: -25px;
+                    transition: color .5s;
                     img{
                         width: 20px;
                         display: inline-block;
@@ -105,6 +106,9 @@
                         display: inline-block;
                         color: #797878;
                     }
+                }
+                .spot:hover{
+                    color: #00ffaa
                 }
             }
         }
