@@ -1,9 +1,9 @@
 /*global kakao*/
 import React from "react";
-import Header from "../common/Header";
-import { Row, Col } from "antd";
-import "./PlaceDetail.scss";
 import { Link } from "react-router-dom";
+import Header from "../common/Header";
+import { Row, Col, Button, Rate } from "antd";
+import "./PlaceDetail.scss";
 
 class PlaceDetail extends React.Component {
   componentDidMount() {
@@ -110,7 +110,8 @@ class PlaceDetail extends React.Component {
             </Row>
             <h1 className="place-name">{state.store_name}</h1>
             <div>
-              <p>{state.category}</p>
+              <span>{state.category}</span> &nbsp;
+              <Rate value="4" className="rate" />
             </div>
             <hr />
             <div className="location">
@@ -135,7 +136,7 @@ class PlaceDetail extends React.Component {
                     },
                   }}
                 >
-                  <button>리뷰 작성하기</button>
+                  <Button>리뷰 작성하기</Button>
                 </Link>
               </div>
               <div className="review"></div>

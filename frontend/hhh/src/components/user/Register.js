@@ -146,9 +146,9 @@ const Register = () => {
           </Form.Item>
 
           <Form.Item {...tailLayout}>
-            <Button htmlType="submit">회원가입</Button>
-            &nbsp;
             <Link to="/login">로그인 하러가기</Link>
+            &nbsp;
+            <Button htmlType="submit">회원가입</Button>
           </Form.Item>
         </Form>
       </div>

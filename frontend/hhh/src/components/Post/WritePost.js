@@ -3,6 +3,7 @@ import { Form, Upload, Modal, Input, Button, Rate } from "antd";
 import { PlusOutlined, EnvironmentTwoTone } from "@ant-design/icons";
 import "./WritePost.scss";
 import axios from "axios";
+import Header from "../common/Header";
 
 const postURL = `http://13.125.113.171:8000/board/post`;
 
@@ -49,14 +50,15 @@ class PicturesWall extends React.Component {
         <div className="ant-upload-text">Upload</div>
       </div>
     );
-    const placeName = this.props.location.state.store_name;
+    const state = this.props.location.state;
+    const isStore = state.isStore;
+    const placeName = isStore ? state.store_name : state.location_name;
     const onFinish = (values) => {
-      console.log("Received values of form: ", values);
       let form_data = new FormData();
       form_data.append("content", values.content);
-      form_data.append("writer", 1); // 로그인 시 받은 id 로 처리 예정
+      form_data.append("writer", sessionStorage.getItem("userId"));
       // form_data.append("rate", values.rate); // 별점 컬럼 생성 시 추가
-      if (this.props.location.state.isStore) {
+      if (isStore) {
         form_data.append("store", this.props.location.state.id);
       } else {
         form_data.append("location", this.props.location.state.id);
@@ -75,53 +77,58 @@ class PicturesWall extends React.Component {
         .catch((err) => console.timeLog(err));
     };
     return (
-      <div className="writeContainer">
-        <Form name="validate_other" onFinish={onFinish}>
-          <div className="position">
-            <h3>
-              <EnvironmentTwoTone /> {placeName}
-            </h3>
-            <Form.Item name="rate">
-              <Rate className="rate" />
-            </Form.Item>
-            <hr />
-            <br />
-          </div>
-          <div className="clearfix">
-            <Form.Item name="photo">
-              <Upload
-                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                listType="picture-card"
-                fileList={fileList}
-                onPreview={this.handlePreview}
-                onChange={this.handleChange}
+      <>
+        <Header />
+        <br />
+        <div className="writeContainer">
+          <Form name="validate_other" onFinish={onFinish}>
+            <div className="position">
+              <h3>
+                <EnvironmentTwoTone /> {placeName}
+              </h3>
+              <Form.Item name="rate">
+                <Rate className="rate" />
+              </Form.Item>
+              <hr />
+              <br />
+            </div>
+            <div className="clearfix">
+              <Form.Item name="photo">
+                <Upload
+                  action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                  listType="picture-card"
+                  fileList={fileList}
+                  onPreview={this.handlePreview}
+                  onChange={this.handleChange}
+                >
+                  {fileList.length >= 10 ? null : uploadButton}
+                </Upload>
+              </Form.Item>
+              <Modal
+                visible={previewVisible}
+                title={previewTitle}
+                footer={null}
+                onCancel={this.handleCancel}
               >
-                {fileList.length >= 10 ? null : uploadButton}
-              </Upload>
+                <img
+                  alt="example"
+                  style={{ width: "100%" }}
+                  src={previewImage}
+                />
+              </Modal>
+            </div>
+            <div className="writeSpace">
+              <Form.Item name="content">
+                <TextArea rows={9} />
+              </Form.Item>
+            </div>
+            <br />
+            <Form.Item>
+              <Button htmlType="submit">작성완료</Button>
             </Form.Item>
-            <Modal
-              visible={previewVisible}
-              title={previewTitle}
-              footer={null}
-              onCancel={this.handleCancel}
-            >
-              <img alt="example" style={{ width: "100%" }} src={previewImage} />
-            </Modal>
-          </div>
-          <br />
-          <div className="writeSpace">
-            <Form.Item name="content">
-              <TextArea rows={10} />
-            </Form.Item>
-          </div>
-          <br />
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              작성완료
-            </Button>
-          </Form.Item>
-        </Form>
-      </div>
+          </Form>
+        </div>
+      </>
     );
   }
 }
