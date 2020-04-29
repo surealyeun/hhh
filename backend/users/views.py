@@ -85,7 +85,7 @@ def user_follow_feedlist(request, username):
     result = board_models.Board.objects.filter(writer=user.id)[:50]
     result = list(result.values())
     for i in range(len(result)):
-        user = get_object_or_404(User ,id=result[i]["writer_id"])
+        user_writer = get_object_or_404(User ,id=result[i]["writer_id"])
         board = get_object_or_404(board_models.Board ,id=result[i]["id"])
         like = list(board_models.Like.objects.filter(board=board).values())
 
@@ -97,12 +97,20 @@ def user_follow_feedlist(request, username):
             result[i]["loc_name"] = store.location_name
 
         result[i]["likes"] =len(like)
-        result[i]["username"] = user.username
+        result[i]["username"] = user_writer.username
         
-        photo = list(board_models.Photo.objects.filter(board=board).values())
         photos = []
-        for j in range(len(photo)):
-            photos.append("http://13.125.113.171:8000/media/"+str(photo[j]["image"]))
+        photo1 = board.photo
+        if str(photo1) is not "":
+            photos.append("http://13.125.113.171:8000/media/"+str(photo1))
+
+        photo2 = board.photo2
+        if str(photo2) is not "":
+            photos.append("http://13.125.113.171:8000/media/"+str(photo2))
+        
+        photo3 = board.photo3
+        if str(photo3) is not "":
+            photos.append("http://13.125.113.171:8000/media/"+str(photo3))
         result[i]["photos"] = photos 
 
         if str(user.avatar) is not "":
@@ -116,8 +124,8 @@ def user_follow_feedlist(request, username):
         comments = list(comments_models.Comment.objects.filter(board=board).values())
         result[i]["comments"] = comments
         for j in range(len(comments)):
-            user = get_object_or_404(User ,id=comments[j]["writer_id"])
-            comments[j]['username'] = user.username
+            user_commenter = get_object_or_404(User ,id=comments[j]["writer_id"])
+            comments[j]['username'] = user_commenter.username
             if str(user.avatar) is not "":
                 comments[j]["avatar"] = "http://13.125.113.171:8000/media/"+str(user.avatar)
             else :
@@ -149,11 +157,19 @@ def user_follow_feedlist(request, username):
             result[i]["likes"] =len(like)
             result[i]["username"] = user.username
  
-            photo = list(board_models.Photo.objects.filter(board=board).values())
             photos = []
-            for j in range(len(photo)):
-                photos.append("http://13.125.113.171:8000/media/"+str(photo[j]["image"]))
-            result[i]["photos"] = photos 
+            photo1 = board.photo
+            if str(photo1) is not "":
+                photos.append("http://13.125.113.171:8000/media/"+str(photo1))
+
+            photo2 = board.photo2
+            if str(photo2) is not "":
+                photos.append("http://13.125.113.171:8000/media/"+str(photo2))
+            
+            photo3 = board.photo3
+            if str(photo3) is not "":
+                photos.append("http://13.125.113.171:8000/media/"+str(photo3))
+            result[i]["photos"] = photos  
 
             
             if str(user.avatar) is not "":
@@ -174,7 +190,6 @@ def user_follow_feedlist(request, username):
                 else :
                     comments[j]["avatar"] = ""
 
-                
             pressLike = True
             if len(like) == 0:
                 pressLike = False
@@ -211,11 +226,19 @@ def user_feedlist(request, user_name):
         if board.store_id is None:
             store = get_object_or_404(api_models.Location, id=board.location_id)
             result[i]["loc_name"] = store.location_name
-
-        photo = list(board_models.Photo.objects.filter(board=board).values())
+   
         photos = []
-        for j in range(len(photo)):
-            photos.append("http://13.125.113.171:8000/media/"+str(photo[j]["image"]))
+        photo1 = board.photo
+        if str(photo1) is not "":
+            photos.append("http://13.125.113.171:8000/media/"+str(photo1))
+
+        photo2 = board.photo2
+        if str(photo2) is not "":
+            photos.append("http://13.125.113.171:8000/media/"+str(photo2))
+        
+        photo3 = board.photo3
+        if str(photo3) is not "":
+            photos.append("http://13.125.113.171:8000/media/"+str(photo3))
         result[i]["photos"] = photos 
 
         like = list(board_models.Like.objects.filter(board=board).values())

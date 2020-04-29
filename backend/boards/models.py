@@ -34,7 +34,9 @@ class Board(core_models.TimeStampedModel):
     writer = models.ForeignKey("users.User", on_delete=models.CASCADE)
     address_gu = models.CharField(max_length=20, null=True, blank=True)
     content = models.TextField(null=True, blank=True)
-    photo = models.ManyToManyField(Photo)
+    photo = models.ImageField(upload_to="boards", null=True)
+    photo2 = models.ImageField(upload_to="boards", null=True, blank=True)
+    photo3 = models.ImageField(upload_to="boards", null=True, blank=True)
     store = models.ForeignKey("api.DiningStore", on_delete=models.CASCADE, null=True, blank=True)
     location = models.ForeignKey("api.Location", on_delete=models.CASCADE, null=True, blank=True)
 
