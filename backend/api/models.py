@@ -46,3 +46,9 @@ class Location(models.Model):
 
     def __str__(self):
         return str(self.location_name)+' | '+ str(self.address_gu)+' | ' + str(self.address_dong)
+
+class Recommend(models.Model):
+    rank = models.IntegerField(null=True)
+    loc_id = models.IntegerField(null=True)
+    user_id = models.IntegerField(null=True)
+    is_location = models.BooleanField(null=True, default=False)
