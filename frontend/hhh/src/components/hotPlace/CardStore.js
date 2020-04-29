@@ -22,6 +22,7 @@ const Place = ({ state }) => {
             to={{
               pathname: `/store/${id}`,
               state: {
+                id,
                 store_name,
                 category,
                 address_see,
@@ -32,13 +33,15 @@ const Place = ({ state }) => {
               },
             }}
           >
-            <img src="https://www.agoda.com/wp-content/uploads/2019/03/Best-restaurants-in-Seoul-Fine-dining-Jungsik-Seoul-Mingles-restaurant.jpg" />
+            <img src={url} />
             <h2>
+              {category ? (
                 <span className="small">{category}</span>
-                <br />
-              <span>
-                {store_name}
-              </span>
+              ) : (
+                <span className="small">음식점</span>
+              )}
+              <br />
+              <span>{store_name}</span>
             </h2>
           </Link>
         </div>

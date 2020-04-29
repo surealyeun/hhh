@@ -18,7 +18,7 @@ class Feed extends React.Component<
   }
 
   mouseOver() {
-    this.setState({ bgColor: "rgba(0, 0, 0, 0.3)", display: "block" });
+    this.setState({ bgColor: "rgba(0, 0, 0, 0.4)", display: "block" });
   }
 
   render() {

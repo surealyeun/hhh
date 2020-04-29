@@ -1,6 +1,8 @@
 /*global kakao*/
 import React from "react";
-import { Row, Col } from "antd";
+import { Link } from "react-router-dom";
+import Header from "../common/Header";
+import { Row, Col, Button, Rate } from "antd";
 import "./PlaceDetail.scss";
 
 class PlaceDetail extends React.Component {
@@ -43,7 +45,10 @@ class PlaceDetail extends React.Component {
   render() {
     const id = this.props.match.params.id;
     const state = this.props.location.state;
+    const store_name = state.store_name;
     return (
+      <>
+      <Header />
       <div className="place-detail">
         <Row>
           <Col span={11}>
@@ -105,7 +110,8 @@ class PlaceDetail extends React.Component {
             </Row>
             <h1 className="place-name">{state.store_name}</h1>
             <div>
-              <p>{state.category}</p>
+              <span>{state.category}</span> &nbsp;
+              <Rate value="4" className="rate" />
             </div>
             <hr />
             <div className="location">
@@ -119,7 +125,20 @@ class PlaceDetail extends React.Component {
             <hr />
             <div className="reviews">
               <h3>Reviews</h3>
-              <div className="review"></div>
+              <div className="review">
+                <Link
+                  to={{
+                    pathname: `/writePost`,
+                    state: {
+                      isStore: true,
+                      store_name,
+                      id
+                    },
+                  }}
+                >
+                  <Button>리뷰 작성하기</Button>
+                </Link>
+              </div>
               <div className="review"></div>
               <div className="review"></div>
             </div>
@@ -130,6 +149,7 @@ class PlaceDetail extends React.Component {
           </Col>
         </Row>
       </div>
+      </>
     );
   }
 }
