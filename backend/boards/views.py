@@ -6,6 +6,7 @@ from .serializers import BoardSerializer, LikeSerializer
 from .models import Board, Like
 from users.models import User
 from boards.models import Board
+from comments.models import Comment
 import json
 from django.http import HttpResponseRedirect
 from .forms import UploadFileForm
@@ -28,6 +29,16 @@ def board_like_post(request, username, boardno):
     board = get_object_or_404(Board ,id=boardno)
     like = Like(user=user,board=board)
     like.save()
+    return Response({"message" : "data input!","data":request.data})
+
+
+@api_view(['POST'])
+def comment_post(request, boardno, userid, text):
+    user = get_object_or_404(User ,id=userid)
+    board = get_object_or_404(Board ,id=boardno)
+    comment = Comment(text=text, writer=user, board=board)
+    print(comment) 
+    comment.save()
     return Response({"message" : "data input!","data":request.data})
 
 @api_view(['DELETE'])

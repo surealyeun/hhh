@@ -14,6 +14,8 @@ from django.contrib.auth.hashers import check_password
 from comments import models as comments_models
 import json, datetime
 from django.http import HttpResponse
+import pymysql
+import pandas as pd
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -247,4 +249,57 @@ def user_feedlist(request, user_name):
     if len(feedlist) is not 0:
         feedlist = sorted(feedlist, key=lambda  feed: feed["created"], reverse=True)
     json_list = json.dumps(feedlist, cls=DateTimeEncoder)
+    return HttpResponse(json_list)
+
+
+@api_view(['GET'])
+def recommend_location_list(request, area_gu, username):
+    
+    connection = pymysql.connect(
+        host='13.125.113.171', user='root', password='ssafya202!@#', db='HHH',
+        charset='utf8mb4', autocommit=True, cursorclass=pymysql.cursors.DictCursor
+    )
+    
+    cursor = connection.cursor()
+    user = get_object_or_404(User ,username="username")
+
+    sql = "select * from HHH.api_recommend_by_id_"+area_gu+" where user_id="+str(user.id)
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    connection.close()
+
+    df = pd.DataFrame(result)
+    recommend_list = list(df["recommend"])
+    isLocation = list(df["isLocation"])
+    
+    result= []
+    for i in range(len(recommend_list)):
+        dic = {}
+        if isLocation[i] is 1:
+            location = get_object_or_404(api_models.Location, id=recommend_list[i])
+            dic["id"] = recommend_list[i]
+            dic["url"] = "http://13.125.113.171:8000/media/shop.png"
+            dic["location_name"] = location.location_name
+            dic["description"] = location.description
+            dic["rank"] = str(i+1)
+            dic["address_see"] = location.address_see
+            dic["address_gu"] = location.address_gu
+            dic["address_dong"] = location.address_dong
+            dic["latitude"] = location.latitude
+            dic["longitude"] = location.longitude
+            
+        else :
+            store = get_object_or_404(api_models.DiningStore, id=recommend_list[i])
+            dic["id"] = recommend_list[i]
+            dic["category"] = store.category
+            dic["url"] = "http://13.125.113.171:8000/media/shop.png"
+            dic["store_name"] = store.store_name
+            dic["rank"] = str(i+1)
+            dic["address_see"] = store.address_see
+            dic["address_gu"] = store.address_gu
+            dic["address_dong"] = store.address_dong
+            dic["latitude"] = store.latitude
+            dic["longitude"] = store.longitude
+        result.append(dic)
+    json_list = json.dumps(result)
     return HttpResponse(json_list)
