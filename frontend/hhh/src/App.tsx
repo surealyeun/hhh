@@ -11,6 +11,7 @@ import PlaceDetail from './components/placeDetail/PlaceDetail';
 import StoreDetail from './components/placeDetail/StoreDetail';
 import FeedDetail from "./components/feedDetail/FeedDetail";
 import mainsns from './components/main/MainSNS';
+import Header from "./components/common/Header";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route path="/sns" component={mainsns} />
+          <Route path="/hd" component={Header} />
           <Redirect path="*" to="/"></Redirect>
         </Switch>
       </BrowserRouter>

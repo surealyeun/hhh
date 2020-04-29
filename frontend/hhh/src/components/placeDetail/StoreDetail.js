@@ -1,5 +1,6 @@
 /*global kakao*/
 import React from "react";
+import Header from "../common/Header";
 import { Row, Col } from "antd";
 import "./PlaceDetail.scss";
 
@@ -44,6 +45,8 @@ class PlaceDetail extends React.Component {
     const id = this.props.match.params.id;
     const state = this.props.location.state;
     return (
+      <>
+      <Header />
       <div className="place-detail">
         <Row>
           <Col span={11}>
@@ -130,6 +133,7 @@ class PlaceDetail extends React.Component {
           </Col>
         </Row>
       </div>
+      </>
     );
   }
 }
