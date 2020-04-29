@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { Form, Input, Select, Row, Col, Button } from "antd";
 import "./Register.scss";
 import Header from "../common/Header";
@@ -26,16 +26,10 @@ const formItemLayout = {
     },
   },
 };
-const tailFormItemLayout = {
+const tailLayout = {
   wrapperCol: {
-    xs: {
-      span: 24,
-      offset: 0,
-    },
-    sm: {
-      span: 16,
-      offset: 8,
-    },
+    offset: 13,
+    span: 16,
   },
 };
 
@@ -59,105 +53,105 @@ const Register = () => {
 
   return (
     <>
-    <Header />
-    <br />
-    <div className="registerContainer">
-      <Form
-        {...formItemLayout}
-        form={form}
-        name="register"
-        onFinish={onFinish}
-        scrollToFirstError
-      >
-        <Form.Item
-          name="username"
-          label={<span>아이디&nbsp;</span>}
-          rules={[
-            {
-              required: true,
-              message: "아이디를 입력해주세요!",
-              whitespace: true,
-            },
-          ]}
+      <Header />
+      <br />
+      <div className="registerContainer">
+        <Form
+          {...formItemLayout}
+          form={form}
+          name="register"
+          onFinish={onFinish}
+          scrollToFirstError
         >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          name="password"
-          label="비밀번호"
-          rules={[
-            {
-              required: true,
-              message: "비밀번호를 입력해주세요!",
-            },
-          ]}
-          hasFeedback
-        >
-          <Input.Password />
-        </Form.Item>
-        <Form.Item
-          name="confirm"
-          label="비밀번호 확인"
-          dependencies={["password"]}
-          hasFeedback
-          rules={[
-            {
-              required: true,
-              message: "비밀번호를 다시 입력해주세요!",
-            },
-            ({ getFieldValue }) => ({
-              validator(rule, value) {
-                if (!value || getFieldValue("password") === value) {
-                  return Promise.resolve();
-                }
-
-                return Promise.reject("비밀번호가 맞지 않아요!");
+          <Form.Item
+            name="username"
+            label={<span>아이디&nbsp;</span>}
+            rules={[
+              {
+                required: true,
+                message: "아이디를 입력해주세요!",
+                whitespace: true,
               },
-            }),
-          ]}
-        >
-          <Input.Password />
-        </Form.Item>
-        <Form.Item
-          name="email"
-          label="이메일"
-          rules={[
-            {
-              type: "email",
-              message: "이메일의 형식이 맞지 않아요!",
-            },
-            {
-              required: true,
-              message: "이메일을 입력해주세요.",
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item name="gender" label="성별">
-          <Select
-            showSearch
-            style={{ width: 200 }}
-            onChange={onChange}
-            filterOption={(input, option) =>
-              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-            }
-            defaultValue="none"
+            ]}
           >
-            <Option value="male">Male</Option>
-            <Option value="female">Female</Option>
-            <Option value="none">None</Option>
-          </Select>
-        </Form.Item>
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="password"
+            label="비밀번호"
+            rules={[
+              {
+                required: true,
+                message: "비밀번호를 입력해주세요!",
+              },
+            ]}
+            hasFeedback
+          >
+            <Input.Password />
+          </Form.Item>
+          <Form.Item
+            name="confirm"
+            label="비밀번호 확인"
+            dependencies={["password"]}
+            hasFeedback
+            rules={[
+              {
+                required: true,
+                message: "비밀번호를 다시 입력해주세요!",
+              },
+              ({ getFieldValue }) => ({
+                validator(rule, value) {
+                  if (!value || getFieldValue("password") === value) {
+                    return Promise.resolve();
+                  }
 
-        <Form.Item {...tailFormItemLayout}>
-          <Button type="primary" htmlType="submit">
-            회원가입
-          </Button>
-        </Form.Item>
-      </Form>
-    </div>
+                  return Promise.reject("비밀번호가 맞지 않아요!");
+                },
+              }),
+            ]}
+          >
+            <Input.Password />
+          </Form.Item>
+          <Form.Item
+            name="email"
+            label="이메일"
+            rules={[
+              {
+                type: "email",
+                message: "이메일의 형식이 맞지 않아요!",
+              },
+              {
+                required: true,
+                message: "이메일을 입력해주세요.",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item name="gender" label="성별">
+            <Select
+              showSearch
+              style={{ width: 200 }}
+              onChange={onChange}
+              filterOption={(input, option) =>
+                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+              }
+              defaultValue="none"
+            >
+              <Option value="male">Male</Option>
+              <Option value="female">Female</Option>
+              <Option value="none">None</Option>
+            </Select>
+          </Form.Item>
+
+          <Form.Item {...tailLayout}>
+            <Button htmlType="submit">회원가입</Button>
+            &nbsp;
+            <Link to="/login">로그인 하러가기</Link>
+          </Form.Item>
+        </Form>
+      </div>
     </>
   );
 };

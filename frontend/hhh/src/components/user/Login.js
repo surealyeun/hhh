@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { Form, Input, Button } from "antd";
 import "./Login.scss";
 import axios from "axios";
@@ -17,7 +17,7 @@ const layout = {
 };
 const tailLayout = {
   wrapperCol: {
-    offset: 15,
+    offset: 13,
     span: 16,
   },
 };
@@ -37,9 +37,9 @@ const Login = () => {
         },
       })
       .then((resp) => {
-        console.log(resp);
         if (resp.status === 200) {
           sessionStorage.setItem("username", values.username);
+          sessionStorage.setItem("user", resp.data.user);
           history.push("/");
         }
       });
@@ -73,7 +73,7 @@ const Login = () => {
               },
             ]}
           >
-            <Input id="username"/>
+            <Input id="username" />
           </Form.Item>
 
           <Form.Item
@@ -90,9 +90,9 @@ const Login = () => {
           </Form.Item>
 
           <Form.Item {...tailLayout}>
-            <Button type="primary" htmlType="submit">
-              로그인
-            </Button>
+            <Button htmlType="submit">로그인</Button>
+            &nbsp;
+            <Link to="/register">회원가입 하러가기</Link>
           </Form.Item>
         </Form>
       </div>
