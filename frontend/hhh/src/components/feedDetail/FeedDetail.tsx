@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Header from "../common/Header";
+import { Link } from "react-router-dom";
 import { HeartOutlined, HeartFilled } from "@ant-design/icons";
 import "./FeedDetail.scss";
 
@@ -148,7 +149,7 @@ class FeedDetail extends Component {
           "http://13.125.113.171:8000/board/like/delete/" +
           this.state.loginUser +
           "/" +
-          this.state.loginUserId,
+          this.state.feedid,
       })
         .then((res) => {
           console.log(res);
@@ -169,7 +170,7 @@ class FeedDetail extends Component {
           "http://13.125.113.171:8000/board/like/post/" +
           this.state.loginUser +
           "/" +
-          this.state.loginUserId,
+          this.state.feedid,
       })
         .then((res) => {
           console.log(res.data);
@@ -186,8 +187,12 @@ class FeedDetail extends Component {
         <Header />
         <div id="feed-detail">
           <div id="user-id">
-            <img className="user-pic" src={this.state.avatar} alt="" />
-            <div id="id">{this.state.userName}</div>
+            <Link to={`/feedList/${this.state.userName}`}>
+              <img className="user-pic" src={this.state.avatar} alt="" />
+            </Link>
+            <Link to={`/feedList/${this.state.userName}`}>
+              <div id="id">{this.state.userName}</div>
+            </Link>
           </div>
 
           <div id="feed-img">
@@ -204,8 +209,12 @@ class FeedDetail extends Component {
               <ul>
                 {this.state.comments.map((comment: any) => (
                   <li key={comment.id}>
-                    <img src={comment.avatar} alt="" />
-                    <div className="id">{comment.username}</div>
+                    <Link to={`/feedList/${comment.username}`}>
+                      <img src={comment.avatar} alt="" />
+                    </Link>
+                    <Link to={`/feedList/${comment.username}`}>
+                      <div className="id">{comment.username}</div>
+                    </Link>
                     <div className="text">{comment.text}</div>
                   </li>
                 ))}

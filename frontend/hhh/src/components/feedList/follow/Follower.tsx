@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import "./Follow.scss";
 
-class Follow extends Component {
+class Follower extends Component {
   state = {
     userId: window.location.href.split("/")[4],
     loginUserName: sessionStorage.getItem("username"),
@@ -13,7 +13,7 @@ class Follow extends Component {
 
   async componentDidMount() {
     await axios
-      .get("http://13.125.113.171:8000/following/" + Number(this.state.userId))
+      .get("http://13.125.113.171:8000/follower/" + Number(this.state.userId))
       .then((res) => {
         console.log(res.data);
 
@@ -28,7 +28,7 @@ class Follow extends Component {
       <div id="follow" style={{ display: "block" }}>
         <div id="follow-list">
           <div id="follow-text">
-            팔로우
+            팔로워
             <Link to={`/feedList/${this.state.originUserName}`}>
               <div id="close-btn">X</div>
             </Link>
@@ -54,4 +54,4 @@ class Follow extends Component {
   }
 }
 
-export default Follow;
+export default Follower;
