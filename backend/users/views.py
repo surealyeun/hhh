@@ -125,7 +125,6 @@ def login(request, username, password):
 @api_view(['GET'])
 def user_follow_feedlist(request, username):
     user = get_object_or_404(User, username=username)
-
     feedlist = []
     result = board_models.Board.objects.filter(writer=user.id)[:50]
     result = list(result.values())
@@ -171,8 +170,8 @@ def user_follow_feedlist(request, username):
         for j in range(len(comments)):
             user_commenter = get_object_or_404(User ,id=comments[j]["writer_id"])
             comments[j]['username'] = user_commenter.username
-            if str(user.avatar) is not "":
-                comments[j]["avatar"] = "http://13.125.113.171:8000/media/"+str(user.avatar)
+            if str(user_commenter.avatar) is not "":
+                comments[j]["avatar"] = "http://13.125.113.171:8000/media/"+str(user_commenter.avatar)
             else :
                 comments[j]["avatar"] = ""
 

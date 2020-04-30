@@ -38,7 +38,11 @@ def follower_list(request, user_id):
 
 
 @api_view(['POST'])
-def follow(request):
+def follow(request, following_id, followed_id):
+    following = get_object_or_404(User ,id=following_id)
+    followed = get_object_or_404(User ,id=followed_id)
+    follow = Follow(following=following,followed=followed)
+    follow.save()
     return Response({"message" : "data input!","data":request.data})
 
 @api_view(['DELETE'])
