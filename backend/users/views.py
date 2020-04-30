@@ -319,8 +319,6 @@ def recommend_location_list(request, area_gu, username="Eum_mericano"):
         result = cursor.fetchall()
         df = pd.DataFrame(result)
 
-    connection.close()
-
     df = pd.DataFrame(result)
     recommend_list = list(df["recommend"])
     isLocation = list(df["isLocation"])
@@ -331,7 +329,7 @@ def recommend_location_list(request, area_gu, username="Eum_mericano"):
         if isLocation[i] is 1:
             location = get_object_or_404(api_models.Location, id=recommend_list[i])
             dic["id"] = recommend_list[i]
-            dic["url"] = "http://13.125.113.171:8000/media/shop.png"
+            dic["url"] = "http://13.125.113.171:8000/media/location.png"
             dic["location_name"] = location.location_name
             dic["description"] = location.description
             dic["rank"] = str(i+1)
@@ -355,6 +353,7 @@ def recommend_location_list(request, area_gu, username="Eum_mericano"):
             dic["longitude"] = store.longitude
         result.append(dic)
     json_list = json.dumps(result)
+    connection.close()
     return HttpResponse(json_list)
 
 
