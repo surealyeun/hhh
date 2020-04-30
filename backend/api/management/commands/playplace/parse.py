@@ -100,6 +100,9 @@ def import_data():
 
     location_frame["longitude"] = location_frame["longitude"].str.replace(' ','') 
     location_frame["latitude"] = location_frame["latitude"].str.replace(' ','') 
+
+    location_frame.sort_values(by=['location_name'], inplace=True)
+    print(location_frame)
     return {"location": location_frame}
 
 

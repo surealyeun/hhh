@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import { Form, Input, Button, Checkbox } from "antd";
+import React from "react";
+import { useHistory, Link, Redirect } from "react-router-dom";
+import { Form, Input, Button } from "antd";
 import "./Login.scss";
 import axios from "axios";
+import Header from "../common/Header";
 
 const loginURL = `http://13.125.113.171:8000/login/`;
 
@@ -16,7 +17,7 @@ const layout = {
 };
 const tailLayout = {
   wrapperCol: {
-    offset: 14,
+    offset: 13,
     span: 16,
   },
 };
@@ -25,17 +26,24 @@ const Login = () => {
   let history = useHistory();
 
   const onFinish = async (values) => {
-    console.log("Success:", values);
     const resultURL = loginURL + `${values.username}/${values.password}`;
+    let form_data = new FormData();
+    form_data.append("username", values.username);
+    form_data.append("password", values.password);
     await axios
-      .get(resultURL, {
-        username: values.username,
-        password: values.password,
+      .get(resultURL, form_data, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
       })
       .then((resp) => {
         if (resp.status === 200) {
           console.log(resp);
           sessionStorage.setItem("username", values.username);
+          sessionStorage.setItem("userId", resp.data.user.id);
+          sessionStorage.setItem("user", resp.data.user);
+          sessionStorage.setItem("id", resp.data.user.id);
+          sessionStorage.setItem("avatar", resp.data.user.avatar)
           history.push("/");
         }
       });
@@ -46,54 +54,53 @@ const Login = () => {
   };
 
   return (
-    <div className="loginContainer">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ7ly6Nep4C_fGpdCTAxzjDeyNhLUsRWrdqdg_tbvey6WxsYgzs&usqp=CAU" />
-      <Form
-        {...layout}
-        name="basic"
-        initialValues={{
-          remember: true,
-        }}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-      >
-        <Form.Item
-          label="Username"
-          name="username"
-          rules={[
-            {
-              required: true,
-              message: "Please input your username!",
-            },
-          ]}
+    <>
+      <Header />
+      <br />
+      <div className="loginForm">
+        <Form
+          {...layout}
+          name="basic"
+          initialValues={{
+            remember: true,
+          }}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
         >
-          <Input />
-        </Form.Item>
+          <Form.Item
+            label="아이디"
+            name="username"
+            rules={[
+              {
+                required: true,
+                message: "Please input your username!",
+              },
+            ]}
+          >
+            <Input id="username" />
+          </Form.Item>
 
-        <Form.Item
-          label="Password"
-          name="password"
-          rules={[
-            {
-              required: true,
-              message: "Please input your password!",
-            },
-          ]}
-        >
-          <Input.Password />
-        </Form.Item>
+          <Form.Item
+            label="비밀번호"
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: "Please input your password!",
+              },
+            ]}
+          >
+            <Input.Password />
+          </Form.Item>
 
-        <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-          <Checkbox>로그인 유지하기</Checkbox>
-        </Form.Item>
-
-        <Form.Item {...tailLayout}>
-          <Button type="primary" htmlType="submit">
-            로그인
-          </Button>
-        </Form.Item>
-      </Form>
-    </div>
+          <Form.Item {...tailLayout}>
+            <Link to="/register">회원가입 하러가기</Link>
+            &nbsp;
+            <Button htmlType="submit">로그인</Button>
+          </Form.Item>
+        </Form>
+      </div>
+    </>
   );
 };
 

@@ -1,49 +1,54 @@
-.place-detail{
-    width: 90%;
-    margin: 0 auto;
-    font-family: 'GmarketSansLight';
-    font-weight: bolder;
-    color: rgb(34, 34, 34);
+.place-detail {
+  width: 90%;
+  margin: 0 auto;
+  font-family: "GmarketSansLight";
+  font-weight: bolder;
+  color: rgb(34, 34, 34);
 
-    hr{
-        border: 0;
-        height: 2px;
-        background-color: #00ffaa;
-    }
-    // 넓은 화면
-    @media screen and (min-width: 768px) {
-        .slide{
-            display: block;
-        }
-
-        .place-name{
-            font-size: 50px;
-        }
-
-        .location{
-            .map{
-                // border: 1px solid black;
-                // background-color: #00ffaa;
-                width: 100%;
-                height: 300px;
-            }
-        }
+  hr {
+    border: 0;
+    height: 2px;
+    background-color: #00ffaa;
+  }
+  // 넓은 화면
+  @media screen and (min-width: 768px) {
+    .slide {
+      display: block;
     }
 
-    // 좁은 화면
-    @media screen and (max-width: 767px){
-
+    .place-name {
+      font-size: 50px;
     }
 
-    .gutter-row img{
-       width:200px;
+    .location {
+      .map {
+        // border: 1px solid black;
+        // background-color: #00ffaa;
+        width: 100%;
+        height: 300px;
+      }
     }
+  }
 
-    .empty {
-        height: 50px;
-    }
+  // 좁은 화면
+  @media screen and (max-width: 767px) {
+  }
 
-    .empty2 {
-        height: 15px;
-    }
+  .gutter-row img {
+    width: 200px;
+  }
+
+  .empty {
+    height: 50px;
+  }
+
+  .empty2 {
+    height: 15px;
+  }
+
+  Button {
+    background-color: black;
+    color: #00ffaa;
+    border: none;
+  }
 }

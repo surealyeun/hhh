@@ -35,3 +35,4 @@ def review_search(request, store_id):
     reviews = models.DiningReview.objects.filter(store_id=store_id)
     review_serializer = DiningReviewSerializer(reviews, many=True)
     return Response(review_serializer.data)
+

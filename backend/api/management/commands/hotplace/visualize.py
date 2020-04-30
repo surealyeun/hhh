@@ -7,12 +7,12 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import requests
 import json
+import pymysql
 import numpy as np
 from folium import plugins
 from collections import Counter
 from parse import load_dataframes
 from pandas.io.json import json_normalize
-
 
 def show_stores_distribution_graph(dataframes):
     """
@@ -20,7 +20,7 @@ def show_stores_distribution_graph(dataframes):
     """
     m = folium.Map(
         location=[37.503309,126.7636763],
-        zoom_start=13
+        zoom_start=12
     )
     result = pd.read_pickle('./data/hot_place.pkl')
 
@@ -38,7 +38,8 @@ def show_stores_distribution_graph(dataframes):
         fill_opacity=0.75,
         line_opacity=0.9, 
         legend_name="Hot Place Score",
-        tooltip=df.index
+        tooltip=df.index,
+        hoverinfo = "text"
     ).add_to(m)
 
     """ 서울 구 중심좌표 설정 """
@@ -73,13 +74,48 @@ def show_stores_distribution_graph(dataframes):
     }
     center_dataframe = pd.DataFrame(seoul_gu_center_dic)
 
+
     """ 구별 주요 키워드 리스트화 """
 
     """ 단일 마커 추가 코드 (사전작업: 해당 주소지만 걸러주는 url 만들어놓기)"""
     
+    connection = pymysql.connect(
+        host='13.125.113.171', user='root', password='ssafya202!@#', db='HHH',
+        charset='utf8mb4', autocommit=True, cursorclass=pymysql.cursors.DictCursor
+    )
+    cursor = connection.cursor()
+
+    gu_eng = {
+        '송파구':'songpa','동작구':'dongjak','관악구':'gwanak','금천구':'geumcheon',
+        '영등포구':'yeongdeungpo','구로구':'guro','양천구':'yangcheon','강서구':'gangseo',
+        '강남구':'gangnam','서초구':'seocho','강동구':'gangdong','광진구':'gwangjin',
+        '중랑구':'jungnang','노원구':'nowon','성동구':'seongdong','동대문구':'dongdaemun',
+        '성북구':'seongbuk','강북구':'gangbuk','도봉구':'dobong','종로구':'jongno',
+        '중구':'jung','용산구':'yongsan','마포구':'mapo','서대문구':'seodaemun',
+        '은평구':'eunpyeong'
+    }
+
     """ 서울시 구 갯수만큼 for문 """
     for i in center_dataframe.index[0:]: 
-        inner_html = '<b>' + center_dataframe.loc[i, 'gu'] + '</b><br/><a href="'+'https://www.google.com'+'">hi!</a>'
+
+        sql = "select * from HHH.district_sense where district = '"+center_dataframe.loc[i, 'gu']+"' order by rank"
+        cursor.execute(sql)
+        result = cursor.fetchall()
+        df = pd.DataFrame(result)
+        sense_list = list(df['word'][:5])
+        emotion_list = list(df['ftype'][:5])
+
+        inner_html = '<h3><b>' + center_dataframe.loc[i, 'gu'] + '</b></h3>'
+        for j in range(len(sense_list)):
+            # print(sense_list[j] + '  '+ str(j)+' '+center_dataframe.loc[i,'gu'])
+            if emotion_list[j] == '긍정':
+                inner_html += '<h4> 😎 #'+sense_list[j]+'</h4>'
+            elif emotion_list[j] == '부정':
+                inner_html += '<h4> 🥵 #'+sense_list[j]+'</h4>'
+            else :
+                inner_html += '<h4> 🤔 #'+sense_list[j]+'</h4>'
+
+        inner_html += '<h5><a href="'+'http://i02a202.p.ssafy.io/spotList/'+gu_eng[center_dataframe.loc[i, 'gu']]+'" target="_parent">view more.. 👀</a></h5>'
         test = folium.Html(inner_html, script=True)
 
         popup = folium.Popup(test, max_width=2650)
@@ -94,6 +130,7 @@ def show_stores_distribution_graph(dataframes):
             fill_opacity = 0.4,
             popup= popup
         ).add_to(m)
+    connection.close()
     m.save('./frontend/hhh/public/map.html')
 
 def main():

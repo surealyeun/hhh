@@ -19,7 +19,7 @@ class DiningStore(models.Model):
         return self.category.split("|") if self.category else []
     
     def __str__(self):
-        return self.store_name
+        return str(self.store_name)+' | '+ str(self.address_gu)+' | ' + str(self.address_dong)
 
 class DiningReview(models.Model):
     id = models.AutoField(primary_key=True)
@@ -45,4 +45,10 @@ class Location(models.Model):
     description = models.TextField(null=True)
 
     def __str__(self):
-        return self.location_name
+        return str(self.location_name)+' | '+ str(self.address_gu)+' | ' + str(self.address_dong)
+
+class Recommend(models.Model):
+    rank = models.IntegerField(null=True)
+    loc_id = models.IntegerField(null=True)
+    user_id = models.IntegerField(null=True)
+    is_location = models.BooleanField(null=True, default=False)

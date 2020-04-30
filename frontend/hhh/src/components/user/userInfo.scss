@@ -1,13 +1,17 @@
 .userInfoContainer {
   margin-top: 80px;
 
-  .submitButton {
-    margin-left: 40%;
+  img,
+  #image {
+    width: 200px;
+    margin-left: 43%;
+    margin-bottom: 20px;
   }
-  
-  img, #image {
-      width:200px;
-      margin-left:43%;
-      margin-bottom: 20px;
+
+  Button {
+    margin-left: 42%;
+    background-color: black;
+    color: #00ffaa;
+    border: none;
   }
 }

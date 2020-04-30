@@ -17,17 +17,23 @@ body {
     margin: 0;
     padding: 0;
 }
-
+body::-webkit-scrollbar{
+    display: none;
+}
 .main {
     width: 100vw;
     height: 100vh;
-    overflow: hidden;
+    // overflow: hidden;
     // float: left;
 
     .main-feed{
         width: 70%;
         margin: 0;
         display: inline-block;
+        overflow: scroll;
+    }
+    .main-feed::-webkit-scrollbar{
+        display: none;
     }
 
     .landing.sns {
@@ -77,8 +83,9 @@ body {
                         display: inline-block;
                         .user-profile {
                             width: 40px;
-                            filter: invert(80%);
+                            // filter: invert(80%);
                             margin-right: 5px;
+                            border-radius: 20px;
                         }
                         h2 {
                             display: inline-block;
@@ -120,48 +127,67 @@ body {
                     height: 50px;
                     position: relative;
                     top: 50%;
-                    margin-top: -17px;
+                    margin-top: -27px;
                     margin-right: 10px;
                     text-align: right;
+                    p{
+                        margin: 0;
+                        font-family: 'GmarketSansLight';
+                    }
                     button {
                         position: relative;
                         right: 3px;
                         border: 0;
                         background: none;
+                        color: white;
                         cursor: pointer;
                         .search-btn {
-                            width: 25px;
-                            filter: invert(80%);
+                            width: 30px;
+                            filter: invert(12%);
                         }
                     }
                     button:focus {
                         outline: none;
                     }
                 }
-                .search-input {
-                    position: absolute;
-                    top: 8px;
-                    left: 31%;
-                    input {
-                        width: 250xp;
-                        height: 35px;
-                        border: solid 1.5px #00ffaa;
-                        border-radius: 5px;
-                        padding-left: 7px;
-                        padding-right: 7px;
-                    }
-                    input:focus {
-                        outline: none;
-                    }
-                    .close {
-                        width: 18px;
-                        position: absolute;
-                        top: 9px;
-                        right: -25px;
-                        cursor: pointer;
-                    }
-                }
             }
+                    .search-input {
+                        .desc::-webkit-scrollbar{
+                            display: none;
+                        }
+                        .desc{
+                            z-index: 10;
+                            position: absolute;
+                            top: 8px;
+                            left: 31%;
+                            background-color: rgba(0, 0, 0, 0.849);
+                            width: 650px;
+                            height: 730px;
+                            padding: 15px 15px;
+                            border-radius: 5px;
+                            overflow: auto;
+                            h2{
+                                color: white;
+                                font-family: "GmarketSansLight";
+                                font-size: 30px;
+                                margin-bottom: 5px;
+                                span{
+                                    color: #00ffaa;
+                                }
+                            }
+                            p{
+                                color: rgb(230, 230, 230);
+                            }
+                            .close {
+                                width: 18px;
+                                position: absolute;
+                                top: 9px;
+                                right: 13px;
+                                cursor: pointer;
+                                
+                            }
+                        }
+                    }
 
             .title-foot {
                 width: 30%;

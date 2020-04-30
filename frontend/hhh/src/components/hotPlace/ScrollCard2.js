@@ -1,10 +1,15 @@
 import React from "react";
 import GuCard from "./GuCard";
 import axios from "axios";
-import CardPlace from "./CardPlace";
 import CardStore from "./CardStore";
 import "./ScrollCard2.scss";
+import Header from "../common/Header";
 
+const area = window.location.href.split("/")[4];
+const username = sessionStorage.getItem("username")
+  ? sessionStorage.getItem("username")
+  : "Eum_mericano";
+  
 class ScrollCard2 extends React.Component {
   constructor(props) {
     super(props);
@@ -16,39 +21,34 @@ class ScrollCard2 extends React.Component {
   }
 
   async componentDidMount() {
-    await axios.get("http://13.125.113.171:8000/dining/stores/").then((res) => {
-      this.setState({
-        storeList: res.data.results,
-      });
-    });
-
     await axios
-      .get("http://13.125.113.171:8000/places/location/")
+      .get(`http://13.125.113.171:8000/recommend/${area}/${username}`)
       .then((res) => {
         this.setState({
-          locList: res.data.results,
+          storeList: res.data,
         });
       });
   }
 
   render() {
-    const area = window.location.href.split('/')[4];
+    console.log(this.state.storeList);
     return (
-      <div className="scrollContainer">
-        <div className="logo">
-          <GuCard area={area}/>
-        </div>
-        <div className="container">
-          <div className="container2">
-            {this.state.storeList.map((slist) => (
-              <CardStore state={slist} />
-            ))}
-            {this.state.locList.map((plist) => (
-              <CardPlace state={plist} />
-            ))}
+      <>
+        <Header />
+        <br />
+        <div className="scrollContainer">
+          <div className="logo">
+            <GuCard area={area} />
+          </div>
+          <div className="container">
+            <div className="container2">
+              {this.state.storeList.map((slist) => (
+                <CardStore state={slist} area={area}/>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 }
