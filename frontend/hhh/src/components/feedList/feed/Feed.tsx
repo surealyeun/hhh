@@ -2,10 +2,10 @@ import React from "react";
 import "./Feed.scss";
 
 class Feed extends React.Component<
-  { url: string },
+  { url: string; likeNum: number; commentNum: number },
   { bgColor: string; display: string }
 > {
-  constructor(props: { url: string }) {
+  constructor(props: { url: string; likeNum: number; commentNum: number }) {
     super(props);
     this.state = {
       bgColor: "rgba(0,0,0,0)",
@@ -39,10 +39,10 @@ class Feed extends React.Component<
           <div className="feedCoverText">
             <ul>
               <li>
-                좋아요 <b>12</b>
+                좋아요 <b>{this.props.likeNum}</b>
               </li>
               <li>
-                댓글 <b>3</b>
+                댓글 <b>{this.props.commentNum}</b>
               </li>
             </ul>
           </div>

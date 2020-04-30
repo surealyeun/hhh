@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import "./userCard.scss";
 import axios from "axios";
 
+const username = window.location.href.split("/")[4];
+
 class UserCard extends React.Component<{
   avatarPic: string;
   userId: number;
@@ -40,7 +42,7 @@ class UserCard extends React.Component<{
           <img src={this.props.avatarPic} alt="" />
         </div>
         <div id="user-info">
-          <div id="user-id">{sessionStorage.getItem("username")}</div>
+          <div id="user-id">{username}</div>
           <div id="user-follow">
             <ul>
               <li>

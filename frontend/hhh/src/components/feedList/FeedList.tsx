@@ -8,7 +8,7 @@ import axios from "axios";
 class FeedList extends React.Component {
   state = {
     userId: 0,
-    userName: sessionStorage.getItem("username"),
+    userName: window.location.href.split("/")[4],
     userAvatar: "",
     feedList: [],
     feedNum: 0,
@@ -25,7 +25,6 @@ class FeedList extends React.Component {
           feedList: res.data,
           feedNum: res.data.length,
         });
-
         console.log(this.state);
       });
   }
@@ -43,8 +42,12 @@ class FeedList extends React.Component {
         <div id="list">
           <div className="row">
             {this.state.feedList.map((data: any) => (
-              <Link to="feedDetail">
-                <Feed url={data.photos[0]}></Feed>
+              <Link to={`/feedDetail/${data.id}`} key={data.id}>
+                <Feed
+                  url={data.photos[0]}
+                  likeNum={data.likes}
+                  commentNum={data.comments.length}
+                ></Feed>
               </Link>
             ))}
           </div>
