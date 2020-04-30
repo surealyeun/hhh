@@ -1,4 +1,25 @@
 @font-face {
+    font-family: "NanumSquareRound";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff")
+        format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: "GmarketSansMedium";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff")
+        format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: "GmarketSansBold";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff")
+        format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
     font-family: "DOSGothic";
     src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_eight@1.0/DOSGothic.woff")
         format("woff");
@@ -17,7 +38,7 @@ body {
     margin: 0;
     padding: 0;
 }
-body::-webkit-scrollbar{
+body::-webkit-scrollbar {
     display: none;
 }
 .main {
@@ -26,13 +47,13 @@ body::-webkit-scrollbar{
     // overflow: hidden;
     // float: left;
 
-    .main-feed{
+    .main-feed {
         width: 70%;
         margin: 0;
         display: inline-block;
         overflow: scroll;
     }
-    .main-feed::-webkit-scrollbar{
+    .main-feed::-webkit-scrollbar {
         display: none;
     }
 
@@ -130,9 +151,9 @@ body::-webkit-scrollbar{
                     margin-top: -27px;
                     margin-right: 10px;
                     text-align: right;
-                    p{
+                    p {
                         margin: 0;
-                        font-family: 'GmarketSansLight';
+                        font-family: "GmarketSansMedium";
                     }
                     button {
                         position: relative;
@@ -151,43 +172,64 @@ body::-webkit-scrollbar{
                     }
                 }
             }
-                    .search-input {
-                        .desc::-webkit-scrollbar{
-                            display: none;
-                        }
-                        .desc{
-                            z-index: 10;
-                            position: absolute;
-                            top: 8px;
-                            left: 31%;
-                            background-color: rgba(0, 0, 0, 0.849);
-                            width: 650px;
-                            height: 730px;
-                            padding: 15px 15px;
-                            border-radius: 5px;
-                            overflow: auto;
-                            h2{
-                                color: white;
-                                font-family: "GmarketSansLight";
-                                font-size: 30px;
-                                margin-bottom: 5px;
-                                span{
-                                    color: #00ffaa;
-                                }
-                            }
-                            p{
-                                color: rgb(230, 230, 230);
-                            }
-                            .close {
-                                width: 18px;
-                                position: absolute;
-                                top: 9px;
-                                right: 13px;
-                                cursor: pointer;
-                                
-                            }
+            .search-input {
+                .desc::-webkit-scrollbar {
+                    display: none;
+                }
+                .desc {
+                    z-index: 10;
+                    position: absolute;
+                    top: 8px;
+                    left: 31%;
+                    background-color: rgba(0, 0, 0, 0.849);
+                    width: 500px;
+                    height: 510px;
+                    padding: 15px 15px;
+                    border-radius: 5px;
+                    overflow: auto;
+                    font-family: "NanumSquareRound";
+                    // font-weight: lighter;
+                    hr {
+                        color: rgb(90, 90, 90);
+                        border: solid thin rgb(90, 90, 90);
+                        margin-top: 10px;
+                        margin-bottom: 20px;
+                    }
+                    h2 {
+                        text-align: center;
+                        color: rgb(235, 235, 235);
+                        font-family: "GmarketSansMedium";
+                        font-size: 30px;
+                        margin-top: 5px;
+                        margin-bottom: 5px;
+                        span {
+                            color: #00ffaa;
                         }
                     }
+                    p {
+                        font-size: 17px;
+                        text-align: center;
+                        line-height: 1.3em;
+                        color: rgb(230, 230, 230);
+                        .gijun {
+                            // color: #00ffaa;
+                            font-size: 22px;
+                        }
+                        .s-gijun {
+                            font-size: 14px;
+
+                            // line-height: 2.0em;
+                        }
+                    }
+                    .close {
+                        width: 18px;
+                        position: absolute;
+                        top: 9px;
+                        right: 13px;
+                        cursor: pointer;
+                    }
+                }
+            }
 
             .title-foot {
                 width: 30%;
