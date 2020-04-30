@@ -45,7 +45,7 @@ class Main extends React.Component {
         isSearch: false,
         isSns: false,
         feedlist: Array<Feed>(),
-        rand: new Date()
+        rand: new Date(),
     };
 
     constructor(props: any) {
@@ -57,13 +57,11 @@ class Main extends React.Component {
         };
     }
 
-    componentWillMount() {
-
-    }
+    componentWillMount() {}
 
     componentDidMount() {
         const username: string | null = sessionStorage.getItem("username");
-        if(username){
+        if (username) {
             axios({
                 method: "get",
                 url: "http://13.125.113.171:8000/feedlist/follow/" + username,
@@ -77,7 +75,6 @@ class Main extends React.Component {
                 .catch((err) => {
                     console.log(err);
                 });
-
         }
     }
 
@@ -114,7 +111,8 @@ class Main extends React.Component {
 
     render() {
         const username: string | null = sessionStorage.getItem("username");
-        const avatar: string|null = "http://13.125.113.171:8000"+sessionStorage.getItem("avatar");
+        const avatar: string | null =
+            "http://13.125.113.171:8000" + sessionStorage.getItem("avatar");
         return (
             <div className="main">
                 {this.state.isSns ? (
@@ -157,7 +155,12 @@ class Main extends React.Component {
                                             <Link to="/userInfo">
                                                 <img
                                                     className="user-profile"
-                                                    src={avatar.substr(avatar.length - 4, 4) == "null" ? userIcon : avatar}
+                                                    src={
+                                                        avatar.substr(avatar.length - 4, 4) ==
+                                                        "null"
+                                                            ? userIcon
+                                                            : avatar
+                                                    }
                                                     alt="user_profile"
                                                 />
                                                 <h2 className="username">{username}</h2>
@@ -186,15 +189,18 @@ class Main extends React.Component {
                                     </div>
                                 )}
                             </div>
-                            {this.state.isSns ? <></>: <>
-                            <div className="search">
-                                <button onClick={this.search}>
-                                    <p>ㅎㅎㅎ?</p>
-                                    <img className="search-btn" src={icon} alt="search" />
-                                </button>
-                            </div>
-                            
-                            </>}
+                            {this.state.isSns ? (
+                                <></>
+                            ) : (
+                                <>
+                                    <div className="search">
+                                        <button onClick={this.search}>
+                                            <p>ㅎㅎㅎ?</p>
+                                            <img className="search-btn" src={icon} alt="search" />
+                                        </button>
+                                    </div>
+                                </>
+                            )}
                         </div>
                         {this.state.isSearch ? (
                             <div className="search-input">
@@ -202,19 +208,39 @@ class Main extends React.Component {
                                     <h2>
                                         <span>ㅎㅎㅎ</span> 프로젝트의 <span>알고리즘</span>은?
                                     </h2>
-                                    <p>🔥🔥🔥 핫플레이스 기준 🔥🔥🔥</p>
-                                    <p>👪 인구수 기준 (서울시 생활인구) 👪</p><br/>
-                                    <p>1-1) 휴일과 평일의 인구수 차이: 15점 만점</p>
-                                    <p>1-2) 6개월 전과 현재 인구수 차이: 18점 만점</p><br/>
-                                    <p>💵 매출 비교 (카드사 데이터) 💵</p>
-                                    <p>쇼핑 / 음식 / 숙박 / 교통 / 취미 / 미용 데이터</p>
-                                    <p>2-1) 휴일과 평일의 매출 차이: 20점 만점</p>
-                                    <p>2-2) 4개월 전과 현재 매출액 차이: 18점 만점</p><br/><br/>
-                                    <p>👩‍💻👩‍💻👩‍💻 맞춤 정보 기준 👨‍💻👨‍💻👨‍💻</p><br/>
-                                    <p>사용자가 장소에 추가한 별점 기준에 따라</p>
-                                    <p>사용자에 맞춘 추천 장소들을 표시합니다.</p>
-                                    <p>데이터가 많아질 수록 ㅎㅎㅎ는</p>
-                                    <p>더 똑똑해져 알맞은 장소를 추천합니다!</p>
+                                    <hr />
+                                    <p>
+                                        <span className="gijun">🔥 핫플레이스 기준 🔥</span>
+                                        <br />
+                                        <br />
+                                        👪 인구수 기준 (서울시 생활인구) <br />
+                                        <span className="s-gijun">
+                                            1-1) 휴일과 평일의 인구수 차이: 15점 만점
+                                            <br />
+                                            1-2) 6개월 전과 현재 인구수 차이: 18점 만점
+                                        </span>
+                                        <br />
+                                        <br />
+                                        💵 매출 비교 (카드사 데이터) <br />
+                                        쇼핑 / 음식 / 숙박 / 교통 / 취미 / 미용 데이터
+                                        <br />
+                                        <span className="s-gijun">
+                                            2-1) 휴일과 평일의 매출 차이: 20점 만점
+                                            <br />
+                                            2-2) 4개월 전과 현재 매출액 차이: 18점 만점
+                                        </span>
+                                        <br />
+                                        <hr />
+                                        <span className="gijun">👩‍💻 맞춤 정보 기준 👨‍💻</span>
+                                        <br />
+                                        <br />
+                                        사용자가 장소에 추가한 별점 기준에 따라
+                                        <br />
+                                        사용자에 맞춘 추천 장소들을 표시합니다.
+                                        <br />
+                                        데이터가 많아질 수록 ㅎㅎㅎ는
+                                        <br />더 똑똑해져 알맞은 장소를 추천합니다!
+                                    </p>
                                     <img
                                         className="close"
                                         src={iconClose}
@@ -253,7 +279,12 @@ class Main extends React.Component {
                         </div>
                     </div>
                     <div className="item mapFrame">
-                        <iframe className="map" src="../map.html" frameBorder="0" key={this.state.rand.toString()}/>
+                        <iframe
+                            className="map"
+                            src="../map.html"
+                            frameBorder="0"
+                            key={this.state.rand.toString()}
+                        />
                     </div>
                 </div>
             </div>

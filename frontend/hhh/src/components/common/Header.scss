@@ -59,7 +59,8 @@
             left: -20px;
             .user-profile {
                 width: 40px;
-                filter: invert(90%);
+                border-radius: 20px;
+                // filter: invert(90%);
             }
             .username {
                 color: white;
