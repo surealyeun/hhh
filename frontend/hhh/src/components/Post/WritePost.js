@@ -26,6 +26,7 @@ class PicturesWall extends React.Component {
     previewImage: "",
     previewTitle: "",
     fileList: [],
+    isWrite: false,
   };
 
   handleCancel = () => this.setState({ previewVisible: false });
@@ -46,6 +47,9 @@ class PicturesWall extends React.Component {
   handleChange = ({ fileList }) => this.setState({ fileList });
 
   render() {
+    if (this.state.isWrite) {
+      return <Redirect to={{ pathname: "/" }} />;
+    }
     const { previewVisible, previewImage, fileList, previewTitle } = this.state;
     const uploadButton = (
       <div>
@@ -88,6 +92,7 @@ class PicturesWall extends React.Component {
         })
         .then((response) => {
           console.log(response);
+          this.setState({ isWrite: true });
         })
         .catch((err) => console.timeLog(err));
 
