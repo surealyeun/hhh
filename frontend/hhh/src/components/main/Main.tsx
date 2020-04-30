@@ -45,6 +45,7 @@ class Main extends React.Component {
         isSearch: false,
         isSns: false,
         feedlist: Array<Feed>(),
+        rand: new Date()
     };
 
     constructor(props: any) {
@@ -54,6 +55,10 @@ class Main extends React.Component {
             ...this.state,
             isLog: sessionStorage.getItem("username") ? true : false,
         };
+    }
+
+    componentWillMount() {
+
     }
 
     componentDidMount() {
@@ -83,7 +88,7 @@ class Main extends React.Component {
     };
 
     logout = () => {
-        sessionStorage.removeItem("username");
+        sessionStorage.clear();
         console.log("logout");
         this.setState({
             isLog: false,
@@ -263,7 +268,7 @@ class Main extends React.Component {
                         </div>
                     </div>
                     <div className="item mapFrame">
-                        <iframe className="map" src="../map.html" frameBorder="0" />
+                        <iframe className="map" src="../map.html" frameBorder="0" key={this.state.rand.toString()}/>
                     </div>
                 </div>
             </div>

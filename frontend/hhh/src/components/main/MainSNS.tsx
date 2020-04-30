@@ -82,7 +82,7 @@ class MainSNS extends React.Component<Props> {
             });
             axios({
                 method: "post",
-                url: url + "board/like/post/" + username + "/" + this.props.id,
+                url: "http://13.125.113.171:8000/board/like/post/" + username + "/" + this.props.id,
             })
                 .then((res) => {
                     console.log(res.data);
@@ -102,34 +102,36 @@ class MainSNS extends React.Component<Props> {
 
     comment = () => {
         console.log("comment");
-        const avatarr: string|null = url+sessionStorage.getItem("avatar");
-        const id: string|null = sessionStorage.getItem("id");
-        
-        if (username != null && avatarr) {
-            var newComm: Comment = {
-                text: this.state.text,
-                username: username,
-                avatar: avatarr,
-            };
-            var updateComm = this.state.comments;
-            updateComm.push(newComm);
-            this.setState({
-                comments: updateComm,
-            });
-        }
+        const avatarr: string | null = url + sessionStorage.getItem("avatar");
+        const id: string | null = sessionStorage.getItem("id");
 
         axios({
             method: "post",
-            url: "http://13.125.113.171:8000/comment/post/"+this.props.id+"/"+id+"/"+this.state.text,
-            // headers: {'content-type': 'application/json'},
-            // data: {
-            //     text: this.state.text,
-            //     writer: id,
-            //     board: this.props.id,
-            // },
+            url:
+                "http://13.125.113.171:8000/comment/post/" +
+                this.props.id +
+                "/" +
+                id +
+                "/" +
+                this.state.text,
         })
             .then((res) => {
                 console.log("comment", res);
+                if (username != null && avatarr) {
+                    var newComm: Comment = {
+                        text: this.state.text,
+                        username: username,
+                        avatar: avatarr,
+                    };
+                    var updateComm = this.state.comments;
+                    updateComm.push(newComm);
+                    this.setState({
+                        comments: updateComm,
+                    });
+                }
+                this.setState({
+                    text: "",
+                });
             })
             .catch((err) => {
                 console.log("comment error", err);
@@ -168,20 +170,20 @@ class MainSNS extends React.Component<Props> {
                                 </p>
                             </div>
                             <div className="spot">
-                                <Link
+                                {/* <Link
                                     to={
                                         this.props.location_id
                                             ? `/place/` + this.props.location_id
                                             : `/store/` + this.props.store_id
                                     }
-                                >
+                                > */}
                                     <img
                                         className="location"
                                         src="https://image.flaticon.com/icons/svg/447/447031.svg"
                                         alt="location"
                                     />
                                     <p>{this.props.loc_name}</p>
-                                </Link>
+                                {/* </Link> */}
                             </div>
                         </div>
                         {this.state.comments.map((comment, i) => {
@@ -220,6 +222,7 @@ class MainSNS extends React.Component<Props> {
                         <textarea
                             placeholder="댓글 달기"
                             onChange={(e) => this.text(e.target.value)}
+                            value={this.state.text}
                         />
                         <button className="comment-btn" onClick={this.comment}>
                             게시
