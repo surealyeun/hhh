@@ -88,7 +88,6 @@ def login(request, username, password):
         elif (password == login_user.password):
             serializer = UserSerializer(login_user)
             res_data['message'] = "로그인 성공"
-            print(serializer.data)
             res_data['user'] = serializer.data
             return Response(res_data, status=status.HTTP_200_OK)
 
@@ -328,6 +327,13 @@ def recommend_location_list(request, area_gu, username="Eum_mericano"):
         dic = {}
         if isLocation[i] is 1:
             location = get_object_or_404(api_models.Location, id=recommend_list[i])
+            star = list(place_models.Review.objects.filter(location=location).values())
+            score = 0
+            for i in range(len(star)):
+                score += star[i]["score"]
+            if len(star) is not 0:
+                score /= len(star)
+            dic["score_avg"] = score
             dic["id"] = recommend_list[i]
             dic["url"] = "http://13.125.113.171:8000/media/location.png"
             dic["location_name"] = location.location_name
@@ -341,6 +347,13 @@ def recommend_location_list(request, area_gu, username="Eum_mericano"):
             
         else :
             store = get_object_or_404(api_models.DiningStore, id=recommend_list[i])
+            star = list(place_models.Review.objects.filter(store=store).values())
+            score = 0
+            for i in range(len(star)):
+                score += star[i]["score"]
+            if len(star) is not 0:
+                score /= len(star)
+            dic["score_avg"] = score
             dic["id"] = recommend_list[i]
             dic["category"] = store.category
             dic["url"] = "http://13.125.113.171:8000/media/shop.png"
@@ -361,14 +374,20 @@ def recommend_location_list(request, area_gu, username="Eum_mericano"):
 def store_detail(request, store_id):   
 
     store = get_object_or_404(api_models.DiningStore, id=store_id)
-    print(store)
     boards = board_models.Board.objects.filter(store=store.id)
     board_list = list(boards.values())
-    print(board_list)
     for i in range(len(board_list)):
+        
         board_list[i]["image"] = "http://13.125.113.171:8000/media/"+str(board_list[i]["photo"])
+        
+        star = list(place_models.Review.objects.filter(store=store).values())
+        score = 0
+        for j in range(len(star)):
+            score += star[j]["score"]
+        if len(star) is not 0:
+            score /= len(star)
+        board_list[i]["score_avg"] = score
 
-    print(board_list)
     if len(board_list) is not 0:
         board_list.sort(key=itemgetter('created'), reverse=True)
     json_list = json.dumps(board_list, cls=DateTimeEncoder)
@@ -383,9 +402,18 @@ def location_detail(request, location_id):
     board_list = list(boards.values())
     
     for i in range(len(board_list)):
+
         board_list[i]["image"] = "http://13.125.113.171:8000/media/"+str(board_list[i]["photo"])
 
-    print(board_list)
+        star = list(place_models.Review.objects.filter(location=location).values())
+        score = 0
+        for j in range(len(star)):
+            score += star[j]["score"]
+        if len(star) is not 0:
+            score /= len(star)
+        board_list[i]["score_avg"] = score
+
+
     if len(board_list) is not 0:
         board_list.sort(key=itemgetter('created'), reverse=True)
     json_list = json.dumps(board_list, cls=DateTimeEncoder)
