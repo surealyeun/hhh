@@ -9,6 +9,7 @@ from .models import User
 from follows import models as follow_models
 from boards import models as board_models
 from api import models as api_models
+from places import models as place_models
 from boards import serializers as board_serializer
 from django.contrib.auth.hashers import check_password
 from comments import models as comments_models
@@ -16,10 +17,31 @@ import json, datetime
 from django.http import HttpResponse
 import pymysql
 import pandas as pd
+from operator import itemgetter
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+@api_view(['POST'])
+def wishlist_store(request, store_id, username, score=0):
+    user = get_object_or_404(User ,username=username)
+    store = get_object_or_404(api_models.DiningStore ,id=store_id)
+    exist_star = place_models.Review.objects.filter(user=user).filter(store=store)
+    exist_star.delete()
+    star = place_models.Review(user=user,store=store, score=score)
+    star.save()
+    return Response({"message" : "data input!","data":request.data})
+
+@api_view(['POST'])
+def wishlist_location(request, location_id, username, score=0):
+    user = get_object_or_404(User ,username=username)
+    location = get_object_or_404(api_models.Location ,id=location_id)
+    exist_star = place_models.Review.objects.filter(user=user).filter(location=location)
+    exist_star.delete()
+    star = place_models.Review(user=user,location=location,score=score)
+    star.save()
+    return Response({"message" : "data input!","data":request.data})
 
 
 @api_view(['GET'])
@@ -276,19 +298,27 @@ def user_feedlist(request, user_name):
 
 
 @api_view(['GET'])
-def recommend_location_list(request, area_gu, username):
+def recommend_location_list(request, area_gu, username="Eum_mericano"):
     
     connection = pymysql.connect(
         host='13.125.113.171', user='root', password='ssafya202!@#', db='HHH',
         charset='utf8mb4', autocommit=True, cursorclass=pymysql.cursors.DictCursor
     )
-    
+
     cursor = connection.cursor()
-    user = get_object_or_404(User ,username="username")
+    user = get_object_or_404(User ,username=username)
 
     sql = "select * from HHH.api_recommend_by_id_"+area_gu+" where user_id="+str(user.id)
     cursor.execute(sql)
     result = cursor.fetchall()
+    df = pd.DataFrame(result)
+    
+    if username != "Eum_mericano" and df.empty:
+        sql = "select * from HHH.api_recommend_by_id_"+area_gu+" where user_id=1"
+        cursor.execute(sql)
+        result = cursor.fetchall()
+        df = pd.DataFrame(result)
+
     connection.close()
 
     df = pd.DataFrame(result)
@@ -325,4 +355,39 @@ def recommend_location_list(request, area_gu, username):
             dic["longitude"] = store.longitude
         result.append(dic)
     json_list = json.dumps(result)
+    return HttpResponse(json_list)
+
+
+@api_view(['GET'])
+def store_detail(request, store_id):   
+
+    store = get_object_or_404(api_models.DiningStore, id=store_id)
+    print(store)
+    boards = board_models.Board.objects.filter(store=store.id)
+    board_list = list(boards.values())
+    print(board_list)
+    for i in range(len(board_list)):
+        board_list[i]["image"] = "http://13.125.113.171:8000/media/"+str(board_list[i]["photo"])
+
+    print(board_list)
+    if len(board_list) is not 0:
+        board_list.sort(key=itemgetter('created'), reverse=True)
+    json_list = json.dumps(board_list, cls=DateTimeEncoder)
+    return HttpResponse(json_list)
+
+@api_view(['GET'])
+def location_detail(request, location_id):   
+
+    location = get_object_or_404(api_models.Location, id=location_id)
+    
+    boards = board_models.Board.objects.filter(location=location.id)
+    board_list = list(boards.values())
+    
+    for i in range(len(board_list)):
+        board_list[i]["image"] = "http://13.125.113.171:8000/media/"+str(board_list[i]["photo"])
+
+    print(board_list)
+    if len(board_list) is not 0:
+        board_list.sort(key=itemgetter('created'), reverse=True)
+    json_list = json.dumps(board_list, cls=DateTimeEncoder)
     return HttpResponse(json_list)

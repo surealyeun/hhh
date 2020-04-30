@@ -39,8 +39,6 @@ class Board(core_models.TimeStampedModel):
     photo3 = models.ImageField(upload_to="boards", null=True, blank=True)
     store = models.ForeignKey("api.DiningStore", on_delete=models.CASCADE, null=True, blank=True)
     location = models.ForeignKey("api.Location", on_delete=models.CASCADE, null=True, blank=True)
-
-    def __str__(self):
-        return str(self.writer) + ' | ' + self.address_gu +' | '+ self.content
-
     
+    def __str__(self):
+        return str(self.writer) + ' | '+ str(self.id)

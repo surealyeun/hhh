@@ -38,7 +38,8 @@ def show_stores_distribution_graph(dataframes):
         fill_opacity=0.75,
         line_opacity=0.9, 
         legend_name="Hot Place Score",
-        tooltip=df.index
+        tooltip=df.index,
+        hoverinfo = "text"
     ).add_to(m)
 
     """ 서울 구 중심좌표 설정 """
@@ -79,7 +80,7 @@ def show_stores_distribution_graph(dataframes):
     
     """ 서울시 구 갯수만큼 for문 """
     for i in center_dataframe.index[0:]: 
-        inner_html = '<h3>' + center_dataframe.loc[i, 'gu'] + '</b><br/></h3><a href="'+'http://i02a202.p.ssafy.io/spotlist'+'" target="_parent">더 보기 👀</a>'
+        inner_html = '<h3>' + center_dataframe.loc[i, 'gu'] + '</b><br/></h3><a href="'+'http://i02a202.p.ssafy.io/spotList'+'" target="_parent">더 보기 👀</a>'
         test = folium.Html(inner_html, script=True)
 
         popup = folium.Popup(test, max_width=2650)
