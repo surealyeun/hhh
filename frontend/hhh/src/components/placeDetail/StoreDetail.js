@@ -10,10 +10,35 @@ class PlaceDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      store_name: "",
+      category: "",
+      address_see: "",
+      address_gu: "",
+      address_dong: "",
+      latitude: "",
+      longitude: "",
       imageList: [],
+      idList: [],
+      rateValue: 3,
     };
   }
   async componentDidMount() {
+    await axios
+      .get(
+        `http://13.125.113.171:8000/dining/stores/${this.props.match.params.id}/`
+      )
+      .then((resp) => {
+        this.setState({
+          store_name: resp.data.store_name,
+          category: resp.data.category,
+          address_see: resp.data.address_see,
+          address_gu: resp.data.address_gu,
+          address_dong: resp.data.address_dong,
+          latitude: resp.data.latitude,
+          longitude: resp.data.longitude,
+        });
+      });
+
     const script = document.createElement("script");
     script.async = true;
     script.src = `http://dapi.kakao.com/v2/maps/sdk.js?appkey=b725b485b0888987cdae1e2ddb72374b&autoload=false`;
@@ -24,8 +49,8 @@ class PlaceDetail extends React.Component {
         let container = document.getElementById("Mymap");
         let options = {
           center: new kakao.maps.LatLng(
-            this.props.location.state.latitude,
-            this.props.location.state.longitude
+            this.state.latitude,
+            this.state.longitude
           ),
           level: 2,
         };
@@ -34,8 +59,8 @@ class PlaceDetail extends React.Component {
 
         // 마커가 표시될 위치입니다
         var markerPosition = new kakao.maps.LatLng(
-          this.props.location.state.latitude,
-          this.props.location.state.longitude
+          this.state.latitude,
+          this.state.longitude
         );
 
         // 마커를 생성합니다
@@ -48,14 +73,18 @@ class PlaceDetail extends React.Component {
       });
     };
 
+    // 리뷰 이미지 뽑기
     await axios
       .get(
         `http://13.125.113.171:8000/store/detail/${this.props.match.params.id}`
       )
       .then((resp) => {
+        console.log(resp);
+        this.setState({ rateValue: resp.score_avg });
         for (let index = 0; index < resp.data.length; index++) {
           this.setState({
             imageList: [...this.state.imageList, resp.data[index].image],
+            idList: [...this.state.idList, resp.data[index].id],
           });
         }
       });
@@ -63,9 +92,41 @@ class PlaceDetail extends React.Component {
 
   render() {
     const id = this.props.match.params.id;
-    const state = this.props.location.state;
-    const store_name = state.store_name;
-    const area = state.area;
+    const store_name = this.state.store_name;
+
+    const items = [];
+    for (let index = 0; index < 3; index++) {
+      items.push(
+        <Col className="gutter-row" span={8}>
+          <Link to={`/feedDetail/${this.state.idList[index]}`}>
+            <img src={this.state.imageList[index]} />
+          </Link>
+        </Col>
+      );
+    }
+
+    const items2 = [];
+    for (let index = 3; index < 6; index++) {
+      items2.push(
+        <Col className="gutter-row" span={8}>
+          <Link to={`/feedDetail/${this.state.idList[index]}`}>
+            <img src={this.state.imageList[index]} />
+          </Link>
+        </Col>
+      );
+    }
+
+    const items3 = [];
+    for (let index = 6; index < 9; index++) {
+      items3.push(
+        <Col className="gutter-row" span={8}>
+          <Link to={`/feedDetail/${this.state.idList[index]}`}>
+            <img src={this.state.imageList[index]} />
+          </Link>
+        </Col>
+      );
+    }
+
     return (
       <>
         <Header />
@@ -77,16 +138,14 @@ class PlaceDetail extends React.Component {
                   <div className="empty" />
                 </Col>
               </Row>
+              <Row gutter={16}>{items}</Row>
               <Row gutter={16}>
-                <Col className="gutter-row" span={8}>
-                  <img src={this.state.imageList[0]} />
+                <Col span={24}>
+                  <div className="empty2" />
                 </Col>
-                <Col className="gutter-row" span={8}>
-                  <img src={this.state.imageList[1]} />
-                </Col>
-                <Col className="gutter-row" span={8}>
-                  <img src={this.state.imageList[2]} />
-                </Col>
+              </Row>
+              <Row gutter={16}>
+                {items2}
               </Row>
               <Row gutter={16}>
                 <Col span={24}>
@@ -94,31 +153,7 @@ class PlaceDetail extends React.Component {
                 </Col>
               </Row>
               <Row gutter={16}>
-                <Col className="gutter-row" span={8}>
-                  <img src={this.state.imageList[3]} />
-                </Col>
-                <Col className="gutter-row" span={8}>
-                  <img src={this.state.imageList[4]} />
-                </Col>
-                <Col className="gutter-row" span={8}>
-                  <img src={this.state.imageList[5]} />
-                </Col>
-              </Row>
-              <Row gutter={16}>
-                <Col span={24}>
-                  <div className="empty2" />
-                </Col>
-              </Row>
-              <Row gutter={16}>
-                <Col className="gutter-row" span={8}>
-                  <img src={this.state.imageList[6]} />
-                </Col>
-                <Col className="gutter-row" span={8}>
-                  <img src={this.state.imageList[7]} />
-                </Col>
-                <Col className="gutter-row" span={8}>
-                  <img src={this.state.imageList[8]} />
-                </Col>
+                {items3}
               </Row>
             </Col>
             <Col span={1} />
@@ -128,16 +163,17 @@ class PlaceDetail extends React.Component {
                   <div className="empty" />
                 </Col>
               </Row>
-              <h1 className="place-name">{state.store_name}</h1>
+              <h1 className="place-name">{this.state.store_name}</h1>
               <div>
-                <span>{state.category}</span> &nbsp;
+                <span>{this.state.category}</span> &nbsp;
                 <Rate value="4" className="rate" />
               </div>
               <hr />
               <div className="location">
                 <h3>Location</h3>
                 <p>
-                  {state.address_see} {state.address_gu} {state.address_dong}
+                  {this.state.address_see} {this.state.address_gu}{" "}
+                  {this.state.address_dong}
                 </p>
                 <div className="map" id="Mymap"></div>
               </div>
@@ -151,18 +187,14 @@ class PlaceDetail extends React.Component {
                       pathname: `/writePost`,
                       state: {
                         isStore: true,
-                        area,
-                        store_name,
                         id,
-                        state,
+                        store_name,
                       },
                     }}
                   >
                     <Button>리뷰 작성하기</Button>
                   </Link>
                 </div>
-                <div className="review"></div>
-                <div className="review"></div>
               </div>
               <br /> <hr />
               <br />

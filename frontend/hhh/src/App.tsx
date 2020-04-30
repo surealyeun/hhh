@@ -21,7 +21,7 @@ function App() {
         <Switch>
           <Route path="/" exact component={Main} />
           <Route path="/feedList" component={FeedList} />
-          <Route path="/feedDetail" component={FeedDetail} />
+          <Route path="/feedDetail/:id" component={FeedDetail} />
           <Route path="/spotList/:area" component={ScrollCard} />
           <Route path="/place/:id" component={PlaceDetail} />
           <Route path="/store/:id" component={StoreDetail} />
