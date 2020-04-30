@@ -326,16 +326,24 @@ def recommend_location_list(request, area_gu, username="Eum_mericano"):
     for i in range(len(recommend_list)):
         dic = {}
         if isLocation[i] is 1:
+            sql = "select src from HHH.crawl_locationimg where location_id="+str(recommend_list[i])
+            cursor.execute(sql)
+            result_sql = cursor.fetchall()
+            url = "http://13.125.113.171:8000/media/location.png"
+            if len(result_sql) != 0:
+                url = result_sql[0]["src"]
+
             location = get_object_or_404(api_models.Location, id=recommend_list[i])
             star = list(place_models.Review.objects.filter(location=location).values())
             score = 0
-            for i in range(len(star)):
-                score += star[i]["score"]
+            for j in range(len(star)):
+                score += star[j]["score"]
             if len(star) is not 0:
                 score /= len(star)
             dic["score_avg"] = score
             dic["id"] = recommend_list[i]
-            dic["url"] = "http://13.125.113.171:8000/media/location.png"
+
+            dic["url"] = url
             dic["location_name"] = location.location_name
             dic["description"] = location.description
             dic["rank"] = str(i+1)
@@ -346,17 +354,25 @@ def recommend_location_list(request, area_gu, username="Eum_mericano"):
             dic["longitude"] = location.longitude
             
         else :
+            sql = "select src from HHH.crawl_storeimg where store_id="+str(recommend_list[i])
+            cursor.execute(sql)
+            result_sql = cursor.fetchall()
+            url = "http://13.125.113.171:8000/media/shop.png"
+            if len(result_sql) != 0:
+                url = result_sql[0]["src"]
+
+            dic["url"] = url
+
             store = get_object_or_404(api_models.DiningStore, id=recommend_list[i])
             star = list(place_models.Review.objects.filter(store=store).values())
             score = 0
-            for i in range(len(star)):
-                score += star[i]["score"]
+            for j in range(len(star)):
+                score += star[j]["score"]
             if len(star) is not 0:
                 score /= len(star)
             dic["score_avg"] = score
             dic["id"] = recommend_list[i]
             dic["category"] = store.category
-            dic["url"] = "http://13.125.113.171:8000/media/shop.png"
             dic["store_name"] = store.store_name
             dic["rank"] = str(i+1)
             dic["address_see"] = store.address_see
