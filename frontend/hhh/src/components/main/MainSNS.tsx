@@ -170,20 +170,20 @@ class MainSNS extends React.Component<Props> {
                                 </p>
                             </div>
                             <div className="spot">
-                                {/* <Link
+                                <Link
                                     to={
                                         this.props.location_id
                                             ? `/place/` + this.props.location_id
                                             : `/store/` + this.props.store_id
                                     }
-                                > */}
+                                >
                                     <img
                                         className="location"
                                         src="https://image.flaticon.com/icons/svg/447/447031.svg"
                                         alt="location"
                                     />
                                     <p>{this.props.loc_name}</p>
-                                {/* </Link> */}
+                                </Link>
                             </div>
                         </div>
                         {this.state.comments.map((comment, i) => {
