@@ -65,7 +65,7 @@ selenium / beautifulsoup
 - 인스타그램에서 해시태그 등을 이용한 데이터 분석 중
 
 ---
-### 배포 
+### 배포 내용
 
 > frontend   
 http://i02a202.p.ssafy.io/   
