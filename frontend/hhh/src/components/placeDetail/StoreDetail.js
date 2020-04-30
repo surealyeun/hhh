@@ -88,6 +88,13 @@ class PlaceDetail extends React.Component {
           });
         }
       });
+
+       // 별점 가져오기
+    await axios
+    .get(
+      `http://13.125.113.171:8000/store/score/${this.props.match.params.id}`
+    )
+    .then((res) => this.setState({ rateValue: res.data }));
   }
 
   render() {
@@ -166,7 +173,7 @@ class PlaceDetail extends React.Component {
               <h1 className="place-name">{this.state.store_name}</h1>
               <div>
                 <span>{this.state.category}</span> &nbsp;
-                <Rate value="4" className="rate" />
+                <Rate value={this.state.rateValue} className="rate" />
               </div>
               <hr />
               <div className="location">
