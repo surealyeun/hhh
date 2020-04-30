@@ -37,7 +37,7 @@ function onChange(value) {
   console.log(`selected ${value}`);
 }
 
-const Register = () => {
+const Register = (state) => {
   const [form] = Form.useForm();
   let history = useHistory();
 
@@ -46,7 +46,12 @@ const Register = () => {
     await axios.post(registerUrl, values).then((resp) => {
       if (resp.status === 201) {
         sessionStorage.setItem("username", values.username);
-        history.push("/");
+        if (state.location.state) {
+          const loc = state.location.state.isStore === true ? "store" : "place";
+          history.push(`/${loc}/${state.location.state.id}`);
+        } else {
+          history.push("/");
+        }
       }
     });
   };
@@ -146,7 +151,27 @@ const Register = () => {
           </Form.Item>
 
           <Form.Item {...tailLayout}>
-            <Link to="/login">로그인 하러가기</Link>
+            {state.location.state ? (
+              <Link
+                to={{
+                  pathname: "/login",
+                  state: {
+                    isStore: state.location.state.isStore,
+                    id: state.location.state.id,
+                  },
+                }}
+              >
+                로그인 하러가기
+              </Link>
+            ) : (
+              <Link
+                to={{
+                  pathname: "/login",
+                }}
+              >
+                로그인 하러가기
+              </Link>
+            )}
             &nbsp;
             <Button htmlType="submit">회원가입</Button>
           </Form.Item>

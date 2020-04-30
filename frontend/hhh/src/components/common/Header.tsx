@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, Redirect, useHistory } from "react-router-dom";
+import userIcon from "../image/user.png";
 import "./Header.scss";
 
 const username: string | null = sessionStorage.getItem("username");
@@ -40,6 +41,8 @@ class Header extends React.Component {
     };
 
     render() {
+        const avatar: string|null = "http://13.125.113.171:8000"+sessionStorage.getItem("avatar");
+
         return (
             <div className="Header">
                 <Link to="/">
@@ -52,10 +55,10 @@ class Header extends React.Component {
                 {this.state.isLog ? (
                     <div>
                         <div className="user">
-                            <Link to="">
+                            <Link to="/userInfo">
                                 <img
                                     className="user-profile"
-                                    src="https://image.flaticon.com/icons/svg/1738/1738760.svg"
+                                    src={avatar.substr(avatar.length-4, 4) == "null" ? userIcon : avatar}
                                     alt="user_profile"
                                 />
                                 {/* <h2 className="username">{username}</h2> */}

@@ -67,7 +67,6 @@ class Main extends React.Component {
         url: "http://13.125.113.171:8000/feedlist/follow/" + username,
       })
         .then((res) => {
-          console.log("results : ");
           console.log(res.data);
           this.setState({
             feedlist: res.data,
@@ -208,24 +207,39 @@ class Main extends React.Component {
                   <h2>
                     <span>ㅎㅎㅎ</span> 프로젝트의 <span>알고리즘</span>은?
                   </h2>
-                  <p>🔥🔥🔥 핫플레이스 기준 🔥🔥🔥</p>
-                  <p>👪 인구수 기준 (서울시 생활인구) 👪</p>
-                  <br />
-                  <p>1-1) 휴일과 평일의 인구수 차이: 15점 만점</p>
-                  <p>1-2) 6개월 전과 현재 인구수 차이: 18점 만점</p>
-                  <br />
-                  <p>💵 매출 비교 (카드사 데이터) 💵</p>
-                  <p>쇼핑 / 음식 / 숙박 / 교통 / 취미 / 미용 데이터</p>
-                  <p>2-1) 휴일과 평일의 매출 차이: 20점 만점</p>
-                  <p>2-2) 4개월 전과 현재 매출액 차이: 18점 만점</p>
-                  <br />
-                  <br />
-                  <p>👩‍💻👩‍💻👩‍💻 맞춤 정보 기준 👨‍💻👨‍💻👨‍💻</p>
-                  <br />
-                  <p>사용자가 장소에 추가한 별점 기준에 따라</p>
-                  <p>사용자에 맞춘 추천 장소들을 표시합니다.</p>
-                  <p>데이터가 많아질 수록 ㅎㅎㅎ는</p>
-                  <p>더 똑똑해져 알맞은 장소를 추천합니다!</p>
+                  <hr />
+                  <p>
+                    <span className="gijun">🔥 핫플레이스 기준 🔥</span>
+                    <br />
+                    <br />
+                    👪 인구수 기준 (서울시 생활인구) <br />
+                    <span className="s-gijun">
+                      1-1) 휴일과 평일의 인구수 차이: 15점 만점
+                      <br />
+                      1-2) 6개월 전과 현재 인구수 차이: 18점 만점
+                    </span>
+                    <br />
+                    <br />
+                    💵 매출 비교 (카드사 데이터) <br />
+                    쇼핑 / 음식 / 숙박 / 교통 / 취미 / 미용 데이터
+                    <br />
+                    <span className="s-gijun">
+                      2-1) 휴일과 평일의 매출 차이: 20점 만점
+                      <br />
+                      2-2) 4개월 전과 현재 매출액 차이: 18점 만점
+                    </span>
+                    <br />
+                    <hr />
+                    <span className="gijun">👩‍💻 맞춤 정보 기준 👨‍💻</span>
+                    <br />
+                    <br />
+                    사용자가 장소에 추가한 별점 기준에 따라
+                    <br />
+                    사용자에 맞춘 추천 장소들을 표시합니다.
+                    <br />
+                    데이터가 많아질 수록 ㅎㅎㅎ는
+                    <br />더 똑똑해져 알맞은 장소를 추천합니다!
+                  </p>
                   <img
                     className="close"
                     src={iconClose}
