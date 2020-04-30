@@ -48,7 +48,7 @@ class PicturesWall extends React.Component {
 
   render() {
     if (this.state.isWrite) {
-      return <Redirect to={{ pathname: `/store/${this.props.location.state.id}`}} />;
+      return <Redirect to={{ pathname: this.props.location.state.isStore? `/store/${this.props.location.state.id}` : `/place/${this.props.location.state.id}`}} />;
     }
     const { previewVisible, previewImage, fileList, previewTitle } = this.state;
     const uploadButton = (
@@ -59,7 +59,7 @@ class PicturesWall extends React.Component {
     );
     const state = this.props.location.state;
     const isStore = state.isStore;
-    const placeName = isStore ? state.store_name : state.location_name;
+    const placeName = state.store_name;
     const place = isStore ? "store" : "location";
 
     const onFinish = (values) => {

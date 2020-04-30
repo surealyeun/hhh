@@ -2,47 +2,26 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Place = ({ state, area }) => {
-  const {
-    id,
-    store_name,
-    category,
-    address_see,
-    address_gu,
-    address_dong,
-    url,
-    latitude,
-    longitude,
-  } = state;
+  const { id, store_name, category, location_name, description, url } = state;
 
   return (
     <div className="box">
       <div>
         <div className="image">
-          <Link
-            to={{
-              pathname: `/store/${id}`,
-              state: {
-                id,
-                store_name,
-                category,
-                address_see,
-                address_gu,
-                address_dong,
-                latitude,
-                longitude,
-                area
-              },
-            }}
-          >
+          <Link to={store_name !== undefined ? `/store/${id}` : `/place/${id}`}>
             <img src={url} />
             <h2>
-              {category ? (
-                <span className="small">{category}</span>
-              ) : (
-                <span className="small">음식점</span>
-              )}
+              <span className="small">
+                {category !== undefined
+                  ? category
+                    ? category
+                    : "먹으러가자!"
+                  : "놀러가자!"}
+              </span>
               <br />
-              <span>{store_name}</span>
+              <span>
+                {store_name !== undefined ? store_name : location_name}
+              </span>
             </h2>
           </Link>
         </div>

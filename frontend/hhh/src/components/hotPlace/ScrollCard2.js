@@ -1,7 +1,6 @@
 import React from "react";
 import GuCard from "./GuCard";
 import axios from "axios";
-import CardPlace from "./CardPlace";
 import CardStore from "./CardStore";
 import "./ScrollCard2.scss";
 import Header from "../common/Header";
@@ -25,22 +24,14 @@ class ScrollCard2 extends React.Component {
     await axios
       .get(`http://13.125.113.171:8000/recommend/${area}/${username}`)
       .then((res) => {
-        console.log(res);
         this.setState({
           storeList: res.data,
         });
       });
-
-    // await axios
-    //   .get("http://13.125.113.171:8000/places/location/")
-    //   .then((res) => {
-    //     this.setState({
-    //       locList: res.data.results,
-    //     });
-    //   });
   }
 
   render() {
+    console.log(this.state.storeList);
     return (
       <>
         <Header />
@@ -54,9 +45,6 @@ class ScrollCard2 extends React.Component {
               {this.state.storeList.map((slist) => (
                 <CardStore state={slist} area={area}/>
               ))}
-              {/* {this.state.locList.map((plist) => (
-              <CardPlace state={plist} />
-            ))} */}
             </div>
           </div>
         </div>
