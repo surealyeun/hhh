@@ -3,21 +3,27 @@ import { Link } from "react-router-dom";
 import "./userCard.scss";
 import axios from "axios";
 
-const username = window.location.href.split("/")[4];
-
 class UserCard extends React.Component<{
   avatarPic: string;
   userId: number;
   feedNum: number;
 }> {
   state = {
+    username: window.location.href.split("/")[4],
     userId: this.props.userId,
     followerNum: 0,
     followingNum: 0,
+    same: false,
   };
 
   async componentDidUpdate(prevProps: any) {
     if (this.props.userId !== prevProps.userId) {
+      if (sessionStorage.getItem("username") === this.state.username) {
+        this.setState({
+          same: true,
+        });
+      }
+
       await axios
         .get("http://13.125.113.171:8000/follower/" + this.props.userId)
         .then((res) => {
@@ -42,7 +48,19 @@ class UserCard extends React.Component<{
           <img src={this.props.avatarPic} alt="" />
         </div>
         <div id="user-info">
-          <div id="user-id">{username}</div>
+          <div id="user-id">{this.state.username}</div>
+          <Link to="/userinfo">
+            <div
+              id="user-info"
+              style={
+                this.state.same
+                  ? { display: "inline-block" }
+                  : { display: "none" }
+              }
+            >
+              프로필 편집
+            </div>
+          </Link>
           <div id="user-follow">
             <ul>
               <li>

@@ -152,7 +152,9 @@ class Main extends React.Component {
                 {this.state.isLog ? (
                   <div>
                     <div className="user">
-                      <Link to="/userInfo">
+                      <Link
+                        to={`/feedList/${sessionStorage.getItem("username")}`}
+                      >
                         <img
                           className="user-profile"
                           src={
