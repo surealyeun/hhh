@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import (
     UserViewSet, user_search, user_search_by_id, user_update_and_delete, login, user_follow_feedlist, user_feedlist, recommend_location_list,
-    wishlist_store, wishlist_location,store_detail,location_detail
+    wishlist_store, wishlist_location,store_detail,location_detail, store_score, location_score
 )
 urlpatterns = [
     path('wishlist/store/<store_id>/<username>/<score>', wishlist_store, name="wishlist_store"),
@@ -16,4 +16,6 @@ urlpatterns = [
     path('recommend/<area_gu>', recommend_location_list, name="recommend_location"),
     path('store/detail/<store_id>', store_detail, name="store_detail"),
     path('location/detail/<location_id>', location_detail, name="location_detail"),
+    path('store/score/<store_id>', store_score, name="store_score"),
+    path('location/score/<location_id>', location_score, name="location_score"),
 ]
