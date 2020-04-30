@@ -1,4 +1,25 @@
 @font-face {
+    font-family: "NanumSquareRound";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff")
+        format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: "GmarketSansMedium";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff")
+        format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: "GmarketSansBold";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff")
+        format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
     font-family: "DOSGothic";
     src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_eight@1.0/DOSGothic.woff")
         format("woff");
@@ -17,253 +38,301 @@ body {
     margin: 0;
     padding: 0;
 }
-
+body::-webkit-scrollbar {
+    display: none;
+}
 .main {
     width: 100vw;
     height: 100vh;
-    overflow: hidden;
+    // overflow: hidden;
+    // float: left;
 
-    // 넓은 화면
-    @media screen and (min-width: 768px) {
-        .landing.sns {
-            position: fixed;
-            right: -70vw;
-            // display: none;
-            .search {
-                button {
-                    .search-btn {
-                        display: none;
-                    }
-                }
-            }
-        }
-        .landing {
-            transition: left 500ms linear;
-            overflow: hidden;
-            height: 100%;
-            width: 100%;
-            position: fixed;
+    .main-feed {
+        width: 70%;
+        margin: 0;
+        display: inline-block;
+        overflow: scroll;
+    }
+    .main-feed::-webkit-scrollbar {
+        display: none;
+    }
 
-            .item {
-                float: left;
-            }
-            .item.title {
-                width: 30%;
-                height: 100%;
-                background-color: black;
-
-                .title-head {
-                    width: 100%;
-                    height: 60px;
-                    display: grid;
-                    grid-template-columns: 84% 16%;
-                    gap: 0;
-                    // background-color: #ffffff;
-                    // border-bottom: solid #00ffaa 1px;
-                    .log {
-                        display: inline-block;
-                        height: 50px;
-                        position: relative;
-                        top: 50%;
-                        margin-top: -20px;
-                        margin-left: 10px;
-                        .user {
-                            display: inline-block;
-                            .user-profile {
-                                width: 40px;
-                                filter: invert(80%);
-                                margin-right: 5px;
-                            }
-                            h2 {
-                                display: inline-block;
-                                color: #f7f7f7;
-                                font-size: 13px;
-                                font-weight: lighter;
-                                font-family: "GmarketSansLight";
-                                margin-left: 3px;
-                            }
-                        }
-                        .login {
-                            margin: 5px;
-                            position: relative;
-                            // bottom: 10px;
-                            // left: -23px;
-                            .login-btn {
-                                width: 30px;
-                                filter: invert(90%);
-                            }
-                        }
-                        .logout {
-                            display: inline-block;
-                            margin-left: 10px;
-                            // position: relative;
-                            // right: 0px;
-                            button {
-                                background: none;
-                                border: 0;
-                                cursor: pointer;
-                                .logout-btn {
-                                    width: 25px;
-                                    filter: invert(80%);
-                                }
-                            }
-                        }
-                    }
-                    .search {
-                        display: inline-block;
-                        height: 50px;
-                        position: relative;
-                        top: 50%;
-                        margin-top: -17px;
-                        margin-right: 10px;
-                        text-align: right;
-                        button {
-                            position: relative;
-                            right: 3px;
-                            border: 0;
-                            background: none;
-                            cursor: pointer;
-                            .search-btn {
-                                width: 25px;
-                                filter: invert(80%);
-                            }
-                        }
-                        button:focus{
-                            outline: none;
-                        }
-                    }
-                    .search-input {
-                        position: absolute;
-                        top: 8px;
-                        left: 31%;
-                        input {
-                            width: 250xp;
-                            height: 35px;
-                            border: solid 1.5px #00ffaa;
-                            border-radius: 5px;
-                            padding-left: 7px;
-                            padding-right: 7px;
-                        }
-                        input:focus {
-                            outline: none;
-                        }
-                        .close {
-                            width: 18px;
-                            position: absolute;
-                            top: 9px;
-                            right: -25px;
-                            cursor: pointer;
-                        }
-                    }
-                }
-
-                .title-foot {
-                    width: 30%;
-                    height: 50px;
-                    position: absolute;
-                    bottom: 0px;
-                    padding-top: 13px;
-                    cursor: pointer;
-                    h5 {
-                        // margin: 0;
-                        font-size: 20px;
-                        // color: rgb(255, 255, 255);
-                        font-family: "GmarketSansLight";
-                        font-weight: bolder;
-                        // margin: auto 10px;
-                    }
-                    // border-top: solid #00ffaa 1px;
-                }
-                .title-foot.mainp {
-                    // right: 0px;
-                    // padding-left: 20%;
-                    h5 {
-                        margin-right: 15px;
-                        text-align: right;
-                    }
-                    background: #00ffaa; /* fallback for old browsers */
-                    background: -webkit-linear-gradient(
-                        to right,
-                        #000000,
-                        #00ffaa
-                    ); /* Chrome 10-25, Safari 5.1-6 */
-                    background: linear-gradient(
-                        to right,
-                        #000000,
-                        #00ffaa
-                    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-                }
-
-                .title-foot.sns {
-                    // padding-left: 1%;
-                    background: #000000; /* fallback for old browsers */
-                    background: -webkit-linear-gradient(
-                        to right,
-                        #00ffaa,
-                        #000000
-                    ); /* Chrome 10-25, Safari 5.1-6 */
-                    background: linear-gradient(to right, #00ffaa, #000000);
-                    h5 {
-                        margin-left: 15px;
-                        text-align: left;
-                    }
-                }
-
-                h1 {
-                    color: #00ffaa;
-                    font-family: "DOSGothic";
-                    font-size: 100px;
-                    font-weight: lighter;
-                    line-height: 0.9em;
-                    margin-top: 20px;
-                    margin-left: -30px;
-                    position: relative;
-                    left: 50%;
-                }
-
-                h3 {
-                    color: white;
-                    font-family: "GmarketSansLight";
-                    font-size: 25px;
-                }
-
-                h4 {
-                    color: rgba(255, 255, 255, 0.87);
-                    font-family: "GmarketSansLight";
-                    font-size: 15px;
-                    font-weight: lighter;
-                    line-height: 1.8em;
-                    position: relative;
-                    left: 50%;
-                    margin-top: 15px;
-                    margin-left: -25px;
-                    #h4-1 {
-                        color: #00ffaa;
-                    }
-                    #h4-2 {
-                        color: #42ffc0;
-                    }
-                    #h4-3 {
-                        color: #affde3;
-                    }
-                    #h4-4 {
-                        color: #e4e4e4;
-                    }
-                }
-            }
-
-            .item.mapFrame {
-                width: 70%;
-                height: 100%;
-                .map {
-                    width: 100%;
-                    height: 100%;
+    .landing.sns {
+        display: inline-block;
+        position: fixed;
+        right: -70vw;
+        // display: none;
+        .search {
+            button {
+                .search-btn {
+                    display: none;
                 }
             }
         }
     }
+    .landing {
+        transition: left 500ms linear;
+        overflow: hidden;
+        height: 100%;
+        width: 100%;
+        position: fixed;
 
-    // 좁은 화면
-    @media screen and (max-width: 767px) {
+        .item {
+            float: left;
+        }
+        .item.title {
+            width: 30%;
+            height: 100%;
+            background-color: black;
+
+            .title-head {
+                width: 100%;
+                height: 60px;
+                display: grid;
+                grid-template-columns: 84% 16%;
+                gap: 0;
+                // background-color: #ffffff;
+                // border-bottom: solid #00ffaa 1px;
+                .log {
+                    display: inline-block;
+                    height: 50px;
+                    position: relative;
+                    top: 50%;
+                    margin-top: -20px;
+                    margin-left: 10px;
+                    .user {
+                        display: inline-block;
+                        .user-profile {
+                            width: 40px;
+                            // filter: invert(80%);
+                            margin-right: 5px;
+                            border-radius: 20px;
+                        }
+                        h2 {
+                            display: inline-block;
+                            color: #f7f7f7;
+                            font-size: 13px;
+                            font-weight: lighter;
+                            font-family: "GmarketSansLight";
+                            margin-left: 3px;
+                        }
+                    }
+                    .login {
+                        margin: 5px;
+                        position: relative;
+                        // bottom: 10px;
+                        // left: -23px;
+                        .login-btn {
+                            width: 30px;
+                            filter: invert(90%);
+                        }
+                    }
+                    .logout {
+                        display: inline-block;
+                        margin-left: 10px;
+                        // position: relative;
+                        // right: 0px;
+                        button {
+                            background: none;
+                            border: 0;
+                            cursor: pointer;
+                            .logout-btn {
+                                width: 25px;
+                                filter: invert(80%);
+                            }
+                        }
+                    }
+                }
+                .search {
+                    display: inline-block;
+                    height: 50px;
+                    position: relative;
+                    top: 50%;
+                    margin-top: -27px;
+                    margin-right: 10px;
+                    text-align: right;
+                    p {
+                        margin: 0;
+                        font-family: "GmarketSansMedium";
+                    }
+                    button {
+                        position: relative;
+                        right: 3px;
+                        border: 0;
+                        background: none;
+                        color: white;
+                        cursor: pointer;
+                        .search-btn {
+                            width: 30px;
+                            filter: invert(12%);
+                        }
+                    }
+                    button:focus {
+                        outline: none;
+                    }
+                }
+            }
+            .search-input {
+                .desc::-webkit-scrollbar {
+                    display: none;
+                }
+                .desc {
+                    z-index: 10;
+                    position: absolute;
+                    top: 8px;
+                    left: 31%;
+                    background-color: rgba(0, 0, 0, 0.849);
+                    width: 500px;
+                    height: 510px;
+                    padding: 15px 15px;
+                    border-radius: 5px;
+                    overflow: auto;
+                    font-family: "NanumSquareRound";
+                    // font-weight: lighter;
+                    hr {
+                        color: rgb(90, 90, 90);
+                        border: solid thin rgb(90, 90, 90);
+                        margin-top: 10px;
+                        margin-bottom: 20px;
+                    }
+                    h2 {
+                        text-align: center;
+                        color: rgb(235, 235, 235);
+                        font-family: "GmarketSansMedium";
+                        font-size: 30px;
+                        margin-top: 5px;
+                        margin-bottom: 5px;
+                        span {
+                            color: #00ffaa;
+                        }
+                    }
+                    p {
+                        font-size: 17px;
+                        text-align: center;
+                        line-height: 1.3em;
+                        color: rgb(230, 230, 230);
+                        .gijun {
+                            // color: #00ffaa;
+                            font-size: 22px;
+                        }
+                        .s-gijun {
+                            font-size: 14px;
+
+                            // line-height: 2.0em;
+                        }
+                    }
+                    .close {
+                        width: 18px;
+                        position: absolute;
+                        top: 9px;
+                        right: 13px;
+                        cursor: pointer;
+                    }
+                }
+            }
+
+            .title-foot {
+                width: 30%;
+                height: 50px;
+                position: absolute;
+                bottom: 0px;
+                padding-top: 13px;
+                cursor: pointer;
+                h5 {
+                    // margin: 0;
+                    font-size: 20px;
+                    // color: rgb(255, 255, 255);
+                    font-family: "GmarketSansLight";
+                    font-weight: bolder;
+                    // margin: auto 10px;
+                }
+                // border-top: solid #00ffaa 1px;
+            }
+            .title-foot.mainp {
+                // right: 0px;
+                // padding-left: 20%;
+                h5 {
+                    margin-right: 15px;
+                    text-align: right;
+                }
+                background: #00ffaa; /* fallback for old browsers */
+                background: -webkit-linear-gradient(
+                    to right,
+                    #000000,
+                    #00ffaa
+                ); /* Chrome 10-25, Safari 5.1-6 */
+                background: linear-gradient(
+                    to right,
+                    #000000,
+                    #00ffaa
+                ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            }
+
+            .title-foot.sns {
+                // padding-left: 1%;
+                background: #000000; /* fallback for old browsers */
+                background: -webkit-linear-gradient(
+                    to right,
+                    #00ffaa,
+                    #000000
+                ); /* Chrome 10-25, Safari 5.1-6 */
+                background: linear-gradient(to right, #00ffaa, #000000);
+                h5 {
+                    margin-left: 15px;
+                    text-align: left;
+                }
+            }
+
+            h1 {
+                color: #00ffaa;
+                font-family: "DOSGothic";
+                font-size: 100px;
+                font-weight: lighter;
+                line-height: 0.9em;
+                margin-top: 20px;
+                margin-left: -30px;
+                position: relative;
+                left: 50%;
+            }
+
+            h3 {
+                color: white;
+                font-family: "GmarketSansLight";
+                font-size: 25px;
+            }
+
+            h4 {
+                color: rgba(255, 255, 255, 0.87);
+                font-family: "GmarketSansLight";
+                font-size: 15px;
+                font-weight: lighter;
+                line-height: 1.8em;
+                position: relative;
+                left: 50%;
+                margin-top: 15px;
+                margin-left: -25px;
+                #h4-1 {
+                    color: #00ffaa;
+                }
+                #h4-2 {
+                    color: #42ffc0;
+                }
+                #h4-3 {
+                    color: #affde3;
+                }
+                #h4-4 {
+                    color: #e4e4e4;
+                }
+            }
+        }
+
+        .item.mapFrame {
+            width: 70%;
+            height: 100%;
+            .map {
+                width: 100%;
+                height: 100%;
+            }
+        }
     }
 }

@@ -1,6 +1,9 @@
 from django.db import models
 from core import models as core_models
 
+class UploadFileModel(models.Model):
+    title = models.TextField(default='')
+    file = models.FileField(null=True)
 
 class Photo(core_models.TimeStampedModel):
 
@@ -9,7 +12,7 @@ class Photo(core_models.TimeStampedModel):
     image = models.ImageField(upload_to="boards")
 
     def __str__(self):
-        return str(self.created)
+        return str(self.image)
 
 
 class Like(models.Model):
@@ -31,11 +34,11 @@ class Board(core_models.TimeStampedModel):
     writer = models.ForeignKey("users.User", on_delete=models.CASCADE)
     address_gu = models.CharField(max_length=20, null=True, blank=True)
     content = models.TextField(null=True, blank=True)
-    photo = models.ManyToManyField(Photo)
+    photo = models.ImageField(upload_to="boards", null=True)
+    photo2 = models.ImageField(upload_to="boards", null=True, blank=True)
+    photo3 = models.ImageField(upload_to="boards", null=True, blank=True)
     store = models.ForeignKey("api.DiningStore", on_delete=models.CASCADE, null=True, blank=True)
     location = models.ForeignKey("api.Location", on_delete=models.CASCADE, null=True, blank=True)
-
-    def __str__(self):
-        return str(self.writer) + ' | ' + self.address_gu +' | '+ self.content
-
     
+    def __str__(self):
+        return str(self.writer) + ' | '+ str(self.id)

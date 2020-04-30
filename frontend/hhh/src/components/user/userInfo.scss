@@ -1,17 +1,17 @@
 .userInfoContainer {
-  margin-top: 100px;
+  margin-top: 80px;
 
-  .submitButton {
-    margin-left: 40%;
+  img,
+  #image {
+    width: 200px;
+    margin-left: 43%;
+    margin-bottom: 20px;
   }
 
-  Input::placeholder {
-    color: black !important;
-  }
-
-  img {
-      width:70px;
-      margin-left:22%;
-      margin-bottom: 20px;
+  Button {
+    margin-left: 42%;
+    background-color: black;
+    color: #00ffaa;
+    border: none;
   }
 }

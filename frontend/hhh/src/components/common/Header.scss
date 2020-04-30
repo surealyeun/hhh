@@ -1,104 +1,106 @@
 .Header {
-    position: fixed;
-    background-color: black;
-    // position: absolute;
+  position: fixed;
+  background-color: black;
+  z-index: 100;
+  // position: absolute;
 
-    @media screen and (min-width: 768px) {
-        width: 75px;
-        height: 100%;
+  @media screen and (min-width: 768px) {
+    width: 75px;
+    height: 100%;
 
-        .search-input {
-            // display: inline-block;
-            position: absolute;
-            left: 75px;
-            input {
-                width: 200px;
-                height: 40px;
-                border: solid 1.5px rgb(138, 138, 138);
-                border-radius: 5px;
-                margin: 16px 10px;
-                font-size: 25px;
-                z-index: 100;
-            }
-            .close {
-                width: 20px;
-                position: absolute;
-                top: 26px;
-                right: 22px;
-            }
+    .search-input {
+      // display: inline-block;
+      position: absolute;
+      left: 75px;
+      input {
+        width: 200px;
+        height: 40px;
+        border: solid 1.5px rgb(138, 138, 138);
+        border-radius: 5px;
+        margin: 16px 10px;
+        font-size: 25px;
+        z-index: 100;
+      }
+      .close {
+        width: 20px;
+        position: absolute;
+        top: 26px;
+        right: 22px;
+      }
+    }
+    .search {
+      margin: 20px 50%;
+      position: absolute;
+      left: -20px;
+      button {
+        border: 0;
+        background: none;
+        .search-btn {
+          width: 30px;
+          filter: invert(90%);
         }
-        .search {
-            margin: 20px 50%;
-            position: absolute;
-            left: -20px;
-            button {
-                border: 0;
-                background: none;
-                .search-btn {
-                    width: 30px;
-                    filter: invert(90%);
-                }
-            }
-        }
-
-        .title {
-            color: #00ffaa;
-            font-size: 80px;
-            font-family: "DOSGothic";
-            line-height: 0.9em;
-            margin: 5px 50%;
-            position: absolute;
-            left: -23px;
-            top: 65px;
-        }
-
-        .user {
-            margin: 5px 50%;
-            position: absolute;
-            bottom: 90px;
-            left: -20px;
-            .user-profile {
-                width: 40px;
-                filter: invert(90%);
-            }
-            .username {
-                color: white;
-                font-size: 10px;
-                font-family: "";
-                font-weight: lighter;
-                position: absolute;
-                left: -10px;
-                bottom: 40px;
-            }
-        }
-
-        .logout {
-            margin: 5px 50%;
-            position: absolute;
-            bottom: 20px;
-            left: -22px;
-            button {
-                border: 0;
-                background: none;
-            }
-            .logout-btn {
-                width: 40px;
-                filter: invert(90%);
-            }
-        }
-
-        .login {
-            margin: 5px 50%;
-            position: absolute;
-            bottom: 10px;
-            left: -23px;
-            .login-btn {
-                width: 40px;
-                filter: invert(90%);
-            }
-        }
+      }
     }
 
-    @media screen and (max-width: 767px) {
+    .title {
+      color: #00ffaa;
+      font-size: 80px;
+      font-family: "DOSGothic";
+      line-height: 0.9em;
+      margin: 5px 50%;
+      position: absolute;
+      left: -23px;
+      top: 65px;
     }
+
+    .user {
+      margin: 5px 50%;
+      position: absolute;
+      bottom: 90px;
+      left: -20px;
+      .user-profile {
+        width: 40px;
+        border-radius: 20px;
+        // filter: invert(90%);
+      }
+      .username {
+        color: white;
+        font-size: 10px;
+        font-family: "";
+        font-weight: lighter;
+        position: absolute;
+        left: -10px;
+        bottom: 40px;
+      }
+    }
+
+    .logout {
+      margin: 5px 50%;
+      position: absolute;
+      bottom: 20px;
+      left: -22px;
+      button {
+        border: 0;
+        background: none;
+      }
+      .logout-btn {
+        width: 40px;
+        filter: invert(90%);
+      }
+    }
+
+    .login {
+      margin: 5px 50%;
+      position: absolute;
+      bottom: 10px;
+      left: -23px;
+      .login-btn {
+        width: 40px;
+        filter: invert(90%);
+      }
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+  }
 }

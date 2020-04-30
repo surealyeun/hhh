@@ -1,31 +1,74 @@
-import React from 'react';
-import Feed from './feed/Feed';
-import UserCard from './userCard/userCard';
-import './FeedList.scss';
+import React from "react";
+import { Link } from "react-router-dom";
+import Feed from "./feed/Feed";
+import UserCard from "./userCard/userCard";
+import Header from "../common/Header";
+import "./FeedList.scss";
+import axios from "axios";
 
 class FeedList extends React.Component {
-    render() {
-        return (
-            <div id="feed-list">
-                <UserCard />
+  state = {
+    userId: 0,
+    userName: window.location.href.split("/")[4],
+    userAvatar: "",
+    feedList: [],
+    feedNum: 0,
+  };
 
-                <input type="text" id="search-bar" placeholder="검색"></input>
-                <div id="list">
-                    <div className="row">
-                        <Feed url="https://lh3.googleusercontent.com/proxy/9UZA-I76mE5cL7z0HIN5OBVDQIJPbtnt6XMSoXb9nNUNvwyoTjYqiPLicQAndqKQiRlVEhWEhMfFQ9y8zvA91IULEmU1qLI"></Feed>
-                        <Feed url="https://t1.daumcdn.net/liveboard/ttimes/efb7ffc328f545b7816049f00b450724.JPG"></Feed>
-                        <Feed url="https://media-cdn.tripadvisor.com/media/photo-s/0a/02/f1/ff/slice-of-waikiki-pizza.jpg"></Feed>
-                    </div>
+  async componentDidMount() {
+    await axios
+      .get("http://13.125.113.171:8000/feedlist/user/" + this.state.userName)
+      .then((res) => {
+        if (
+          this.state.userName === sessionStorage.getItem("username") &&
+          res.data.length === 0
+        ) {
+          this.setState({
+            ...this.state,
+            userId: sessionStorage.getItem("id"),
+            userAvatar: sessionStorage.getItem("avatar"),
+          });
+        } else {
+          this.setState({
+            ...this.state,
+            userId: res.data[0].writer_id,
+            userAvatar: res.data[0].avatar,
+            feedList: res.data,
+            feedNum: res.data.length,
+          });
+        }
+      });
+  }
 
-                    <div className="row">
-                        <Feed url="https://www.myhawaii.kr/wp-content/uploads/2014/07/Lau-Lau.jpg"></Feed>
-                        <Feed url="https://www.myhawaii.kr/wp-content/uploads/2015/02/IMG_5957.jpg"></Feed>
-                        <Feed url="https://www.myhawaii.kr/wp-content/uploads/2018/08/IMG_4630.jpg"></Feed>
-                    </div>
-                </div>
+  render() {
+    return (
+      <>
+        <Header />
+        <div id="feed-list">
+          <UserCard
+            avatarPic={this.state.userAvatar}
+            userId={this.state.userId}
+            feedNum={this.state.feedNum}
+          />
+
+          <input type="text" id="search-bar" placeholder="검색"></input>
+          <div id="list">
+            <div className="row">
+              {this.state.feedList.map((data: any) => (
+                <Link to={`/feedDetail/${data.id}`} key={data.id}>
+                  <Feed
+                    url={data.photos[0]}
+                    likeNum={data.likes}
+                    commentNum={data.comments.length}
+                  ></Feed>
+                </Link>
+              ))}
             </div>
-        );
-    }
+          </div>
+        </div>
+      </>
+    );
+  }
 }
 
 export default FeedList;

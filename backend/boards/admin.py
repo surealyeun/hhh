@@ -10,8 +10,8 @@ class BoradAdmin(admin.ModelAdmin):
 
 @admin.register(models.Photo)
 class PhotoAdmin(admin.ModelAdmin):
-
-    pass
+    class Media:
+        js = ('jquery.js', 'inlines.js')
 
 @admin.register(models.Like)
 class LikeAdmin(admin.ModelAdmin):

@@ -1,5 +1,4 @@
 from django.db import models
-from api import models as api
 
 # Create your models here.
 class StoreSense(models.Model):

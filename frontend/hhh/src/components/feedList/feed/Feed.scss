@@ -5,6 +5,7 @@
   width: 300px;
   height: 300px;
   overflow: hidden;
+  margin: 10px 10px 10px 10px;
 
   &:hover {
     cursor: pointer;
@@ -27,7 +28,7 @@
   }
 
   .feedCoverText {
-    color: rgb(230, 230, 230);
+    color: rgb(255, 255, 255);
 
     ul {
       position: relative;

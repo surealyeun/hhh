@@ -23,7 +23,7 @@ import json
 
 def read_csv():
 
-    df = pd.read_csv("../store.csv")
+    df = pd.read_csv("../store_full.csv")
 
     return df
 
@@ -119,7 +119,7 @@ def crawled(data, driver):
 # store와 location에 대해 계속 반복하기
 
 global num
-num = 1
+num = 7363
 
 def main():
 
@@ -137,14 +137,14 @@ def main():
     dataframes = read_csv()
     df1 = pd.DataFrame()
     # for idx in dataframes.index:
-    for idx in tqdm(range(0,77559)):
+    for idx in tqdm(range(997,77559)):
         print(dataframes.loc[idx, ["id", "store_name"]])
         df2 = crawled(dataframes.loc[idx, ["id", "store_name"]], driver)
 
         df1 = pd.concat([df1, df2])
 
         data = df1.set_index("id")
-        data.to_csv("./data/store_sense_rest.csv", encoding="utf-8")
+        data.to_csv("./data/store_sense_rest1.csv", encoding="utf-8")
     # read_csv()
 
 

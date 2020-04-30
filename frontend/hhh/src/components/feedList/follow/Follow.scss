@@ -1,0 +1,99 @@
+#follow {
+  position: fixed;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.65);
+  background-size: cover;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 10;
+
+  a {
+    color: black;
+  }
+
+  #follow-text {
+    width: 100%;
+    height: 45px;
+    border-bottom: 1px solid rgb(200, 200, 200);
+    text-align: center;
+    line-height: 45px;
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 2px;
+
+    #close-btn {
+      display: inline-block;
+      position: absolute;
+      right: 15px;
+      font-size: 24px;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  #follow-list {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background-color: rgb(255, 255, 255);
+    left: 50%;
+    top: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    border-radius: 10px;
+
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+
+      li {
+        position: relative;
+        padding: 10px 20px;
+
+        img {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+
+        .id {
+          display: inline-block;
+          margin-left: 15px;
+          font-size: 16px;
+          font-weight: bold;
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+
+        .follow-btn {
+          display: inline-block;
+          position: absolute;
+          right: 20px;
+          top: 15px;
+          width: 64px;
+          height: 32px;
+          border: 1px solid rgb(200, 200, 200);
+          border-radius: 4px;
+          text-align: center;
+          line-height: 32px;
+          font-weight: bold;
+          font-size: 15px;
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}

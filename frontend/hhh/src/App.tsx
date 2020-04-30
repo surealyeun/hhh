@@ -7,9 +7,13 @@ import FeedList from "./components/feedList/FeedList";
 import userInfo from "./components/user/userInfo";
 import Login from "./components/user/Login";
 import Register from "./components/user/Register";
-import PlaceDetail from './components/placeDetail/PlaceDetail';
-import StoreDetail from './components/placeDetail/StoreDetail';
+import PlaceDetail from "./components/placeDetail/PlaceDetail";
+import StoreDetail from "./components/placeDetail/StoreDetail";
 import FeedDetail from "./components/feedDetail/FeedDetail";
+import mainsns from "./components/main/MainSNS";
+import Follow from "./components/feedList/follow/Follow";
+import Follower from "./components/feedList/follow/Follower";
+import WritePost from "./components/Post/WritePost";
 
 function App() {
   return (
@@ -17,14 +21,18 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route path="/" exact component={Main} />
-          <Route path="/feedList" component={FeedList} />
-          <Route path="/feedDetail" component={FeedDetail} />
-          <Route path="/spotList" component={ScrollCard} />
+          <Route path="/feedList/:username" component={FeedList} />
+          <Route path="/feedDetail/:id" component={FeedDetail} />
+          <Route path="/spotList/:area" component={ScrollCard} />
           <Route path="/place/:id" component={PlaceDetail} />
           <Route path="/store/:id" component={StoreDetail} />
-          <Route path="/userinfo" component={userInfo} />
+          <Route path="/userInfo" component={userInfo} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
+          <Route path="/sns" component={mainsns} />
+          <Route path="/follow/:id" component={Follow} />
+          <Route path="/follower/:id" component={Follower} />
+          <Route path="/writePost" component={WritePost} />
           <Redirect path="*" to="/"></Redirect>
         </Switch>
       </BrowserRouter>
