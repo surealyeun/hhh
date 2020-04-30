@@ -5,7 +5,14 @@ class FeedDetail extends Component {
   render() {
     return (
       <div id="feed-detail">
-        <div id="user-id">catcatgood</div>
+        <div id="user-id">
+          <img
+            className="user-pic"
+            src="https://ssolmarket.com/wp-content/uploads/2019/08/%EC%83%B43.jpg"
+            alt=""
+          />
+          <div id="id">catcatgood</div>
+        </div>
 
         <div id="feed-img">
           <img

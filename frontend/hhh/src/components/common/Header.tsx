@@ -42,15 +42,6 @@ class Header extends React.Component {
     render() {
         return (
             <div className="Header">
-                <div className="search">
-                    <button onClick={this.search}>
-                        <img
-                            className="search-btn"
-                            src="https://image.flaticon.com/icons/svg/149/149852.svg"
-                            alt="search"
-                        />
-                    </button>
-                </div>
                 <Link to="/">
                     <h1 className="title">
                         ㅎ<br />
@@ -91,19 +82,7 @@ class Header extends React.Component {
                         </Link>
                     </div>
                 )}
-                {this.state.isSearch ? (
-                    <div className="search-input">
-                        <input type="text"></input>
-                        <img
-                            className="close"
-                            src="https://image.flaticon.com/icons/svg/1828/1828778.svg"
-                            alt="close"
-                            onClick={this.closeSearch}
-                        />
-                    </div>
-                ) : (
-                    <></>
-                )}
+                
             </div>
         );
     }

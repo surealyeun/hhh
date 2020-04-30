@@ -1,0 +1,56 @@
+@font-face { font-family: 'GoyangIlsan'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GoyangIlsan.woff') format('woff'); font-weight: normal; font-style: normal; }
+
+.writeContainer {
+  font-family: "GoyangIlsan";
+  font-weight: bolder;
+  color: rgb(34, 34, 34);
+
+  margin-top: 40px;
+  margin-left: 25%;
+  margin-right: 20%;
+
+  .avatar-uploader > .ant-upload {
+    width: 200px;
+    height: 200px;
+  }
+
+  .ant-upload-list-picture-card-container {
+    width: 200px;
+    height: 200px;
+  }
+
+  .ant-upload-list-picture-card .ant-upload-list-item {
+    width: 200px;
+    height: 200px;
+  }
+
+  .ant-upload.ant-upload-select-picture-card {
+    width: 200px;
+    height: 200px;
+  }
+
+  hr {
+    border: 0;
+    height: 2px;
+    background-color: #00ffaa;
+  }
+
+  Button {
+    margin-left: 90%;
+  }
+
+  h3 {
+    font-family: 'GmarketSansLight';
+    display: inline-block;
+  }
+
+  .rate {
+    margin-left: 20px;
+  }
+
+  Button {
+    background-color: black;
+    color: #00ffaa;
+    border: none;
+}
+}

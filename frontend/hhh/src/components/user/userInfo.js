@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import axios from "axios";
 import { Form, Input, Button } from "antd";
+import Header from "../common/Header";
 
 import "antd/dist/antd.css";
 import "./userInfo.scss";
@@ -35,6 +37,10 @@ class userInfo extends Component {
       first_name: "",
       last_name: "",
       email: "",
+      avatar: null,
+      imagePreviewUrl: "",
+      flag: false,
+      isEdit: false
     };
   }
 
@@ -47,6 +53,7 @@ class userInfo extends Component {
       first_name: this.state.user.first_name,
       last_name: this.state.user.last_name,
       email: this.state.user.email,
+      avatar: this.state.user.avatar,
     });
   }
 
@@ -56,85 +63,127 @@ class userInfo extends Component {
     });
   };
 
+  handleAvatarChange = (e) => {
+    let reader = new FileReader();
+    let file = e.target.files[0];
+    reader.onloadend = () => {
+      this.setState({ avatar: file, imagePreviewUrl: reader.result });
+    };
+    reader.readAsDataURL(file);
+  };
+
   handleSubmit = (e) => {
     e.preventDefault();
+    let form_data = new FormData();
+    if (this.state.flag) {
+      form_data.append("avatar", this.state.avatar, this.state.avatar.name);
+    }
+    form_data.append("username", this.state.username);
+    form_data.append("password", this.state.password);
+    form_data.append("first_name", this.state.first_name);
+    form_data.append("last_name", this.state.last_name);
+    form_data.append("email", this.state.email);
     axios
-      .put(updateUrl, {
-        username: this.state.username,
-        password: this.state.password,
-        email: this.state.email,
-        first_name: this.state.first_name,
-        last_name: this.state.last_name,
+      .put(updateUrl, form_data, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
       })
-      .then((response) => console.timeLog(response))
+      .then((response) => {
+        if (response.status === 200) {
+          this.setState({isEdit:true});
+          sessionStorage.setItem("avatar", `/media/avatars/${this.state.avatar.name}`);
+        }
+      })
       .catch((err) => console.timeLog(err));
   };
 
   render() {
+    if (this.state.isEdit) {
+      return <Redirect to={{pathname:"/"}} />
+    }
+    let { imagePreviewUrl } = this.state;
+    let $imagePreview = null;
+    if (imagePreviewUrl) {
+      this.state.flag = true;
+    }
     return (
-      <div className="userInfoContainer">
-        <img src="https://beslow.co.kr/assets/img/mobile-float-mypage.png" />
-        <Form {...layout} onSubmitCapture={this.handleSubmit}>
-          <Form.Item name="username" label="Username">
-            <Input
-              name="username"
-              value={this.state.username}
-              placeholder={this.state.username}
-              disabled
+      <>
+        <Header />
+        <br />
+        <div className="userInfoContainer">
+          {!$imagePreview && (
+            <img
+              src={
+                imagePreviewUrl
+                  ? imagePreviewUrl
+                  : this.state.avatar
+                  ? `http://13.125.113.171:8000` + this.state.avatar
+                  : "http://13.125.113.171:8000/media/avatars/default.jpg"
+              }
             />
-          </Form.Item>
-          <Form.Item label="Name" style={{ marginBottom: 0 }}>
-            <Form.Item
-              name="first_name"
-              style={{ display: "inline-block", width: "calc(50% - 8px)" }}
-            >
+          )}
+          <br />
+          <input
+            type="file"
+            id="image"
+            accept="image/png, image/jpeg"
+            onChange={this.handleAvatarChange}
+            required
+          />
+          <Form {...layout} onSubmitCapture={this.handleSubmit}>
+            <Form.Item name="username" label="아이디">
               <Input
+                name="username"
+                value={this.state.username}
+                placeholder={this.state.username}
+                disabled
+              />
+            </Form.Item>
+            <Form.Item label="이름" style={{ marginBottom: 0 }}>
+              <Form.Item
                 name="first_name"
-                value={this.state.first_name}
-                placeholder={this.state.first_name}
-                onChange={this.handleChange}
-              />
-            </Form.Item>
-            <Form.Item
-              name="last_name"
-              style={{
-                display: "inline-block",
-                width: "calc(50% - 8px)",
-                margin: "0 8px",
-              }}
-            >
-              <Input
+                style={{ display: "inline-block", width: "calc(50% - 8px)" }}
+              >
+                <Input
+                  name="first_name"
+                  value={this.state.first_name}
+                  placeholder={this.state.first_name}
+                  onChange={this.handleChange}
+                />
+              </Form.Item>
+              <Form.Item
                 name="last_name"
-                value={this.state.last_name}
-                placeholder={this.state.last_name}
+                style={{
+                  display: "inline-block",
+                  width: "calc(50% - 8px)",
+                  margin: "0 8px",
+                }}
+              >
+                <Input
+                  name="last_name"
+                  value={this.state.last_name}
+                  placeholder={this.state.last_name}
+                  onChange={this.handleChange}
+                />
+              </Form.Item>
+            </Form.Item>
+            <Form.Item label="이메일" name="email">
+              <Input
+                name="email"
+                value={this.state.email}
+                placeholder={this.state.email}
                 onChange={this.handleChange}
               />
             </Form.Item>
-          </Form.Item>
-          <Form.Item name="password" label="Password">
-            <Input.Password
-              name="password"
-              value={this.state.password}
-              placeholder="*********"
-              onChange={this.handleChange}
-              disabled
-            />
-          </Form.Item>
-          <Form.Item label="Email" name="email">
-            <Input
-              name="email"
-              value={this.state.email}
-              placeholder={this.state.email}
-              onChange={this.handleChange}
-            />
-          </Form.Item>
-          <Form.Item className="submitButton" {...tailLayout}>
-            <Button type="primary" htmlType="submit">
-              수정
-            </Button>
-          </Form.Item>
-        </Form>
-      </div>
+            <Form.Item className="submitButton" {...tailLayout}>
+              <Button type="primary" htmlType="submit">
+                수정
+              </Button>
+            </Form.Item>
+          </Form>
+        </div>
+      </>
     );
   }
 }
