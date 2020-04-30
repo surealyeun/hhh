@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import icon from "../image/teacher.png";
 import iconClose from "../image/close.png";
+import userIcon from "../image/user.png";
 import "./Main.scss";
 
 // const username: string | null = sessionStorage.getItem("username");
@@ -57,19 +58,22 @@ class Main extends React.Component {
 
     componentDidMount() {
         const username: string | null = sessionStorage.getItem("username");
-                axios({
-                    method: "get",
-                    url: "http://13.125.113.171:8000/feedlist/follow/" + username,
-                })
-                    .then((res) => {
-                        console.log(res.data);
-                        this.setState({
-                            feedlist: res.data,
-                        });
-                    })
-                    .catch((err) => {
-                        console.log(err);
+        if(username){
+            axios({
+                method: "get",
+                url: "http://13.125.113.171:8000/feedlist/follow/" + username,
+            })
+                .then((res) => {
+                    console.log(res.data);
+                    this.setState({
+                        feedlist: res.data,
                     });
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+
+        }
     }
 
     search = () => {
@@ -148,7 +152,7 @@ class Main extends React.Component {
                                             <Link to="/userInfo">
                                                 <img
                                                     className="user-profile"
-                                                    src={avatar ? avatar:"https://image.flaticon.com/icons/svg/1738/1738760.svg"}
+                                                    src={avatar.substr(avatar.length - 4, 4) == "null" ? userIcon : avatar}
                                                     alt="user_profile"
                                                 />
                                                 <h2 className="username">{username}</h2>
