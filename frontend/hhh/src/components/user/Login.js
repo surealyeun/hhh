@@ -22,7 +22,7 @@ const tailLayout = {
   },
 };
 
-const Login = () => {
+const Login = (state) => {
   let history = useHistory();
 
   const onFinish = async (values) => {
@@ -42,8 +42,14 @@ const Login = () => {
           sessionStorage.setItem("userId", resp.data.user.id);
           sessionStorage.setItem("user", resp.data.user);
           sessionStorage.setItem("id", resp.data.user.id);
-          sessionStorage.setItem("avatar", resp.data.user.avatar)
-          history.push("/");
+          sessionStorage.setItem("avatar", resp.data.user.avatar);
+          if (state.location.state) {
+            const loc =
+              state.location.state.isStore === true ? "store" : "place";
+            history.push(`/${loc}/${state.location.state.id}`);
+          } else {
+            history.push("/");
+          }
         }
       });
   };
@@ -93,7 +99,27 @@ const Login = () => {
           </Form.Item>
 
           <Form.Item {...tailLayout}>
-            <Link to="/register">회원가입 하러가기</Link>
+            {state.location.state ? (
+              <Link
+                to={{
+                  pathname: "/register",
+                  state: {
+                    isStore: state.location.state.isStore,
+                    id: state.location.state.id,
+                  },
+                }}
+              >
+                회원가입 하러가기
+              </Link>
+            ) : (
+              <Link
+                to={{
+                  pathname: "/register",
+                }}
+              >
+                회원가입 하러가기
+              </Link>
+            )}
             &nbsp;
             <Button htmlType="submit">로그인</Button>
           </Form.Item>

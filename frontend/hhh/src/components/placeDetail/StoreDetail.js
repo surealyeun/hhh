@@ -6,6 +6,8 @@ import { Row, Col, Button, Rate } from "antd";
 import "./PlaceDetail.scss";
 import axios from "axios";
 
+const URL = "http://13.125.113.171:8000/";
+
 class PlaceDetail extends React.Component {
   constructor(props) {
     super(props);
@@ -19,7 +21,8 @@ class PlaceDetail extends React.Component {
       longitude: "",
       imageList: [],
       idList: [],
-      rateValue: 3,
+      rateValue: "",
+      userValue: 0,
     };
   }
   async componentDidMount() {
@@ -89,12 +92,47 @@ class PlaceDetail extends React.Component {
         }
       });
 
-       // 별점 가져오기
+    // 별점 가져오기
     await axios
-    .get(
-      `http://13.125.113.171:8000/store/score/${this.props.match.params.id}`
-    )
-    .then((res) => this.setState({ rateValue: res.data }));
+      .get(
+        `http://13.125.113.171:8000/store/score/${this.props.match.params.id}`
+      )
+      .then((res) => {
+        if (res.data !== "undefined") {
+          const num = res.data;
+          this.setState({ rateValue: num.toFixed(1) });
+        } else {
+          this.setState({ rateValue: "0" });
+        }
+      });
+  }
+
+  async handleChange(e) {
+    const username = sessionStorage.getItem("username");
+    if (!username) {
+      alert("별점은 로그인 후 남길 수 있어요!");
+    } else {
+      this.setState({ userValue: e });
+      await axios.post(
+        `${URL}wishlist/store/${this.props.match.params.id}/${username}/${e}`
+      );
+
+      await axios
+        .get(
+          `http://13.125.113.171:8000/store/score/${this.props.match.params.id}`
+        )
+        .then((res) => {
+          if (res.data !== "undefined") {
+            const num = res.data;
+            this.setState({ rateValue: num.toFixed(1) });
+          } else {
+            this.setState({ rateValue: "0" });
+          }
+        });
+
+      const changeText = document.querySelector(".changeText");
+      changeText.innerHTML = "별점이 반영되었습니다.";
+    }
   }
 
   render() {
@@ -134,46 +172,56 @@ class PlaceDetail extends React.Component {
       );
     }
 
+    const empty = [];
+    empty.push(
+      <Row gutter={16}>
+        <Col span={24}>
+          <div className="empty" />
+        </Col>
+      </Row>
+    );
+
+    const empty2 = [];
+    empty2.push(
+      <Row gutter={16}>
+        <Col span={24}>
+          <div className="empty2" />
+        </Col>
+      </Row>
+    );
+
     return (
       <>
         <Header />
         <div className="place-detail">
           <Row>
             <Col span={11}>
-              <Row gutter={16}>
-                <Col span={24}>
-                  <div className="empty" />
-                </Col>
-              </Row>
+              {empty}
               <Row gutter={16}>{items}</Row>
-              <Row gutter={16}>
-                <Col span={24}>
-                  <div className="empty2" />
-                </Col>
-              </Row>
-              <Row gutter={16}>
-                {items2}
-              </Row>
-              <Row gutter={16}>
-                <Col span={24}>
-                  <div className="empty2" />
-                </Col>
-              </Row>
-              <Row gutter={16}>
-                {items3}
-              </Row>
+              {empty2}
+              <Row gutter={16}>{items2}</Row>
+              {empty2}
+              <Row gutter={16}>{items3}</Row>
             </Col>
             <Col span={1} />
             <Col span={12}>
-              <Row gutter={16}>
-                <Col span={24}>
-                  <div className="empty" />
-                </Col>
-              </Row>
+              {empty}
               <h1 className="place-name">{this.state.store_name}</h1>
               <div>
                 <span>{this.state.category}</span> &nbsp;
-                <Rate value={this.state.rateValue} className="rate" />
+                <img
+                  width="20px"
+                  src="https://www.shwattialamal.com/wp-content/uploads/2017/08/orange-rating-star-512.png"
+                />
+                &nbsp;{this.state.rateValue}
+                <br />
+                <Rate
+                  value={this.state.userValue}
+                  className="rate"
+                  onChange={this.handleChange.bind(this)}
+                />
+                &nbsp;&nbsp;
+                <span class="changeText">지금 바로 별점을 남겨보세요!</span>
               </div>
               <hr />
               <div className="location">
@@ -189,18 +237,32 @@ class PlaceDetail extends React.Component {
               <div className="reviews">
                 <h3>Reviews</h3>
                 <div className="review">
-                  <Link
-                    to={{
-                      pathname: `/writePost`,
-                      state: {
-                        isStore: true,
-                        id,
-                        store_name,
-                      },
-                    }}
-                  >
-                    <Button>리뷰 작성하기</Button>
-                  </Link>
+                  {sessionStorage.getItem("username") ? (
+                    <Link
+                      to={{
+                        pathname: `/writePost`,
+                        state: {
+                          isStore: true,
+                          id,
+                          store_name,
+                        },
+                      }}
+                    >
+                      <Button>리뷰 작성하기</Button>
+                    </Link>
+                  ) : (
+                    <Link
+                      to={{
+                        pathname: "/login",
+                        state: {
+                          isStore: true,
+                          id,
+                        },
+                      }}
+                    >
+                      <Button>로그인하고 리뷰 작성하기</Button>
+                    </Link>
+                  )}
                 </div>
               </div>
               <br /> <hr />
