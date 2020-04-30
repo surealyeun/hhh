@@ -45,6 +45,30 @@ def wishlist_location(request, location_id, username, score=0):
 
 
 @api_view(['GET'])
+def store_score(request, store_id):
+    store = get_object_or_404(api_models.DiningStore, id=store_id)
+    star = list(place_models.Review.objects.filter(store=store).values())
+    score = 0
+    for j in range(len(star)):
+        score += star[j]["score"]
+    if len(star) is not 0:
+        score /= len(star)
+    json_list = json.dumps(score)
+    return HttpResponse(json_list)
+
+@api_view(['GET'])
+def location_score(request, location_id):
+    location = get_object_or_404(api_models.Location, id=location_id)
+    star = list(place_models.Review.objects.filter(location=location).values())
+    score = 0
+    for j in range(len(star)):
+        score += star[j]["score"]
+    if len(star) is not 0:
+        score /= len(star)
+    json_list = json.dumps(score)
+    return HttpResponse(json_list)
+
+@api_view(['GET'])
 def user_search(request, username):
     user = get_object_or_404(User, username=username)
     user_serializer = UserSerializer(user)
@@ -381,8 +405,8 @@ def recommend_location_list(request, area_gu, username="Eum_mericano"):
             dic["latitude"] = store.latitude
             dic["longitude"] = store.longitude
         result.append(dic)
-    json_list = json.dumps(result)
     connection.close()
+    json_list = json.dumps(result)
     return HttpResponse(json_list)
 
 
