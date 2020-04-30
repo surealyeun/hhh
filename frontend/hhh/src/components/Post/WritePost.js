@@ -48,7 +48,7 @@ class PicturesWall extends React.Component {
 
   render() {
     if (this.state.isWrite) {
-      return <Redirect to={{ pathname: "/" }} />;
+      return <Redirect to={{ pathname: `/store/${this.props.location.state.id}`}} />;
     }
     const { previewVisible, previewImage, fileList, previewTitle } = this.state;
     const uploadButton = (
