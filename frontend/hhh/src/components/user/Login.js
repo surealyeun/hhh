@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory, Link, Redirect } from "react-router-dom";
 import { Form, Input, Button } from "antd";
 import "./Login.scss";
 import axios from "axios";
@@ -38,7 +38,6 @@ const Login = () => {
       })
       .then((resp) => {
         if (resp.status === 200) {
-          console.log(resp.data.user);
           sessionStorage.setItem("username", values.username);
           sessionStorage.setItem("userId", resp.data.user.id);
           sessionStorage.setItem("user", resp.data.user);

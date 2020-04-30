@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import axios from "axios";
 import { Form, Input, Button } from "antd";
 import Header from "../common/Header";
@@ -39,6 +40,7 @@ class userInfo extends Component {
       avatar: null,
       imagePreviewUrl: "",
       flag: false,
+      isEdit: false
     };
   }
 
@@ -72,7 +74,6 @@ class userInfo extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state);
     let form_data = new FormData();
     if (this.state.flag) {
       form_data.append("avatar", this.state.avatar, this.state.avatar.name);
@@ -88,11 +89,19 @@ class userInfo extends Component {
           "content-type": "multipart/form-data",
         },
       })
-      .then((response) => console.timeLog(response))
+      .then((response) => {
+        if (response.status === 200) {
+          this.setState({isEdit:true});
+          sessionStorage.setItem("avatar", `/media/avatars/${this.state.avatar.name}`);
+        }
+      })
       .catch((err) => console.timeLog(err));
   };
 
   render() {
+    if (this.state.isEdit) {
+      return <Redirect to={{pathname:"/"}} />
+    }
     let { imagePreviewUrl } = this.state;
     let $imagePreview = null;
     if (imagePreviewUrl) {

@@ -1,11 +1,14 @@
 import React from "react";
+import { Redirect } from "react-router-dom";
 import { Form, Upload, Modal, Input, Button, Rate } from "antd";
 import { PlusOutlined, EnvironmentTwoTone } from "@ant-design/icons";
 import "./WritePost.scss";
 import axios from "axios";
 import Header from "../common/Header";
 
-const postURL = `http://13.125.113.171:8000/board/post`;
+const URL = "http://13.125.113.171:8000/";
+const postURL = `http://13.125.113.171:8000/boards/`;
+const username = sessionStorage.getItem("username");
 
 const { TextArea } = Input;
 function getBase64(file) {
@@ -53,19 +56,29 @@ class PicturesWall extends React.Component {
     const state = this.props.location.state;
     const isStore = state.isStore;
     const placeName = isStore ? state.store_name : state.location_name;
+    const place = isStore ? "store" : "location";
+
     const onFinish = (values) => {
+      console.log(values);
       let form_data = new FormData();
-      form_data.append("content", values.content);
+      form_data.append("address_gu", state.area);
       form_data.append("writer", sessionStorage.getItem("userId"));
-      // form_data.append("rate", values.rate); // 별점 컬럼 생성 시 추가
+      form_data.append("content", values.content);
       if (isStore) {
-        form_data.append("store", this.props.location.state.id);
+        form_data.append("store", state.id);
       } else {
-        form_data.append("location", this.props.location.state.id);
+        form_data.append("location", state.id);
       }
-      // 여기 고민...
+
       for (let index = 0; index < fileList.length; index++) {
-        form_data.append("photo", fileList[index]);
+        if (index === 0) {
+          form_data.append("photo", this.state.fileList[0].originFileObj);
+        } else {
+          form_data.append(
+            `photo${index + 1}`,
+            this.state.fileList[index].originFileObj
+          );
+        }
       }
       axios
         .post(postURL, form_data, {
@@ -73,8 +86,16 @@ class PicturesWall extends React.Component {
             "content-type": "multipart/form-data",
           },
         })
-        .then((response) => console.timeLog(response))
+        .then((response) => {
+          console.log(response);
+        })
         .catch((err) => console.timeLog(err));
+
+      axios
+        .post(
+          `${URL}wishlist/${place}/${this.props.location.state.id}/${username}/${values.rate}`
+        )
+        .then((resp) => console.log(resp));
     };
     return (
       <>
@@ -101,7 +122,7 @@ class PicturesWall extends React.Component {
                   onPreview={this.handlePreview}
                   onChange={this.handleChange}
                 >
-                  {fileList.length >= 10 ? null : uploadButton}
+                  {fileList.length >= 3 ? null : uploadButton}
                 </Upload>
               </Form.Item>
               <Modal

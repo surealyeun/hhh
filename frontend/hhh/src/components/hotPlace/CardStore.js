@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Place = ({ state }) => {
+const Place = ({ state, area }) => {
   const {
     id,
     store_name,
@@ -30,6 +30,7 @@ const Place = ({ state }) => {
                 address_dong,
                 latitude,
                 longitude,
+                area
               },
             }}
           >

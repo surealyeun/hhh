@@ -46,6 +46,7 @@ class PlaceDetail extends React.Component {
     const id = this.props.match.params.id;
     const state = this.props.location.state;
     const store_name = state.store_name;
+    const area = state.area;
     return (
       <>
       <Header />
@@ -131,8 +132,10 @@ class PlaceDetail extends React.Component {
                     pathname: `/writePost`,
                     state: {
                       isStore: true,
+                      area,
                       store_name,
-                      id
+                      id,
+                      state
                     },
                   }}
                 >
