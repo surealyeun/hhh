@@ -69,28 +69,13 @@ class FeedDetail extends Component {
             photos: element.photos,
             comments: element.comments,
             likes: element.likes,
+            isLike: element.pressLike,
           });
 
           break;
         }
       }
     });
-
-    await axios
-      .get("http://13.125.113.171:8000/feedlist/follow/" + this.state.loginUser)
-      .then((res) => {
-        console.log(res.data);
-
-        for (let index = 0; index < res.data.length; index++) {
-          const element = res.data[index];
-
-          if (element.id === Number(this.state.feedid)) {
-            this.setState({
-              isLike: element.pressLike,
-            });
-          }
-        }
-      });
   }
 
   addComment = () => {
