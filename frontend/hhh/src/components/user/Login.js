@@ -38,6 +38,7 @@ const Login = (state) => {
       })
       .then((resp) => {
         if (resp.status === 200) {
+          console.log(resp);
           sessionStorage.setItem("username", values.username);
           sessionStorage.setItem("userId", resp.data.user.id);
           sessionStorage.setItem("user", resp.data.user);

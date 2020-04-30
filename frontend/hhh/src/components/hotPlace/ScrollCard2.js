@@ -9,7 +9,7 @@ const area = window.location.href.split("/")[4];
 const username = sessionStorage.getItem("username")
   ? sessionStorage.getItem("username")
   : "Eum_mericano";
-  
+
 class ScrollCard2 extends React.Component {
   constructor(props) {
     super(props);
@@ -43,7 +43,7 @@ class ScrollCard2 extends React.Component {
           <div className="container">
             <div className="container2">
               {this.state.storeList.map((slist) => (
-                <CardStore state={slist} area={area}/>
+                <CardStore state={slist} area={area} />
               ))}
             </div>
           </div>

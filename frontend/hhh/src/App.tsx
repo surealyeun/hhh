@@ -10,7 +10,7 @@ import Register from "./components/user/Register";
 import PlaceDetail from "./components/placeDetail/PlaceDetail";
 import StoreDetail from "./components/placeDetail/StoreDetail";
 import FeedDetail from "./components/feedDetail/FeedDetail";
-import mainsns from './components/main/MainSNS';
+import mainsns from "./components/main/MainSNS";
 import Follow from "./components/feedList/follow/Follow";
 import WritePost from "./components/Post/WritePost";
 
@@ -20,7 +20,7 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route path="/" exact component={Main} />
-          <Route path="/feedList" component={FeedList} />
+          <Route path="/feedList/:username" component={FeedList} />
           <Route path="/feedDetail/:id" component={FeedDetail} />
           <Route path="/spotList/:area" component={ScrollCard} />
           <Route path="/place/:id" component={PlaceDetail} />
