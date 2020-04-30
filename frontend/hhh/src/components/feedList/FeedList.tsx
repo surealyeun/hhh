@@ -20,7 +20,7 @@ class FeedList extends React.Component {
       .then((res) => {
         this.setState({
           ...this.state,
-          userId: res.data[0].id,
+          userId: res.data[0].writer_id,
           userAvatar: res.data[0].avatar,
           feedList: res.data,
           feedNum: res.data.length,
@@ -43,32 +43,10 @@ class FeedList extends React.Component {
         <div id="list">
           <div className="row">
             {this.state.feedList.map((data: any) => (
-              <Feed url={data.photos[0]}></Feed>
+              <Link to="feedDetail">
+                <Feed url={data.photos[0]}></Feed>
+              </Link>
             ))}
-
-            {/* <Link to="/feedDetail">
-              <Feed url="https://image.shutterstock.com/image-photo/honolulu-hawaii-dec-23-2018-260nw-1271997817.jpg"></Feed>
-            </Link>
-
-            <Link to="/feedDetail">
-              <Feed url="https://t1.daumcdn.net/liveboard/ttimes/efb7ffc328f545b7816049f00b450724.JPG"></Feed>
-            </Link>
-
-            <Link to="/feedDetail">
-              <Feed url="https://media-cdn.tripadvisor.com/media/photo-s/0a/02/f1/ff/slice-of-waikiki-pizza.jpg"></Feed>
-            </Link>
-
-            <Link to="/feedDetail">
-              <Feed url="https://www.myhawaii.kr/wp-content/uploads/2014/07/Lau-Lau.jpg"></Feed>
-            </Link>
-
-            <Link to="/feedDetail">
-              <Feed url="https://www.myhawaii.kr/wp-content/uploads/2015/02/IMG_5957.jpg"></Feed>
-            </Link>
-
-            <Link to="/feedDetail">
-              <Feed url="https://www.myhawaii.kr/wp-content/uploads/2018/08/IMG_4630.jpg"></Feed>
-            </Link> */}
           </div>
         </div>
       </div>
