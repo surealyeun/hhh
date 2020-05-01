@@ -1,13 +1,17 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import "./Follow.scss";
 
 class Follow extends Component {
   render() {
     return (
-      <div id="follow" style={{ display: "none" }}>
+      <div id="follow" style={{ display: "block" }}>
         <div id="follow-list">
           <div id="follow-text">
-            팔로우 <div id="close-btn">X</div>
+            팔로우
+            <Link to="feedList">
+              <div id="close-btn">X</div>
+            </Link>
           </div>
           <ul>
             <li>
