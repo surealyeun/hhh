@@ -27,7 +27,7 @@ class Header extends React.Component {
   };
 
   logout = () => {
-    sessionStorage.removeItem("username");
+    sessionStorage.clear();
     console.log("logout");
     this.setState({
       isLog: false,
@@ -56,7 +56,7 @@ class Header extends React.Component {
         {this.state.isLog ? (
           <div>
             <div className="user">
-              <Link to="/userInfo">
+              <Link to="userInfo">
                 <img
                   className="user-profile"
                   src={

@@ -153,7 +153,7 @@ class Main extends React.Component {
                   <div>
                     <div className="user">
                       <Link
-                        to={`/feedList/${sessionStorage.getItem("username")}`}
+                        to="userInfo"
                       >
                         <img
                           className="user-profile"
