@@ -31,7 +31,6 @@ class userInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: {},
       username: "",
       password: "",
       first_name: "",
@@ -40,20 +39,21 @@ class userInfo extends Component {
       avatar: null,
       imagePreviewUrl: "",
       flag: false,
-      isEdit: false
+      isEdit: false,
     };
   }
 
   async componentDidMount() {
-    let { data: user } = await axios.get(userUrl);
-    this.setState({ user });
-    this.setState({
-      username: this.state.user.username,
-      password: this.state.user.password,
-      first_name: this.state.user.first_name,
-      last_name: this.state.user.last_name,
-      email: this.state.user.email,
-      avatar: this.state.user.avatar,
+    await axios.get(userUrl).then((res) => {
+      console.log(res);
+      this.setState({
+        username: res.data.username,
+        password: res.data.password,
+        first_name: res.data.first_name,
+        last_name: res.data.last_name,
+        email: res.data.email,
+        avatar: res.data.avatar,
+      });
     });
   }
 
@@ -91,8 +91,13 @@ class userInfo extends Component {
       })
       .then((response) => {
         if (response.status === 200) {
-          this.setState({isEdit:true});
-          sessionStorage.setItem("avatar", `/media/avatars/${this.state.avatar.name}`);
+          this.setState({ isEdit: true });
+          if (this.state.flag) {
+            sessionStorage.setItem(
+              "avatar",
+              `/media/avatars/${this.state.avatar.name}`
+            );
+          }
         }
       })
       .catch((err) => console.timeLog(err));
@@ -100,7 +105,7 @@ class userInfo extends Component {
 
   render() {
     if (this.state.isEdit) {
-      return <Redirect to={{pathname:"/"}} />
+      return <Redirect to={{ pathname: "/" }} />;
     }
     let { imagePreviewUrl } = this.state;
     let $imagePreview = null;
