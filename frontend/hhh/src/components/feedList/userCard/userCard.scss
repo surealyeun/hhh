@@ -49,6 +49,27 @@
       font-size: 26px;
     }
 
+    #follow-btn {
+      display: inline-block;
+      position: absolute;
+      top: 15px;
+      right: 250px;
+      border: 1px solid rgb(200, 200, 200);
+      border-radius: 5px;
+      width: 100px;
+      height: 32px;
+      padding: 0;
+      line-height: 32px;
+      text-align: center;
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
     #user-info {
       display: inline-block;
       position: absolute;

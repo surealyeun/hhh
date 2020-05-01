@@ -19,14 +19,24 @@ class FeedList extends React.Component {
     await axios
       .get("http://13.125.113.171:8000/feedlist/user/" + this.state.userName)
       .then((res) => {
-        this.setState({
-          ...this.state,
-          userId: res.data[0].writer_id,
-          userAvatar: res.data[0].avatar,
-          feedList: res.data,
-          feedNum: res.data.length,
-        });
-        console.log(this.state);
+        if (
+          this.state.userName === sessionStorage.getItem("username") &&
+          res.data.length === 0
+        ) {
+          this.setState({
+            ...this.state,
+            userId: sessionStorage.getItem("id"),
+            userAvatar: sessionStorage.getItem("avatar"),
+          });
+        } else {
+          this.setState({
+            ...this.state,
+            userId: res.data[0].writer_id,
+            userAvatar: res.data[0].avatar,
+            feedList: res.data,
+            feedNum: res.data.length,
+          });
+        }
       });
   }
 
