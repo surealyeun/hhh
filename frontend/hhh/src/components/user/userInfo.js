@@ -40,7 +40,7 @@ class userInfo extends Component {
       avatar: null,
       imagePreviewUrl: "",
       flag: false,
-      isEdit: false
+      isEdit: false,
     };
   }
 
@@ -91,8 +91,13 @@ class userInfo extends Component {
       })
       .then((response) => {
         if (response.status === 200) {
-          this.setState({isEdit:true});
-          sessionStorage.setItem("avatar", `/media/avatars/${this.state.avatar.name}`);
+          this.setState({ isEdit: true });
+          if (this.state.flag) {
+            sessionStorage.setItem(
+              "avatar",
+              `/media/avatars/${this.state.avatar.name}`
+            );
+          }
         }
       })
       .catch((err) => console.timeLog(err));
@@ -100,7 +105,7 @@ class userInfo extends Component {
 
   render() {
     if (this.state.isEdit) {
-      return <Redirect to={{pathname:"/"}} />
+      return <Redirect to={{ pathname: "/" }} />;
     }
     let { imagePreviewUrl } = this.state;
     let $imagePreview = null;
