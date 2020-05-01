@@ -45,7 +45,6 @@ const Register = (state) => {
     console.log(values);
     await axios.post(registerUrl, values).then((resp) => {
       if (resp.status === 201) {
-        sessionStorage.setItem("username", values.username);
         if (state.location.state) {
           const loc = state.location.state.isStore === true ? "store" : "place";
           history.push(`/${loc}/${state.location.state.id}`);
