@@ -81,3 +81,17 @@ http://i02a202.p.ssafy.io/
 
 > WSGI 참고자료
 https://paphopu.tistory.com/37
+
+
+### 배포 참고
+django 배포
+https://dailyheumsi.tistory.com/19   
+
+gunicorn  실행
+https://wikidocs.net/6601
+
+react 배포
+https://codechacha.com/ko/deploy-react-with-nginx/   
+
+nginx 80포트 에러
+https://jootc.com/p/201806261346   
