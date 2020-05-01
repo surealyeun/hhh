@@ -31,7 +31,6 @@ class userInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: {},
       username: "",
       password: "",
       first_name: "",
@@ -45,15 +44,16 @@ class userInfo extends Component {
   }
 
   async componentDidMount() {
-    let { data: user } = await axios.get(userUrl);
-    this.setState({ user });
-    this.setState({
-      username: this.state.user.username,
-      password: this.state.user.password,
-      first_name: this.state.user.first_name,
-      last_name: this.state.user.last_name,
-      email: this.state.user.email,
-      avatar: this.state.user.avatar,
+    await axios.get(userUrl).then((res) => {
+      console.log(res);
+      this.setState({
+        username: res.data.username,
+        password: res.data.password,
+        first_name: res.data.first_name,
+        last_name: res.data.last_name,
+        email: res.data.email,
+        avatar: res.data.avatar,
+      });
     });
   }
 
