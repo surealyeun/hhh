@@ -23,7 +23,7 @@
     "hide-scrollbar": "0.0.2",
     "hide-scrollbar-react": "^1.1.6",
     "mdbreact": "^4.25.5",
-    "node-sass": "^4.14.0",
+    "node-sass": "^7.0.0",
     "rc-tween-one": "^2.6.8",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
